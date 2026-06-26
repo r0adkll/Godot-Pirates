@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://sjx60mbt023l"]
+
+[ext_resource type="Script" uid="uid://bm8flclpt6y5u" path="res://BuilderMode/Scripts/builder_node.gd" id="1_vx7o5"]
+
+[node name="BuilderNode" type="CanvasLayer" unique_id=553760252]
+layer = 4
+script = ExtResource("1_vx7o5")

@@ -1,0 +1,56 @@
+[gd_resource type="Theme" format=3 uid="uid://dg11jhbwup2jx"]
+
+[ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="1_x77c5"]
+[ext_resource type="StyleBox" uid="uid://cvlde3ysoevmo" path="res://UI/Resources/Buttons/disabled_button_style.tres" id="2_uxug0"]
+[ext_resource type="Texture2D" uid="uid://dqk05af3dmn76" path="res://UI/Resources/Buttons/button_brown.svg" id="3_k8pc3"]
+[ext_resource type="StyleBox" uid="uid://muuf3vx6s0vw" path="res://UI/Resources/Buttons/normal_button_style.tres" id="4_j8i6c"]
+[ext_resource type="Texture2D" uid="uid://c0c0u1uafkvyk" path="res://UI/Resources/Checkbox/checkbox_beige_cross.svg" id="5_nty0r"]
+[ext_resource type="Texture2D" uid="uid://bi1giocn7jqtr" path="res://UI/Resources/Checkbox/checkbox_beige_checked.svg" id="6_ea4o1"]
+[ext_resource type="Texture2D" uid="uid://oowyx34o28nh" path="res://UI/Resources/Checkbox/checkbox_beige_empty.svg" id="7_0i5v8"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f7g8j"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+texture = ExtResource("3_k8pc3")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 6.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+region_rect = Rect2(0, 0, 48, 24)
+modulate_color = Color(0.60324824, 0.6032482, 0.6032482, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fvyyx"]
+content_margin_left = 20.0
+content_margin_top = 8.0
+content_margin_right = 20.0
+content_margin_bottom = 10.0
+texture = ExtResource("3_k8pc3")
+texture_margin_left = 5.0
+texture_margin_top = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 6.0
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+region_rect = Rect2(0, 0, 48, 24)
+modulate_color = Color(0.772951, 0.77295107, 0.77295107, 1)
+
+[resource]
+Button/colors/font_color = Color(0, 0, 0, 1)
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_x77c5")
+Button/styles/disabled = ExtResource("2_uxug0")
+Button/styles/hover = SubResource("StyleBoxTexture_f7g8j")
+Button/styles/normal = ExtResource("4_j8i6c")
+Button/styles/pressed = SubResource("StyleBoxTexture_fvyyx")
+CheckBox/font_sizes/font_size = 40
+CheckBox/icons/checked = ExtResource("5_nty0r")
+CheckBox/icons/radio_checked = ExtResource("6_ea4o1")
+CheckBox/icons/unchecked = ExtResource("7_0i5v8")

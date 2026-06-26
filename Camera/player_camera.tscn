@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cooq5awbwhbp"]
+
+[ext_resource type="Script" uid="uid://basgwwoitq5ph" path="res://Camera/Scripts/player_camera.gd" id="1_24bta"]
+[ext_resource type="Script" uid="uid://cgu354fu133fa" path="res://Camera/Scripts/camera_shake.gd" id="2_xh3up"]
+
+[node name="PlayerCamera" type="Camera2D" unique_id=277804073]
+position_smoothing_enabled = true
+script = ExtResource("1_24bta")
+
+[node name="CameraShake" type="Node" parent="." unique_id=1885242200 node_paths=PackedStringArray("camera")]
+unique_name_in_owner = true
+script = ExtResource("2_xh3up")
+camera = NodePath("..")

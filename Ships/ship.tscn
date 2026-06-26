@@ -1,0 +1,216 @@
+[gd_scene format=3 uid="uid://dkei6dibffafq"]
+
+[ext_resource type="Shader" uid="uid://nbp07318mrfa" path="res://Ships/Effects/hit_flash.gdshader" id="1_3hd0c"]
+[ext_resource type="Script" uid="uid://bss68d1jfl7k7" path="res://Ships/Scripts/ship.gd" id="1_gv7c3"]
+[ext_resource type="Resource" uid="uid://dqcd6i3uun0ul" path="res://Systems/Faction/player_faction.tres" id="2_10d41"]
+[ext_resource type="Script" uid="uid://chcye8f3cp6kg" path="res://Cannons/Scripts/damage_target.gd" id="2_cxoxt"]
+[ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="2_ho0l7"]
+[ext_resource type="Script" uid="uid://63wxoecufwfe" path="res://Ships/Scripts/boat_sprite.gd" id="3_ho0l7"]
+[ext_resource type="Script" uid="uid://c0g0sy824hji6" path="res://Ships/Scripts/Inputs/player_input.gd" id="4_a86iu"]
+[ext_resource type="Script" uid="uid://be142l01efsi4" path="res://Ships/Scripts/Inputs/theme_song_input.gd" id="5_10d41"]
+[ext_resource type="Resource" uid="uid://b41sp1cm34ll6" path="res://Ships/Resources/blue_boat_hull.tres" id="6_84lgx"]
+[ext_resource type="Script" uid="uid://dfkl3ktuj1gqw" path="res://Ships/Scripts/Inputs/player_movement_input.gd" id="6_sb8vm"]
+[ext_resource type="Script" uid="uid://bvpay758pgbvr" path="res://Ships/Scripts/Inputs/player_shoot_input.gd" id="7_m3k8j"]
+[ext_resource type="PackedScene" uid="uid://ca4534vsk0742" path="res://Cannons/magazine.tscn" id="9_njxlb"]
+[ext_resource type="Script" uid="uid://b3liy0gjleis0" path="res://Camera/Scripts/camera_harness.gd" id="9_sb8vm"]
+[ext_resource type="Script" uid="uid://ddg03jokeiaae" path="res://Ships/Scripts/crew_cabin.gd" id="11_onxlx"]
+[ext_resource type="PackedScene" uid="uid://dynf75xudk8up" path="res://UI/emote.tscn" id="12_fihr7"]
+[ext_resource type="PackedScene" uid="uid://h80fj2pfv1nd" path="res://Cannons/cannon.tscn" id="13_a86iu"]
+[ext_resource type="Animation" uid="uid://bkwilblbe1swk" path="res://Ships/Effects/hit_flash.res" id="13_ttvci"]
+[ext_resource type="AudioStream" uid="uid://doeqat548ha24" path="res://Ships/Effects/Sfx/wood_breaking.mp3" id="17_em2b4"]
+[ext_resource type="AudioStream" uid="uid://d15bm65mts5ap" path="res://Ships/Effects/Sfx/wood_impact.mp3" id="18_84lgx"]
+[ext_resource type="AudioStream" uid="uid://stxashysvn7h" path="res://Music/theme_song.mp3" id="19_84lgx"]
+[ext_resource type="Script" uid="uid://dnhs0l0c867uo" path="res://Systems/Trails/Scripts/trail_emitter.gd" id="20_a86iu"]
+
+[sub_resource type="Animation" id="Animation_cxoxt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoatSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cannon:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BoatSprite:material")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7iy5"]
+shader = ExtResource("1_3hd0c")
+shader_parameter/active = true
+
+[sub_resource type="Animation" id="Animation_onxlx"]
+resource_name = "sinking"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoatSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.2509804)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cannon:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.2509804)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BoatSprite:material")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_s7iy5"), null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fihr7"]
+_data = {
+&"RESET": SubResource("Animation_cxoxt"),
+&"hit_flash": ExtResource("13_ttvci"),
+&"sinking": SubResource("Animation_onxlx")
+}
+
+[node name="Ship" type="CharacterBody2D" unique_id=769173989 node_paths=PackedStringArray("boat_sprite", "cannon", "crew_cabin", "left_trail", "right_trail")]
+z_index = 1
+collision_layer = 3
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_gv7c3")
+faction = ExtResource("2_10d41")
+boat_sprite = NodePath("BoatSprite")
+cannon = NodePath("Cannon")
+crew_cabin = NodePath("CrewCabin")
+left_trail = NodePath("Trails/Left")
+right_trail = NodePath("Trails/Right")
+coin = 10
+
+[node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]
+scale = Vector2(2, 2)
+texture = ExtResource("2_ho0l7")
+script = ExtResource("3_ho0l7")
+hulls = ExtResource("6_84lgx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2004901318]
+scale = Vector2(1.9551865, 2.0247545)
+polygon = PackedVector2Array(20, -32, 19.946945, 18.767706, 15.343803, 34.078205, 10, 43, 5.114601, 46.425377, 0, 47.413155, -5.114601, 46.425377, -11, 43, -16, 33, -19.435484, 17.779932, -19, -32, -17, -39, -12, -46, -6, -50, 0, -52, 6, -50, 12, -46, 17, -39)
+
+[node name="DamageTarget" type="Node2D" parent="." unique_id=662718068]
+script = ExtResource("2_cxoxt")
+
+[node name="CameraHarness" type="Node2D" parent="." unique_id=70649547]
+script = ExtResource("9_sb8vm")
+metadata/_custom_type_script = "uid://b3liy0gjleis0"
+
+[node name="CrewCabin" type="Node2D" parent="." unique_id=1167268538]
+script = ExtResource("11_onxlx")
+crew = 10
+
+[node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("9_njxlb")]
+capacity = 20
+reload_speed_sec = 1.0
+
+[node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("origin", "magazine") instance=ExtResource("13_a86iu")]
+position = Vector2(0, 62)
+origin = NodePath("..")
+magazine = NodePath("../Magazine")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1108010045]
+libraries/ = SubResource("AnimationLibrary_fihr7")
+
+[node name="Emote" parent="." unique_id=430666270 instance=ExtResource("12_fihr7")]
+offset_top = -33.0
+offset_bottom = -33.0
+pivot_offset = Vector2(0, 33)
+duration = 2
+
+[node name="PlayerInput" type="Node" parent="." unique_id=2096444177 node_paths=PackedStringArray("ship")]
+script = ExtResource("4_a86iu")
+ship = NodePath("..")
+
+[node name="ThemeSongInput" type="Node" parent="PlayerInput" unique_id=1956139088]
+script = ExtResource("5_10d41")
+enabled = false
+
+[node name="PlayerMovementInput" type="Node" parent="PlayerInput" unique_id=1356169104]
+script = ExtResource("6_sb8vm")
+
+[node name="PlayerShootInput" type="Node" parent="PlayerInput" unique_id=1576787881]
+script = ExtResource("7_m3k8j")
+
+[node name="Sfx" type="Node" parent="." unique_id=2017829903]
+
+[node name="WoodBreaking" type="AudioStreamPlayer" parent="Sfx" unique_id=1515738617]
+stream = ExtResource("17_em2b4")
+volume_db = -14.0
+
+[node name="WoodImpact" type="AudioStreamPlayer" parent="Sfx" unique_id=629944357]
+stream = ExtResource("18_84lgx")
+volume_db = -40.001
+pitch_scale = 0.49
+
+[node name="Music" type="Node" parent="." unique_id=1586605938]
+
+[node name="ThemeSong" type="AudioStreamPlayer" parent="Music" unique_id=1003883303]
+unique_name_in_owner = true
+stream = ExtResource("19_84lgx")
+
+[node name="Trails" type="Node2D" parent="." unique_id=642801447]
+
+[node name="Right" type="Marker2D" parent="Trails" unique_id=1745945883]
+position = Vector2(25, -50)
+script = ExtResource("20_a86iu")
+point_velocity = Vector2(50, 0)
+point_lifetime = 0.75
+
+[node name="Left" type="Marker2D" parent="Trails" unique_id=481142593]
+position = Vector2(-25, -50)
+script = ExtResource("20_a86iu")
+point_velocity = Vector2(-50, 0)
+point_lifetime = 0.75
+
+[connection signal="crew_returned" from="." to="." method="_on_crew_returned"]
+[connection signal="apply_damage" from="DamageTarget" to="." method="_on_damage_target_apply_damage"]
+[connection signal="crew_updated" from="CrewCabin" to="." method="_on_crew_cabin_crew_updated"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://def8vfdu0wa34"]
+
+[ext_resource type="Script" uid="uid://bv6u8aix7tsmt" path="res://UI/Scripts/ui_ammo_indicator.gd" id="1_n4mwv"]
+[ext_resource type="Texture2D" uid="uid://b20fh1mbi1u2s" path="res://Cannons/Sprites/cannonBall.png" id="2_aq6m4"]
+
+[node name="AmmoIndicator" type="CenterContainer" unique_id=1637920932]
+offset_right = 10.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+script = ExtResource("1_n4mwv")
+
+[node name="Background" type="TextureRect" parent="." unique_id=726750928]
+modulate = Color(1, 1, 1, 0.2509804)
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = ExtResource("2_aq6m4")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Foreground" type="TextureRect" parent="." unique_id=1199698059]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = ExtResource("2_aq6m4")
+expand_mode = 3
+stretch_mode = 5

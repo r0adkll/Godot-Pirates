@@ -1,0 +1,196 @@
+[gd_scene format=3 uid="uid://cs5com70u7ekw"]
+
+[ext_resource type="Script" uid="uid://b8bo8c4sqhyl7" path="res://Crew/Scripts/floating_crew.gd" id="1_j8ehc"]
+[ext_resource type="Texture2D" uid="uid://2hamnux5j6lv" path="res://Crew/Sprites/crew_1.png" id="2_qte30"]
+[ext_resource type="Texture2D" uid="uid://iashcnfstvr3" path="res://Crew/Sprites/Masks/circle_d_noise.png" id="3_qte30"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5s8xe"]
+radius = 22.0
+
+[sub_resource type="Animation" id="Animation_j8ehc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.66]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PointLight2D:texture_scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.25]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PointLight2D:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0.75483197, 0.7563482, 0.5372549)]
+}
+
+[sub_resource type="Animation" id="Animation_qte30"]
+resource_name = "drowning"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(0.5, 0.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D:energy")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [0.66, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PointLight2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Color(0, 0.75483197, 0.7563482, 0.5372549), Color(0, 0.7529412, 0.75686276, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_86il3"]
+resource_name = "glow"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 2),
+"transitions": PackedFloat32Array(0.5, 1, 2),
+"update": 0,
+"values": [0.66, 1.26, 0.66]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PointLight2D:texture_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(0.5, 1, 2),
+"update": 0,
+"values": [0.25, 0.3, 0.25]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_86il3"]
+_data = {
+&"RESET": SubResource("Animation_j8ehc"),
+&"drowning": SubResource("Animation_qte30"),
+&"glow": SubResource("Animation_86il3")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qte30"]
+radius = 200.0
+
+[node name="FloatingCrew" type="Area2D" unique_id=1782141186]
+script = ExtResource("1_j8ehc")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=837308433]
+texture = ExtResource("2_qte30")
+
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=48213844]
+shape = SubResource("CircleShape2D_5s8xe")
+
+[node name="DrowningTimer" type="Timer" parent="." unique_id=2005967498]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=91376971]
+libraries/ = SubResource("AnimationLibrary_86il3")
+autoplay = &"glow"
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=339947760]
+z_index = -1
+color = Color(0, 0.75483197, 0.7563482, 0.5372549)
+energy = 0.66
+texture = ExtResource("3_qte30")
+texture_scale = 0.25
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=725781439]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=781249640]
+shape = SubResource("CircleShape2D_qte30")
+
+[connection signal="timeout" from="DrowningTimer" to="." method="_on_drowning_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -1,0 +1,144 @@
+[gd_scene format=3 uid="uid://chc6t8kygwrig"]
+
+[ext_resource type="Script" uid="uid://bwvca8xnt3mje" path="res://Crew/Scripts/walking_crew.gd" id="1_k83sb"]
+[ext_resource type="SpriteFrames" uid="uid://cf6d6tjq3r87y" path="res://Crew/Sprites/crew_frames.tres" id="1_kceh2"]
+[ext_resource type="Texture2D" uid="uid://dmogivb66sjfr" path="res://UI/Resources/coin_01.png" id="2_vbcks"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="3_lhixj"]
+[ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="4_ru2w7"]
+[ext_resource type="Script" uid="uid://crkjak4kyv56m" path="res://addons/beehave/nodes/decorators/inverter.gd" id="5_g2rvg"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="7_hgm0l"]
+[ext_resource type="Script" uid="uid://b3hevwfokujge" path="res://Crew/Behavior/Conditions/has_available_forts.gd" id="7_io4tl"]
+[ext_resource type="Script" uid="uid://c4lbuejul7eus" path="res://Crew/Behavior/Conditions/is_ship_beached.gd" id="8_l81m4"]
+[ext_resource type="Script" uid="uid://kwpvfi7asu70" path="res://Crew/Behavior/Actions/select_fort.gd" id="9_8isty"]
+[ext_resource type="Script" uid="uid://ylnrm3xtncs1" path="res://Crew/Behavior/Actions/move_to_ship.gd" id="9_g2rvg"]
+[ext_resource type="Script" uid="uid://cg3vsig0pkyar" path="res://Crew/Behavior/Actions/move_to_fort.gd" id="10_p8q6d"]
+[ext_resource type="Script" uid="uid://23b71wlufnow" path="res://Crew/Behavior/Actions/enter_fort.gd" id="11_p2tc7"]
+[ext_resource type="Script" uid="uid://dbhh4ngp1tupr" path="res://Crew/Behavior/Actions/board_ship.gd" id="18_w1gux"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kceh2"]
+radius = 17.0
+height = 48.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xnnr8"]
+radius = 42.047592
+
+[sub_resource type="Curve" id="Curve_vbcks"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0033714771), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_u4r2p"]
+curve = SubResource("Curve_vbcks")
+
+[sub_resource type="Curve" id="Curve_4tg26"]
+_data = [Vector2(0.0017361119, 0.35019058), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_aaxpf"]
+curve = SubResource("Curve_4tg26")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rujms"]
+particle_flag_disable_z = true
+angle_min = -194.99998
+angle_max = 195.00002
+spread = 60.0
+initial_velocity_max = 112.31
+angular_velocity_min = -720.0
+angular_velocity_max = 719.99994
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -36.31
+linear_accel_max = 4.6099977
+scale_min = 0.14999999
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_aaxpf")
+alpha_curve = SubResource("CurveTexture_u4r2p")
+
+[node name="WalkingCrew" type="CharacterBody2D" unique_id=886829237]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_k83sb")
+
+[node name="Treasure" type="Sprite2D" parent="." unique_id=463364401]
+visible = false
+position = Vector2(15, -13)
+rotation = 1.5707964
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("2_vbcks")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1681938705]
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("1_kceh2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1696255272]
+shape = SubResource("CapsuleShape2D_kceh2")
+
+[node name="DetectionZone" type="Area2D" parent="." unique_id=323221410]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionZone" unique_id=921783444]
+shape = SubResource("CircleShape2D_xnnr8")
+debug_color = Color(0.84390795, 0.38018268, 5.7756904e-07, 0.41960785)
+
+[node name="CoinEmitter" type="GPUParticles2D" parent="." unique_id=1599575324]
+position = Vector2(14, 0)
+emitting = false
+amount = 20
+texture = ExtResource("2_vbcks")
+process_material = SubResource("ParticleProcessMaterial_rujms")
+
+[node name="BeehaveTree" type="Node" parent="." unique_id=1836616785 node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("3_lhixj")
+blackboard = NodePath("@Node@157007")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="OnIsland" type="Node" parent="BeehaveTree" unique_id=1667958222]
+script = ExtResource("7_hgm0l")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree/OnIsland" unique_id=1792108803]
+script = ExtResource("4_ru2w7")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="DoesntHave" type="Node" parent="BeehaveTree/OnIsland/SelectorComposite" unique_id=908640208]
+script = ExtResource("5_g2rvg")
+metadata/_custom_type_script = "uid://crkjak4kyv56m"
+
+[node name="HasAvailableForts" type="Node" parent="BeehaveTree/OnIsland/SelectorComposite/DoesntHave" unique_id=1173814176]
+script = ExtResource("7_io4tl")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="OccupyFort" type="Node" parent="BeehaveTree/OnIsland/SelectorComposite" unique_id=1080444118]
+script = ExtResource("7_hgm0l")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="SelectFort" type="Node" parent="BeehaveTree/OnIsland/SelectorComposite/OccupyFort" unique_id=502231868]
+script = ExtResource("9_8isty")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="MoveToFort" type="Node" parent="BeehaveTree/OnIsland/SelectorComposite/OccupyFort" unique_id=2004238685]
+script = ExtResource("10_p8q6d")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="EnterFort" type="Node" parent="BeehaveTree/OnIsland/SelectorComposite/OccupyFort" unique_id=27456670]
+script = ExtResource("11_p2tc7")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="EscapeIsland" type="Node" parent="BeehaveTree/OnIsland" unique_id=1723017424]
+script = ExtResource("7_hgm0l")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="IsShipBeached" type="Node" parent="BeehaveTree/OnIsland/EscapeIsland" unique_id=1669560488]
+script = ExtResource("8_l81m4")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="MoveToShip" type="Node" parent="BeehaveTree/OnIsland/EscapeIsland" unique_id=1490573459]
+script = ExtResource("9_g2rvg")
+min_dist = 60.0
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="BoardShip" type="Node" parent="BeehaveTree/OnIsland/EscapeIsland" unique_id=572421484]
+script = ExtResource("18_w1gux")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[connection signal="area_entered" from="DetectionZone" to="." method="_on_detection_zone_area_entered"]
+[connection signal="area_exited" from="DetectionZone" to="." method="_on_detection_zone_area_exited"]

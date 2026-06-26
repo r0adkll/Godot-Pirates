@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bsjtm7nvw1ehf"]
+
+[ext_resource type="Script" uid="uid://cljgsylucevra" path="res://UI/Scripts/kill_counter.gd" id="1_hoivn"]
+[ext_resource type="Texture2D" uid="uid://vony0r6hc0i3" path="res://Systems/Faction/Sprites/plain.png" id="1_j2rk1"]
+[ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="2_hoivn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b2ya"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3b2ya"]
+font = ExtResource("2_hoivn")
+font_size = 100
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 20
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(2, 2)
+
+[node name="KillCounter" type="MarginContainer" unique_id=167486497]
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+script = ExtResource("1_hoivn")
+
+[node name="HBoxContainer" type="PanelContainer" parent="." unique_id=530423741]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3b2ya")
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=972597269]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+texture = ExtResource("1_j2rk1")
+expand_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=1930379798]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(4, -10)
+text = "0"
+label_settings = SubResource("LabelSettings_3b2ya")
+horizontal_alignment = 1
+vertical_alignment = 1

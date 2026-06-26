@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://btc8x488erdf4"]
+
+[ext_resource type="Texture2D" uid="uid://d0cvncgkmeu6m" path="res://Effects/Explosion/Sprites/explosion1.png" id="1_3m2nu"]
+[ext_resource type="Script" uid="uid://bp1qpwu62qytt" path="res://Effects/Explosion/Scripts/explosion.gd" id="1_gbh8q"]
+[ext_resource type="Texture2D" uid="uid://dxiodg4458wj1" path="res://Effects/Explosion/Sprites/explosion2.png" id="2_gbh8q"]
+[ext_resource type="Texture2D" uid="uid://bbiuc4h5klg5s" path="res://Effects/Explosion/Sprites/explosion3.png" id="3_ssos7"]
+[ext_resource type="Script" uid="uid://bv04rgexfvft5" path="res://Effects/Explosion/Sfx/explosion_sfx.gd" id="5_faok2"]
+[ext_resource type="AudioStream" uid="uid://cgktdr51tf67q" path="res://Effects/Explosion/Sfx/explosion1.mp3" id="5_ssos7"]
+[ext_resource type="AudioStream" uid="uid://tsc1p8f2x7qp" path="res://Effects/Explosion/Sfx/explosion2.mp3" id="7_ndm4b"]
+[ext_resource type="AudioStream" uid="uid://bxmbge5iddndn" path="res://Effects/Explosion/Sfx/explosion3.mp3" id="8_aptji"]
+[ext_resource type="AudioStream" uid="uid://den1ma0d4e7dg" path="res://Effects/Explosion/Sfx/explosion4.mp3" id="9_onrhy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i8qin"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3m2nu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_gbh8q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ssos7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Explosion" type="Node2D" unique_id=728675976]
+z_index = 1
+script = ExtResource("1_gbh8q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1726878824]
+sprite_frames = SubResource("SpriteFrames_i8qin")
+
+[node name="DelayTimer" type="Timer" parent="." unique_id=1928876274]
+one_shot = true
+
+[node name="Sfx" type="Node" parent="." unique_id=1391698249]
+script = ExtResource("5_faok2")
+volume = -29.0
+
+[node name="Explosion1" type="AudioStreamPlayer" parent="Sfx" unique_id=66388497]
+stream = ExtResource("5_ssos7")
+volume_db = -20.0
+
+[node name="Explosion2" type="AudioStreamPlayer" parent="Sfx" unique_id=853412366]
+stream = ExtResource("7_ndm4b")
+volume_db = -20.0
+
+[node name="Explosion3" type="AudioStreamPlayer" parent="Sfx" unique_id=1750611990]
+stream = ExtResource("8_aptji")
+volume_db = -20.0
+
+[node name="Explosion4" type="AudioStreamPlayer" parent="Sfx" unique_id=945931273]
+stream = ExtResource("9_onrhy")
+volume_db = -20.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="DelayTimer" to="." method="_on_delay_timer_timeout"]
+[connection signal="finished" from="Sfx" to="." method="_on_sfx_finished"]

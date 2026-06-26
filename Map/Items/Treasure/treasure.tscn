@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://c0a2fi2dabaoc"]
+
+[ext_resource type="Shader" uid="uid://cs7622jw332e4" path="res://Effects/Shaders/aura.gdshader" id="1_2p2d7"]
+[ext_resource type="Script" uid="uid://b2v6p0nhg1tih" path="res://Map/Items/Treasure/treasure_chest.gd" id="1_h0pq6"]
+[ext_resource type="Texture2D" uid="uid://q76510hifp3f" path="res://Map/Items/Treasure/treasure_chest.png" id="1_jyuoi"]
+[ext_resource type="PackedScene" uid="uid://brfocte6os72a" path="res://UI/health_bar.tscn" id="4_51npt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0pq6"]
+shader = ExtResource("1_2p2d7")
+shader_parameter/aura_width = 4.0
+shader_parameter/aura_color = Color(1, 1, 1, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2p2d7"]
+radius = 49.47727
+
+[node name="Treasure" type="Area2D" unique_id=1129388796]
+script = ExtResource("1_h0pq6")
+
+[node name="Chest" type="Sprite2D" parent="." unique_id=1293605027]
+material = SubResource("ShaderMaterial_h0pq6")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_jyuoi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=806837870]
+shape = SubResource("CircleShape2D_2p2d7")
+
+[node name="HealthBar" parent="." unique_id=564379113 instance=ExtResource("4_51npt")]
+offset_left = -50.0
+offset_top = -76.0
+offset_right = 50.0
+offset_bottom = -44.0

@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://h80fj2pfv1nd"]
+
+[ext_resource type="Script" uid="uid://sm8c81jtgego" path="res://Cannons/Scripts/cannon.gd" id="1_0lnsc"]
+[ext_resource type="Texture2D" uid="uid://om5wbxf04vet" path="res://Cannons/Sprites/cannonLoose.png" id="3_wjiq8"]
+[ext_resource type="PackedScene" uid="uid://ket4a6tv5bc7" path="res://Cannons/Sounds/cannon_sfx.tscn" id="4_pf40s"]
+
+[node name="Cannon" type="Node2D" unique_id=123988509 node_paths=PackedStringArray("fire_sfx", "shoot_pos")]
+script = ExtResource("1_0lnsc")
+fire_sfx = NodePath("Sfx")
+shoot_pos = NodePath("CannonShootPos")
+
+[node name="CannonSprite" type="Sprite2D" parent="." unique_id=1384447694]
+scale = Vector2(2, 2)
+texture = ExtResource("3_wjiq8")
+offset = Vector2(4.5, 0)
+
+[node name="CannonShootPos" type="Marker2D" parent="." unique_id=1669976564]
+position = Vector2(26, 0)
+
+[node name="Sfx" parent="." unique_id=1972930314 instance=ExtResource("4_pf40s")]

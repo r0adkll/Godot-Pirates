@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://7j657q17dshm"]
+
+[ext_resource type="Script" uid="uid://b34gufhkq47a8" path="res://Map/Forts/Scripts/fort_cannon.gd" id="1_hgj8s"]
+[ext_resource type="PackedScene" uid="uid://ca4534vsk0742" path="res://Cannons/magazine.tscn" id="2_83r4b"]
+[ext_resource type="PackedScene" uid="uid://bmlf0ish5cpml" path="res://Cannons/land_cannon.tscn" id="3_85s6h"]
+
+[node name="FortCannon" type="Node2D" unique_id=235665835]
+script = ExtResource("1_hgj8s")
+
+[node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("2_83r4b")]
+position = Vector2(-64, -64)
+
+[node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("magazine") instance=ExtResource("3_85s6h")]
+magazine = NodePath("../Magazine")
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

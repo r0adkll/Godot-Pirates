@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://brfocte6os72a"]
+
+[ext_resource type="Script" uid="uid://duwm3qmenp067" path="res://UI/Scripts/health_bar.gd" id="1_qh381"]
+[ext_resource type="Texture2D" uid="uid://cr82wohgymic1" path="res://UI/Resources/Progress/progress_transparent_small.png" id="2_xoxfh"]
+[ext_resource type="Texture2D" uid="uid://b5hquy1jln3wg" path="res://UI/Resources/Progress/progress_red_small_border.png" id="3_m6ls7"]
+[ext_resource type="Texture2D" uid="uid://dc8moyyk20bbq" path="res://UI/Resources/Progress/progress_green_small_border.png" id="4_ykvmv"]
+
+[node name="HealthBar" type="Control" unique_id=564379113]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -990.0
+offset_right = -890.0
+offset_bottom = 32.0
+grow_horizontal = 2
+script = ExtResource("1_qh381")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=159187932]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+offset_right = 100.0
+offset_bottom = 32.0
+texture = ExtResource("2_xoxfh")
+patch_margin_left = 14
+patch_margin_right = 14
+
+[node name="Low" type="NinePatchRect" parent="." unique_id=583743765]
+visible = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+offset_right = 100.0
+offset_bottom = 32.0
+texture = ExtResource("3_m6ls7")
+patch_margin_left = 14
+patch_margin_right = 14
+
+[node name="Full" type="NinePatchRect" parent="." unique_id=168659209]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+offset_right = 100.0
+offset_bottom = 32.0
+texture = ExtResource("4_ykvmv")
+patch_margin_left = 14
+patch_margin_right = 14

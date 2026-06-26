@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://d26dlthwrbqq0"]
+
+[ext_resource type="Texture2D" uid="uid://dgf2h230irp1v" path="res://BuilderMode/Sprites/fort_medium.png" id="1_58cr6"]
+[ext_resource type="Script" uid="uid://bfgkh78kyfi0o" path="res://Map/Forts/Scripts/fort.gd" id="1_rakby"]
+[ext_resource type="Texture2D" uid="uid://vony0r6hc0i3" path="res://Systems/Faction/Sprites/plain.png" id="3_p54y3"]
+[ext_resource type="PackedScene" uid="uid://7j657q17dshm" path="res://Map/Forts/fort_cannon.tscn" id="3_wtxsg"]
+[ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="4_p54y3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wtxsg"]
+font = ExtResource("4_p54y3")
+font_size = 30
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3b2ya"]
+size = Vector2(256, 256)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3b2ya"]
+radius = 1500.0
+
+[node name="Fort" type="StaticBody2D" unique_id=690316544]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_rakby")
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1952514733]
+position = Vector2(192, 192)
+texture = ExtResource("1_58cr6")
+
+[node name="FactionFlag" type="Sprite2D" parent="." unique_id=1395716489]
+position = Vector2(192, 192)
+scale = Vector2(2, 2)
+texture = ExtResource("3_p54y3")
+
+[node name="Count" type="Label" parent="FactionFlag" unique_id=726567162]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.0
+offset_top = -34.5
+offset_right = -13.0
+offset_bottom = -11.5
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(1.2, -1)
+text = "4"
+label_settings = SubResource("LabelSettings_wtxsg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1388149839]
+visible = false
+position = Vector2(192, 192)
+shape = SubResource("RectangleShape2D_3b2ya")
+
+[node name="TL_Cannon" parent="." unique_id=235665835 instance=ExtResource("3_wtxsg")]
+position = Vector2(64, 64)
+
+[node name="BL_Cannon" parent="." unique_id=1681945190 instance=ExtResource("3_wtxsg")]
+position = Vector2(64, 320)
+
+[node name="TR_Cannon" parent="." unique_id=1022301122 instance=ExtResource("3_wtxsg")]
+position = Vector2(320, 64)
+
+[node name="BR_Cannon" parent="." unique_id=1435075204 instance=ExtResource("3_wtxsg")]
+position = Vector2(320, 320)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1064387210]
+visible = false
+position = Vector2(192, 192)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=993883653]
+shape = SubResource("CircleShape2D_3b2ya")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

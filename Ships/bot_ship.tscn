@@ -1,0 +1,267 @@
+[gd_scene format=3 uid="uid://dcr2re8q4cwwx"]
+
+[ext_resource type="Script" uid="uid://o116wn4ge56b" path="res://Ships/Scripts/bot_ship.gd" id="1_je6gq"]
+[ext_resource type="Script" uid="uid://cj4tu6bshyj28" path="res://Systems/Faction/faction.gd" id="2_1mq6f"]
+[ext_resource type="Script" uid="uid://chcye8f3cp6kg" path="res://Cannons/Scripts/damage_target.gd" id="2_35pnw"]
+[ext_resource type="Texture2D" uid="uid://05na1be36kmh" path="res://Ships/Sprites/ship_pirate/pirate_new.png" id="3_je6gq"]
+[ext_resource type="Shader" uid="uid://nbp07318mrfa" path="res://Ships/Effects/hit_flash.gdshader" id="3_w87dw"]
+[ext_resource type="Script" uid="uid://63wxoecufwfe" path="res://Ships/Scripts/boat_sprite.gd" id="4_w87dw"]
+[ext_resource type="Resource" uid="uid://dedejr2j0go53" path="res://Ships/Resources/pirate_boat_hull.tres" id="5_w87dw"]
+[ext_resource type="PackedScene" uid="uid://h80fj2pfv1nd" path="res://Cannons/cannon.tscn" id="8_35pnw"]
+[ext_resource type="PackedScene" uid="uid://ca4534vsk0742" path="res://Cannons/magazine.tscn" id="8_srwwu"]
+[ext_resource type="Script" uid="uid://ddg03jokeiaae" path="res://Ships/Scripts/crew_cabin.gd" id="9_35pnw"]
+[ext_resource type="Script" uid="uid://dnhs0l0c867uo" path="res://Systems/Trails/Scripts/trail_emitter.gd" id="13_w87dw"]
+[ext_resource type="AudioStream" uid="uid://doeqat548ha24" path="res://Ships/Effects/Sfx/wood_breaking.mp3" id="14_wlg32"]
+[ext_resource type="Script" uid="uid://bb0t2ovl7wifo" path="res://addons/beehave/nodes/beehave_tree.gd" id="14_yxj2c"]
+[ext_resource type="AudioStream" uid="uid://d15bm65mts5ap" path="res://Ships/Effects/Sfx/wood_impact.mp3" id="15_eoivm"]
+[ext_resource type="Script" uid="uid://8hn4kne15ac5" path="res://addons/beehave/nodes/composites/selector.gd" id="15_k6dgw"]
+[ext_resource type="Script" uid="uid://cq2chm8mp2mts" path="res://Ships/AI/Conditions/is_alive.gd" id="16_kobdx"]
+[ext_resource type="Script" uid="uid://cg016dbe7gs1x" path="res://addons/beehave/nodes/composites/sequence.gd" id="16_rr3t5"]
+[ext_resource type="Script" uid="uid://crkjak4kyv56m" path="res://addons/beehave/nodes/decorators/inverter.gd" id="17_87mmx"]
+[ext_resource type="Script" uid="uid://b5g18103ryohx" path="res://Ships/AI/Conditions/has_target.gd" id="18_kobdx"]
+[ext_resource type="Script" uid="uid://q0cxbpb5a1u4" path="res://Ships/AI/Actions/find_destination.gd" id="19_k6dgw"]
+[ext_resource type="Script" uid="uid://b2vgjtf6gick7" path="res://Ships/AI/Actions/patrol_ship.gd" id="20_rr3t5"]
+[ext_resource type="Script" uid="uid://bkr7qj44253ue" path="res://addons/beehave/nodes/composites/simple_parallel.gd" id="22_oqc1a"]
+[ext_resource type="Script" uid="uid://cxhju5kk26sh5" path="res://Ships/AI/Actions/pursue_target_turning.gd" id="23_oqc1a"]
+[ext_resource type="Script" uid="uid://b7lmjg1pan6vs" path="res://Ships/AI/Actions/attack_target.gd" id="23_taibw"]
+
+[sub_resource type="Resource" id="Resource_wlg32"]
+script = ExtResource("2_1mq6f")
+id = "enemy1"
+type = 1
+boat = ExtResource("5_w87dw")
+metadata/_custom_type_script = "uid://cj4tu6bshyj28"
+
+[sub_resource type="Animation" id="Animation_cxoxt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoatSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BoatSprite:material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hd0c"]
+shader = ExtResource("3_w87dw")
+shader_parameter/active = true
+
+[sub_resource type="Animation" id="Animation_ylcei"]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoatSprite:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_3hd0c"), null]
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylcei"]
+shader = ExtResource("3_w87dw")
+shader_parameter/active = false
+
+[sub_resource type="Animation" id="Animation_onxlx"]
+resource_name = "sinking"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoatSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.2509804)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BoatSprite:material")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_ylcei"), null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fihr7"]
+_data = {
+&"RESET": SubResource("Animation_cxoxt"),
+&"hit_flash": SubResource("Animation_ylcei"),
+&"sinking": SubResource("Animation_onxlx")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_je6gq"]
+radius = 800.0
+
+[node name="BotShip" type="CharacterBody2D" unique_id=769173989 node_paths=PackedStringArray("boat_sprite", "cannon", "crew_cabin", "left_trail", "right_trail")]
+collision_layer = 3
+collision_mask = 3
+motion_mode = 1
+script = ExtResource("1_je6gq")
+shooting_rate = null
+shooting_distance = 300.0
+faction = SubResource("Resource_wlg32")
+boat_sprite = NodePath("BoatSprite")
+cannon = NodePath("Cannon")
+crew_cabin = NodePath("CrewCabin")
+left_trail = NodePath("Trails/Left")
+right_trail = NodePath("Trails/Right")
+max_health = null
+coin = null
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1729791700]
+debug_enabled = true
+debug_path_custom_point_size = 20.0
+debug_path_custom_line_width = 10.0
+
+[node name="DamageTarget" type="Node2D" parent="." unique_id=662718068]
+script = ExtResource("2_35pnw")
+
+[node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]
+scale = Vector2(2, 2)
+texture = ExtResource("3_je6gq")
+script = ExtResource("4_w87dw")
+hulls = ExtResource("5_w87dw")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2004901318]
+scale = Vector2(1.9551865, 2.0247545)
+polygon = PackedVector2Array(20, -32, 19.946945, 18.767706, 15.343803, 34.078205, 10, 43, 5, 51, 0, 56, -5, 51, -11, 43, -16, 33, -19.435484, 17.779932, -19, -32, -17, -39, -12, -46, -6, -50, 0, -52, 6, -50, 12, -46, 17, -39)
+
+[node name="CrewCabin" type="Node2D" parent="." unique_id=201274847]
+script = ExtResource("9_35pnw")
+
+[node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("origin", "magazine") instance=ExtResource("8_35pnw")]
+position = Vector2(0, 62)
+origin = NodePath("..")
+magazine = NodePath("../Magazine")
+
+[node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("8_srwwu")]
+reload_speed_sec = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1108010045]
+libraries/ = SubResource("AnimationLibrary_fihr7")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1853542162]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=363255713]
+shape = SubResource("CircleShape2D_je6gq")
+
+[node name="ShootingTimer" type="Timer" parent="." unique_id=117339922]
+wait_time = 0.5
+one_shot = true
+
+[node name="Sfx" type="Node" parent="." unique_id=214781246]
+
+[node name="WoodBreaking" type="AudioStreamPlayer" parent="Sfx" unique_id=1892774491]
+stream = ExtResource("14_wlg32")
+volume_db = -16.0
+pitch_scale = 0.83
+
+[node name="WoodImpact" type="AudioStreamPlayer" parent="Sfx" unique_id=341352061]
+stream = ExtResource("15_eoivm")
+volume_db = -50.486
+
+[node name="Trails" type="Node2D" parent="." unique_id=1309767946]
+
+[node name="Right" type="Marker2D" parent="Trails" unique_id=706536758]
+position = Vector2(25, -50)
+script = ExtResource("13_w87dw")
+point_velocity = Vector2(50, 0)
+point_lifetime = 0.75
+
+[node name="Left" type="Marker2D" parent="Trails" unique_id=2033637470]
+position = Vector2(-25, -50)
+script = ExtResource("13_w87dw")
+point_velocity = Vector2(-50, 0)
+point_lifetime = 0.75
+
+[node name="BeehaveTree" type="Node" parent="." unique_id=1407640588 node_paths=PackedStringArray("blackboard", "actor")]
+script = ExtResource("14_yxj2c")
+blackboard = NodePath("@Node@130586")
+actor = NodePath("..")
+metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree" unique_id=1619425553]
+script = ExtResource("15_k6dgw")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="NOT" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=1275453587]
+script = ExtResource("17_87mmx")
+metadata/_custom_type_script = "uid://crkjak4kyv56m"
+
+[node name="IsAlive" type="Node" parent="BeehaveTree/SelectorComposite/NOT" unique_id=825116347]
+script = ExtResource("16_kobdx")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="Patrolling" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=889764661]
+script = ExtResource("16_rr3t5")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="NOT" type="Node" parent="BeehaveTree/SelectorComposite/Patrolling" unique_id=343579965]
+script = ExtResource("17_87mmx")
+metadata/_custom_type_script = "uid://crkjak4kyv56m"
+
+[node name="HasTarget" type="Node" parent="BeehaveTree/SelectorComposite/Patrolling/NOT" unique_id=1627866134]
+script = ExtResource("18_kobdx")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="FindDestination" type="Node" parent="BeehaveTree/SelectorComposite/Patrolling" unique_id=646315833]
+script = ExtResource("19_k6dgw")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="PatrolShip" type="Node" parent="BeehaveTree/SelectorComposite/Patrolling" unique_id=1792488006]
+script = ExtResource("20_rr3t5")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="Attacking" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=428983225]
+script = ExtResource("16_rr3t5")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="HasTarget" type="Node" parent="BeehaveTree/SelectorComposite/Attacking" unique_id=402639768]
+script = ExtResource("18_kobdx")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="SimpleParallelComposite" type="Node" parent="BeehaveTree/SelectorComposite/Attacking" unique_id=1466372133]
+script = ExtResource("22_oqc1a")
+metadata/_custom_type_script = "uid://bkr7qj44253ue"
+
+[node name="PursueTarget" type="Node" parent="BeehaveTree/SelectorComposite/Attacking/SimpleParallelComposite" unique_id=1374121149]
+script = ExtResource("23_oqc1a")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="AttackTarget" type="Node" parent="BeehaveTree/SelectorComposite/Attacking/SimpleParallelComposite" unique_id=1318080829]
+script = ExtResource("23_taibw")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[connection signal="apply_damage" from="DamageTarget" to="." method="_on_damage_target_apply_damage"]
+[connection signal="crew_updated" from="CrewCabin" to="." method="_on_crew_cabin_crew_updated"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="current_animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_current_animation_changed"]

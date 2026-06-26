@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://ket4a6tv5bc7"]
+
+[ext_resource type="Script" uid="uid://bfnw6mx38y4ir" path="res://Cannons/Sounds/cannon_sfx.gd" id="1_odejh"]
+[ext_resource type="AudioStream" uid="uid://dekqwgnobc2kv" path="res://Cannons/Sounds/cannon_black_powder.mp3" id="1_t1aqg"]
+[ext_resource type="AudioStream" uid="uid://vtvi65nma2yp" path="res://Cannons/Sounds/cannon_civil_war_1.mp3" id="2_odejh"]
+[ext_resource type="AudioStream" uid="uid://bbpa6tnhicov8" path="res://Cannons/Sounds/cannon_civil_war_2.mp3" id="3_qc3eo"]
+
+[node name="CannonSfx" type="Node" unique_id=1972930314]
+script = ExtResource("1_odejh")
+
+[node name="Fire1" type="AudioStreamPlayer" parent="." unique_id=383552487]
+stream = ExtResource("1_t1aqg")
+volume_db = -18.0
+pitch_scale = 0.5
+
+[node name="Fire2" type="AudioStreamPlayer" parent="." unique_id=1362624889]
+stream = ExtResource("2_odejh")
+volume_db = -16.0
+pitch_scale = 0.9
+
+[node name="Fire3" type="AudioStreamPlayer" parent="." unique_id=1487526942]
+stream = ExtResource("3_qc3eo")
+volume_db = -16.0
+pitch_scale = 0.9

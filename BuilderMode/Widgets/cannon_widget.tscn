@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://clqk6g1ave032"]
+
+[ext_resource type="StyleBox" uid="uid://ya7ugcajfdbo" path="res://UI/Resources/Buttons/grey_panel_button.tres" id="1_8xi4d"]
+[ext_resource type="Texture2D" uid="uid://bllfd6hijam5i" path="res://UI/Resources/Panels/panel_grey_bolts_detail_a.svg" id="2_t23ws"]
+[ext_resource type="Texture2D" uid="uid://dkpnxck2ircra" path="res://UI/Resources/Panels/panel_grey_bolts_red.svg" id="3_liv3a"]
+[ext_resource type="Texture2D" uid="uid://3t4kiejlo4xo" path="res://UI/Resources/Panels/panel_brown_damaged_dark.svg" id="4_e2yop"]
+[ext_resource type="Texture2D" uid="uid://dqk6vt7nnh67c" path="res://Cannons/Sprites/cannonMobile.png" id="5_pulol"]
+[ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="6_lmclb"]
+[ext_resource type="Texture2D" uid="uid://dmogivb66sjfr" path="res://UI/Resources/coin_01.png" id="7_1j63l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tt6en"]
+texture = ExtResource("2_t23ws")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+region_rect = Rect2(0, 0, 64, 64)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r3fr0"]
+texture = ExtResource("3_liv3a")
+texture_margin_left = 18.0
+texture_margin_top = 18.0
+texture_margin_right = 18.0
+texture_margin_bottom = 18.0
+region_rect = Rect2(0, 0, 64, 64)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c45hs"]
+texture = ExtResource("4_e2yop")
+texture_margin_left = 20.0
+texture_margin_top = 24.0
+texture_margin_right = 18.0
+texture_margin_bottom = 20.0
+region_rect = Rect2(0, 0, 64, 64)
+modulate_color = Color(0.71838135, 0.71838135, 0.71838135, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tt6en"]
+font = ExtResource("6_lmclb")
+font_size = 32
+
+[node name="MarginContainer" type="MarginContainer" unique_id=1576044310]
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Button" type="Button" parent="." unique_id=1208468587]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+theme_override_styles/normal = ExtResource("1_8xi4d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_tt6en")
+theme_override_styles/hover = SubResource("StyleBoxTexture_r3fr0")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_c45hs")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Button" unique_id=1119978519]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 21.0
+offset_right = 120.0
+offset_bottom = 107.0
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="CannonImage" type="TextureRect" parent="Button/VBoxContainer" unique_id=977784260]
+custom_minimum_size = Vector2(58, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("5_pulol")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Button/VBoxContainer" unique_id=1725487492]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Cost" type="Label" parent="Button/VBoxContainer/HBoxContainer" unique_id=1008656175]
+layout_mode = 2
+text = "20"
+label_settings = SubResource("LabelSettings_tt6en")
+
+[node name="CoinIcon" type="TextureRect" parent="Button/VBoxContainer/HBoxContainer" unique_id=1361465867]
+layout_mode = 2
+texture = ExtResource("7_1j63l")
+expand_mode = 3

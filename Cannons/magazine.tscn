@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://ca4534vsk0742"]
+
+[ext_resource type="Script" uid="uid://j0funs364tkf" path="res://Cannons/Scripts/magazine.gd" id="1_d707o"]
+
+[node name="Magazine" type="Node2D" unique_id=2116438306]
+script = ExtResource("1_d707o")
+
+[node name="ReloadTimer" type="Timer" parent="." unique_id=15089703]
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
