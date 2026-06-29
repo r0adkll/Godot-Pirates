@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dyxsvt3jxenvf"]
+
+[ext_resource type="Script" uid="uid://bswp77de35hgp" path="res://Ships/Scripts/Weapons/broadsides.gd" id="1_pngg4"]
+[ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="1_w8m1r"]
+[ext_resource type="PackedScene" uid="uid://h80fj2pfv1nd" path="res://Cannons/cannon.tscn" id="2_pngg4"]
+[ext_resource type="PackedScene" uid="uid://ca4534vsk0742" path="res://Cannons/magazine.tscn" id="4_agj1g"]
+
+[node name="Broadsides" type="Node2D" unique_id=1240300503]
+script = ExtResource("1_pngg4")
+
+[node name="HullLarge" type="Sprite2D" parent="." unique_id=1638189387]
+visible = false
+z_index = 1
+scale = Vector2(2, 2)
+texture = ExtResource("1_w8m1r")
+
+[node name="RCannon1" parent="." unique_id=123988509 node_paths=PackedStringArray("magazine") instance=ExtResource("2_pngg4")]
+position = Vector2(23, -40)
+magazine = NodePath("../Magazine")
+power = 30.0
+muzzle_power = 1200.0
+
+[node name="RCannon2" parent="." unique_id=1159898381 node_paths=PackedStringArray("magazine") instance=ExtResource("2_pngg4")]
+position = Vector2(23, 0)
+magazine = NodePath("../Magazine")
+power = 30.0
+muzzle_power = 1200.0
+
+[node name="RCannon3" parent="." unique_id=2117737698 node_paths=PackedStringArray("magazine") instance=ExtResource("2_pngg4")]
+position = Vector2(23, 40)
+magazine = NodePath("../Magazine")
+power = 30.0
+muzzle_power = 1200.0
+
+[node name="LCannon1" parent="." unique_id=1726972563 node_paths=PackedStringArray("magazine") instance=ExtResource("2_pngg4")]
+position = Vector2(-23, -40)
+rotation = -3.1415925
+magazine = NodePath("../Magazine")
+power = 30.0
+muzzle_power = 1200.0
+
+[node name="LCannon2" parent="." unique_id=853720420 node_paths=PackedStringArray("magazine") instance=ExtResource("2_pngg4")]
+position = Vector2(-23, 0)
+rotation = 3.1415927
+magazine = NodePath("../Magazine")
+power = 30.0
+muzzle_power = 1200.0
+
+[node name="LCannon3" parent="." unique_id=738504323 node_paths=PackedStringArray("magazine") instance=ExtResource("2_pngg4")]
+position = Vector2(-23, 40)
+rotation = 3.1415927
+magazine = NodePath("../Magazine")
+power = 30.0
+muzzle_power = 1200.0
+
+[node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("4_agj1g")]
+capacity = 18
+reload_amount = 6
