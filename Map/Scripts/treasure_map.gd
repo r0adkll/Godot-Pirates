@@ -110,7 +110,7 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 	var island: Island = Island.new()
 	island.map = self
 	island.bounds = spec.bounds()
-	island.position = land.map_to_local(island.bounds.position)
+	island.position = land.map_to_local(island.bounds.position) - Vector2(land.tile_set.tile_size) / 2
 	island.land = spec.land
 	island.camera_harness = CameraHarness.new()
 	island.camera_harness.viewport_rect = land.map_to_local(island.bounds.size)

@@ -34,6 +34,7 @@ const TURN_FRICTION: float = 10.0
 const MAX_TURN_SPEED: float = 5.0
 const MAX_FORWARD_SPEED: float = 500.0
 const MAX_PATROL_FORWARD_SPEED: float = 300.0
+const MAX_BEACHING_FORWARD_SPEED: float = 450.0
 const MAX_REVERSE_SPEED: float = 250.0
 const SPRINT_MODIFIER: float = 2.0
 const MAX_TRAIL_VELOCITY: float = 50
@@ -151,8 +152,6 @@ func last_collision_as_beached() -> BeachHead:
 			var island = land.find_island_for_position(last_collision.get_position())
 			if island:
 				return BeachHead.new(island, last_collision.get_position())
-		else:
-			print("Ship collided w/ %s" % collider)
 			
 	return null
 
@@ -225,7 +224,10 @@ func check_if_beached() -> void:
 	var last_beach = beach_head
 	beach_head = last_collision_as_beached()
 	if !beach_head and last_beach:
+		last_beach.island.remove_beached_ship(self)
 		_on_lost_beach_head(last_beach)
+	elif beach_head and !last_beach:
+		beach_head.island.add_beached_ship(self)
 
 @abstract func _on_lost_beach_head(beach: BeachHead) -> void
 

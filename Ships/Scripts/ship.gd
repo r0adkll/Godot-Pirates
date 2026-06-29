@@ -12,6 +12,7 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 ## Nodes / Components
 @onready var sprite: BoatSprite = $BoatSprite
 @onready var player_input: PlayerInput = $PlayerInput
+@onready var broadsides: Broadsides = $Broadsides
 
 @onready var camera_harness: CameraHarness = $CameraHarness
 @onready var animation_player: AnimationPlayer = $AnimationPlayer

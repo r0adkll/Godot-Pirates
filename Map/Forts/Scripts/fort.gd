@@ -41,6 +41,11 @@ var center: Vector2:
 	get(): 
 		return sprite.global_position
 
+## Get the island, i.e. parent, as a constraint of our game
+var island: Island:
+	get():
+		return get_parent() as Island
+
 func _ready() -> void:
 	_set_cannon_origin()
 	_update_cannons()

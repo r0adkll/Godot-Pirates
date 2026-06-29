@@ -22,6 +22,8 @@ const bot_ship_scene := preload("res://Ships/bot_ship.tscn")
 @export var enemy_count: int = 4
 
 @onready var player_camera: PlayerCamera = %PlayerCamera
+@onready var enemy_blackboard: Blackboard = $EnemyBlackboard
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -81,6 +83,7 @@ func spawn_enemy() -> void:
 		new_boat.global_position = get_random_position()
 		new_boat.faction = enemy_faction
 		new_boat.ships_system = self
+		new_boat.ship_blackboard = enemy_blackboard
 		new_boat.state_changed.connect(_on_enemy_state_changed)
 		SceneSpawnerSystem.add_entity(new_boat)
 

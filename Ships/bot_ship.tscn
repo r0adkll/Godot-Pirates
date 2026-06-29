@@ -20,10 +20,16 @@
 [ext_resource type="Script" uid="uid://crkjak4kyv56m" path="res://addons/beehave/nodes/decorators/inverter.gd" id="17_87mmx"]
 [ext_resource type="Script" uid="uid://b5g18103ryohx" path="res://Ships/AI/Conditions/has_target.gd" id="18_kobdx"]
 [ext_resource type="Script" uid="uid://q0cxbpb5a1u4" path="res://Ships/AI/Actions/find_destination.gd" id="19_k6dgw"]
+[ext_resource type="Script" uid="uid://dpt81caeftxhf" path="res://Ships/AI/Actions/has_crew.gd" id="20_jepsk"]
 [ext_resource type="Script" uid="uid://b2vgjtf6gick7" path="res://Ships/AI/Actions/patrol_ship.gd" id="20_rr3t5"]
+[ext_resource type="Script" uid="uid://i47dm6rt64uq" path="res://Ships/AI/Actions/find_deployable_island.gd" id="21_tlh0b"]
 [ext_resource type="Script" uid="uid://bkr7qj44253ue" path="res://addons/beehave/nodes/composites/simple_parallel.gd" id="22_oqc1a"]
+[ext_resource type="Script" uid="uid://m1xddvj00dvq" path="res://Ships/AI/Conditions/has_island.gd" id="22_swury"]
 [ext_resource type="Script" uid="uid://cxhju5kk26sh5" path="res://Ships/AI/Actions/pursue_target_turning.gd" id="23_oqc1a"]
 [ext_resource type="Script" uid="uid://b7lmjg1pan6vs" path="res://Ships/AI/Actions/attack_target.gd" id="23_taibw"]
+[ext_resource type="Script" uid="uid://cnsw8r20k2475" path="res://Ships/AI/Conditions/is_beached.gd" id="24_3s3yx"]
+[ext_resource type="Script" uid="uid://dw6rqxl3s2vb0" path="res://Ships/AI/Actions/move_to_island.gd" id="24_kxj0y"]
+[ext_resource type="Script" uid="uid://cnc23t3f3e8j0" path="res://Ships/AI/Actions/deploy_crew.gd" id="25_3s3yx"]
 
 [sub_resource type="Resource" id="Resource_wlg32"]
 script = ExtResource("2_1mq6f")
@@ -125,7 +131,6 @@ collision_layer = 3
 collision_mask = 3
 motion_mode = 1
 script = ExtResource("1_je6gq")
-shooting_rate = null
 shooting_distance = 300.0
 faction = SubResource("Resource_wlg32")
 boat_sprite = NodePath("BoatSprite")
@@ -133,10 +138,9 @@ cannon = NodePath("Cannon")
 crew_cabin = NodePath("CrewCabin")
 left_trail = NodePath("Trails/Left")
 right_trail = NodePath("Trails/Right")
-max_health = null
-coin = null
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1729791700]
+target_desired_distance = 64.0
 debug_enabled = true
 debug_path_custom_point_size = 20.0
 debug_path_custom_line_width = 10.0
@@ -156,6 +160,7 @@ polygon = PackedVector2Array(20, -32, 19.946945, 18.767706, 15.343803, 34.078205
 
 [node name="CrewCabin" type="Node2D" parent="." unique_id=201274847]
 script = ExtResource("9_35pnw")
+crew = 20
 
 [node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("origin", "magazine") instance=ExtResource("8_35pnw")]
 position = Vector2(0, 62)
@@ -169,7 +174,6 @@ reload_speed_sec = 1.0
 libraries/ = SubResource("AnimationLibrary_fihr7")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1853542162]
-monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=363255713]
 shape = SubResource("CircleShape2D_je6gq")
@@ -205,7 +209,7 @@ point_lifetime = 0.75
 
 [node name="BeehaveTree" type="Node" parent="." unique_id=1407640588 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("14_yxj2c")
-blackboard = NodePath("@Node@130586")
+blackboard = NodePath("@Node@53001")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
@@ -220,6 +224,62 @@ metadata/_custom_type_script = "uid://crkjak4kyv56m"
 [node name="IsAlive" type="Node" parent="BeehaveTree/SelectorComposite/NOT" unique_id=825116347]
 script = ExtResource("16_kobdx")
 metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="Deploying" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=998407682]
+script = ExtResource("16_rr3t5")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="NotHasTarget" type="Node" parent="BeehaveTree/SelectorComposite/Deploying" unique_id=1056706488]
+script = ExtResource("17_87mmx")
+metadata/_custom_type_script = "uid://crkjak4kyv56m"
+
+[node name="HasTarget" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/NotHasTarget" unique_id=447866553]
+script = ExtResource("18_kobdx")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="HasCrew" type="Node" parent="BeehaveTree/SelectorComposite/Deploying" unique_id=2122035188]
+script = ExtResource("20_jepsk")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="FindDeployableIsland" type="Node" parent="BeehaveTree/SelectorComposite/Deploying" unique_id=650190580]
+script = ExtResource("21_tlh0b")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="SelectorComposite" type="Node" parent="BeehaveTree/SelectorComposite/Deploying" unique_id=785161482]
+script = ExtResource("15_k6dgw")
+metadata/_custom_type_script = "uid://8hn4kne15ac5"
+
+[node name="BeachShip" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite" unique_id=1716064187]
+script = ExtResource("16_rr3t5")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="HasIsland" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite/BeachShip" unique_id=1166950279]
+script = ExtResource("22_swury")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="NOT" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite/BeachShip" unique_id=531995245]
+script = ExtResource("17_87mmx")
+metadata/_custom_type_script = "uid://crkjak4kyv56m"
+
+[node name="IsBeached" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite/BeachShip/NOT" unique_id=1225348142]
+script = ExtResource("24_3s3yx")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="MoveToIsland" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite/BeachShip" unique_id=486795848]
+script = ExtResource("24_kxj0y")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
+
+[node name="DeployCrew" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite" unique_id=1732487845]
+script = ExtResource("16_rr3t5")
+metadata/_custom_type_script = "uid://cg016dbe7gs1x"
+
+[node name="IsBeached" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite/DeployCrew" unique_id=419059344]
+script = ExtResource("24_3s3yx")
+metadata/_custom_type_script = "uid://cbnbvj8prv63i"
+
+[node name="DeployCrew" type="Node" parent="BeehaveTree/SelectorComposite/Deploying/SelectorComposite/DeployCrew" unique_id=981406479]
+script = ExtResource("25_3s3yx")
+metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
 [node name="Patrolling" type="Node" parent="BeehaveTree/SelectorComposite" unique_id=889764661]
 script = ExtResource("16_rr3t5")

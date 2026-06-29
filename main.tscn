@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cooq5awbwhbp" path="res://Camera/player_camera.tscn" id="20_82xsv"]
 [ext_resource type="Resource" uid="uid://cgndd52r241g3" path="res://Systems/Faction/enemy_faction.tres" id="22_ryguw"]
 [ext_resource type="Script" uid="uid://2rv3pd8at6fi" path="res://Systems/Ships/ships_system.gd" id="23_d13ii"]
+[ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="24_1u8w0"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lquwl"]
 
@@ -245,7 +246,7 @@ limit_top = 0
 limit_right = 12800
 limit_bottom = 12800
 zoom_smoothing_rate = 1.8
-position_smoothing_rate = 4000.0
+position_smoothing_rate = 10000.0
 
 [node name="TrailSystem" type="Node2D" parent="." unique_id=1363062214]
 script = ExtResource("15_vivmo")
@@ -261,4 +262,8 @@ script = ExtResource("23_d13ii")
 enemy_faction = ExtResource("22_ryguw")
 player_faction = ExtResource("12_d13ii")
 navigation_layer = NodePath("../TreasureMap/Navigation")
-enemy_count = 8
+enemy_count = 5
+
+[node name="EnemyBlackboard" type="Node" parent="ShipsSystem" unique_id=182668152]
+script = ExtResource("24_1u8w0")
+metadata/_custom_type_script = "uid://dme5f24l0edsf"

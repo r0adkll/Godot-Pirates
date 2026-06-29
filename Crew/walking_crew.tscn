@@ -87,7 +87,7 @@ process_material = SubResource("ParticleProcessMaterial_rujms")
 
 [node name="BeehaveTree" type="Node" parent="." unique_id=1836616785 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("3_lhixj")
-blackboard = NodePath("@Node@157007")
+blackboard = NodePath("@Node@74364")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 

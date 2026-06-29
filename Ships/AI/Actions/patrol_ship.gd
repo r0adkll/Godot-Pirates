@@ -6,13 +6,13 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 	var ship = actor as BotShip
 	
 	# Validate that we still have a destination
-	if not blackboard.has_value(ShipKeys.Key.DESTINATION):
+	if not blackboard.has_value(ShipKeys.Key.DESTINATION, ship.name):
 		return FAILURE
 	
 	# Check if we've finished our current patrol
 	if ship.nav_agent.is_navigation_finished():
 		# Clear current destination, as we've reached our target
-		blackboard.erase_value(ShipKeys.Key.DESTINATION)
+		blackboard.erase_value(ShipKeys.Key.DESTINATION, ship.name)
 		return SUCCESS
 	
 	# Process nav agent and movement

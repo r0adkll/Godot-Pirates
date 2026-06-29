@@ -34,7 +34,7 @@ func parse(cells: Array[Vector2i], map_size: Vector2i) -> Array[IslandSpec]:
 		## Add our now completed island to our list of specs
 		islands.append(spec)
 		
-		TimeUtil.print_time(island_start, "New Island[{0}] @ {1}".format([spec.mass(), first]))
+		TimeUtil.print_time(island_start, "New Island[m:{0}, a:{1}] @ {2}".format([spec.mass(), spec.bounds().get_area(), first]))
 	
 	# Print the time calc
 	TimeUtil.print_time(start, "Calculated %d islands" % islands.size())

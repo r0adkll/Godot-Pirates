@@ -9,6 +9,7 @@ script = ExtResource("1_hgj8s")
 
 [node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("2_83r4b")]
 position = Vector2(-64, -64)
+capacity = 1
 
 [node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("magazine") instance=ExtResource("3_85s6h")]
 magazine = NodePath("../Magazine")

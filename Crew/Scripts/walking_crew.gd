@@ -10,9 +10,11 @@ const interaction_dist = 100
 @onready var detection_zone: Area2D = $DetectionZone
 @onready var treasure_sprite: Sprite2D = $Treasure
 @onready var coin_emitter: GPUParticles2D = $CoinEmitter
+@onready var beehave_tree: BeehaveTree = $BeehaveTree
 
 # The 'held' treasure of this crew member
 @export var treasure: Treasure
+@export var blackboard: Blackboard
 
 var state: State = State.IDLE
 var health: float = 100
@@ -24,6 +26,8 @@ var nearby_treasure: TreasureChest
 
 func _ready() -> void:
 	sprite.frame = randi_range(0, 49)
+	if blackboard:
+		beehave_tree.blackboard = blackboard
 
 
 func _process(_delta: float) -> void:

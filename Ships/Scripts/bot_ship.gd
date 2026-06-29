@@ -12,10 +12,12 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 @onready var shooting_timer: Timer = $ShootingTimer
 @onready var detection_area: Area2D = $DetectionArea
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var beehave_tree: BeehaveTree = $BeehaveTree
 
 @export var shooting_rate: float = 0.5
 @export var shooting_distance: float = 600
 @export var ships_system: ShipsSystem
+@export var ship_blackboard: Blackboard
 
 ## The physical target that this ship is attacking
 var target: Node2D
@@ -24,6 +26,9 @@ var target: Node2D
 func _ready() -> void:
 	super._ready()
 	add_to_group(GROUP)
+	if ship_blackboard:
+		beehave_tree.blackboard = ship_blackboard
+	
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 
@@ -31,6 +36,11 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	pass
 
+
+func _draw() -> void:
+	var color = Color.ALICE_BLUE
+	color.a = 0.3
+	draw_circle(Vector2(), get_detection_radius(), color)
 
 # Check health and other states of the ship that are not
 # movement / frame critical
@@ -48,6 +58,11 @@ func _physics_process(delta: float) -> void:
 	
 	# Move the boat
 	move_and_slide()
+	
+	# Update beached state
+	# Due to how the last_collision property works it HAS to be
+	# called after move_and_slide() 
+	check_if_beached()
 
 
 func _on_die(_source: Faction) -> void:
@@ -92,8 +107,6 @@ func _on_damage_target_apply_damage(faction: Faction, amount: float) -> void:
 		if health <= 0:
 			print("Killed by %s" % str(faction))
 			die(faction)
-		
-	
 
 
 ## AnimationPlayer
@@ -115,21 +128,24 @@ const DEFAULT_DETECTION_RADIUS = 800 #px
 const ATTACKING_DETECTION_RADIUS = 1600 #px
 
 ## Set the radius of the detection area
+func get_detection_radius() -> float:
+	var detection_shape: CircleShape2D = $DetectionArea/CollisionShape2D.shape as CircleShape2D
+	return detection_shape.radius
+
 func _set_detection_radius(radius: float) -> void:
 	var detection_shape: CircleShape2D = $DetectionArea/CollisionShape2D.shape as CircleShape2D
 	detection_shape.radius = radius
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
-	print("Body Entered: %s" % body.name)
 	if body != self && !target and _can_target(body):
-		print("--> Targetting [%s]" % body.name)
-		target = body
-		
-		# Expand our detection area so we don't lose our target as fast
-		_set_detection_radius(ATTACKING_DETECTION_RADIUS)
-		
-		# If the new target is of BaseShip, bind to its state signal
-		if body is BaseShip:
+		if is_instance_of(body, BaseShip):
+			print("--> Targetting Ship [%s]" % body.name)
+			target = body
+			
+			# Expand our detection area so we don't lose our target as fast
+			_set_detection_radius(ATTACKING_DETECTION_RADIUS)
+			
+			# If the new target is of BaseShip, bind to its state signal
 			(body as BaseShip).state_changed.connect(_on_target_state_changed)
 
 ## Check whether or not a body is target-able
@@ -158,7 +174,6 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 	if target == body:
 		print("<-- Lost target[%s]" % body.name)
 		_clear_target()
-
 
 ## Target > BaseShip
 

@@ -9,8 +9,10 @@ const walking_crew := preload("res://Crew/walking_crew.tscn")
 # The amount of crew above the vessel/structure this is attached to
 @export var crew: int = 6
 @export var max_crew: int = 20
+@export var blackboard: Blackboard = Blackboard.new()
 
 func _ready() -> void:
+	add_child(blackboard)
 	crew_updated.emit(crew, max_crew)
 
 
@@ -36,6 +38,7 @@ func deploy(
 	new_crew.rotation = deploy_rotation
 	#new_crew.add_collision_exception_with(ship)
 	new_crew.deployment = WalkingCrew.Deployment.new(ship.faction, island, landing_pos)
+	new_crew.blackboard = blackboard
 	SceneSpawnerSystem.add_entity(new_crew)
 	
 	# Decrease our crew count and update signal watchers

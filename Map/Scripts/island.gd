@@ -22,6 +22,9 @@ var bounds: Rect2i
 ## Island Camera
 var camera_harness: CameraHarness
 
+## Tracking array for ships beached on the island
+var beached_ships: Array[BaseShip] = []
+
 ## Cache for when we generate the poly shape of this island
 ## for debugging
 var _shape: ConvexPolygonShape2D
@@ -32,7 +35,13 @@ func _ready() -> void:
 	
 	# Add island camera
 	add_child(camera_harness)
-
+	
+#func _draw() -> void:
+	#var color = Color.RED
+	#color.a = 0.5
+	#var rect = get_local_area()
+	#rect.position = Vector2()
+	#draw_rect(rect, color)
 	
 ## Get the local (non-map) vector positions of ALL land tiles packed into
 ## a PackedVector2Array
@@ -92,6 +101,31 @@ func get_fortifications() -> Array[Fort]:
 
 	return forts
 
+
+func add_beached_ship(ship: BaseShip) -> void:
+	if !beached_ships.has(ship):
+		beached_ships.append(ship)
+
+
+func remove_beached_ship(ship: BaseShip) -> void:
+	beached_ships.erase(ship)
+
+
+## Get the closest beached ship that is of the same faction
+## May return null if no beached ships of that faction exist
+func find_closest_beached_ship(position: Vector2, faction: Faction) -> BaseShip:
+	var closest_ship: BaseShip
+	var closest_dist: float
+	
+	for ship in beached_ships:
+		if ship.faction.equals(faction):
+			var dist = ship.global_position.distance_squared_to(position)
+			if not closest_dist or dist < closest_dist:
+				closest_ship = ship
+				closest_dist = dist
+	
+	return closest_ship
+
 ## Check if this island contains the passed map coordinates
 func contains_coord(coord: Vector2i) -> bool:
 	return land.has(coord)
@@ -100,3 +134,11 @@ func contains_coord(coord: Vector2i) -> bool:
 ## Check if this island contains the passed local position
 func contains_position(pos: Vector2) -> bool:
 	return contains_coord(map.local_to_map(pos))
+	
+
+## Get the area of this island translated to local coordinates
+func get_local_area() -> Rect2:
+	return Rect2(
+		map.land.map_to_local(bounds.position),
+		map.land.map_to_local(bounds.size),
+	)

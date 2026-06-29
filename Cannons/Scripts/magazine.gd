@@ -5,6 +5,7 @@ signal magazine_changed(count: int, capacity: int)
 
 @export var capacity: int = 3
 @export var reload_speed_sec: float = 2
+@export var reload_amount: int = 1
 
 @onready var reload_timer: Timer = $ReloadTimer
 
@@ -16,9 +17,9 @@ func _ready() -> void:
 
 # "Chamber" a round
 # Returns true if a round was consumed, false otherwise
-func try_chamber_round() -> bool:
+func try_chamber_round(amount: int = 1) -> bool:
 	if count > 0:
-		count -= 1
+		count = clampi(count - amount, 0, INT32_MAX)
 		
 		magazine_changed.emit(count, capacity)
 		
@@ -31,7 +32,7 @@ func try_chamber_round() -> bool:
 
 func _on_reload_timer_timeout() -> void:
 	if count < capacity:
-		count += 1
+		count += reload_amount
 		magazine_changed.emit(count, capacity)
 	
 	# If we are still low, auto-reload

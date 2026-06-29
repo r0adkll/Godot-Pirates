@@ -21,6 +21,8 @@
 [ext_resource type="AudioStream" uid="uid://d15bm65mts5ap" path="res://Ships/Effects/Sfx/wood_impact.mp3" id="18_84lgx"]
 [ext_resource type="AudioStream" uid="uid://stxashysvn7h" path="res://Music/theme_song.mp3" id="19_84lgx"]
 [ext_resource type="Script" uid="uid://dnhs0l0c867uo" path="res://Systems/Trails/Scripts/trail_emitter.gd" id="20_a86iu"]
+[ext_resource type="PackedScene" uid="uid://dyxsvt3jxenvf" path="res://Ships/Weapons/broadsides.tscn" id="22_sb8vm"]
+[ext_resource type="Script" uid="uid://6os0n23546yr" path="res://Ships/Scripts/Weapons/weapon_system.gd" id="23_m3k8j"]
 
 [sub_resource type="Animation" id="Animation_cxoxt"]
 length = 0.001
@@ -124,7 +126,7 @@ cannon = NodePath("Cannon")
 crew_cabin = NodePath("CrewCabin")
 left_trail = NodePath("Trails/Left")
 right_trail = NodePath("Trails/Right")
-coin = 10
+coin = 500
 
 [node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]
 scale = Vector2(2, 2)
@@ -145,7 +147,7 @@ metadata/_custom_type_script = "uid://b3liy0gjleis0"
 
 [node name="CrewCabin" type="Node2D" parent="." unique_id=1167268538]
 script = ExtResource("11_onxlx")
-crew = 10
+crew = 20
 
 [node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("9_njxlb")]
 capacity = 20
@@ -209,6 +211,15 @@ position = Vector2(-25, -50)
 script = ExtResource("20_a86iu")
 point_velocity = Vector2(-50, 0)
 point_lifetime = 0.75
+
+[node name="WeaponSystem" type="Node2D" parent="." unique_id=764782557 node_paths=PackedStringArray("ship")]
+script = ExtResource("23_m3k8j")
+ship = NodePath("..")
+
+[node name="Broadsides" parent="WeaponSystem" unique_id=1240300503 node_paths=PackedStringArray("origin") instance=ExtResource("22_sb8vm")]
+z_index = -1
+faction = ExtResource("2_10d41")
+origin = NodePath("../..")
 
 [connection signal="crew_returned" from="." to="." method="_on_crew_returned"]
 [connection signal="apply_damage" from="DamageTarget" to="." method="_on_damage_target_apply_damage"]
