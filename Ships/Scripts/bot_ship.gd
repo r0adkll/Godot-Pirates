@@ -31,6 +31,8 @@ func _ready() -> void:
 	
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
+	
+	nav_agent.debug_enabled = Debug.enabled
 
 
 func _exit_tree() -> void:
@@ -38,9 +40,10 @@ func _exit_tree() -> void:
 
 
 func _draw() -> void:
-	var color = Color.ALICE_BLUE
-	color.a = 0.3
-	draw_circle(Vector2(), get_detection_radius(), color)
+	if Debug.enabled:
+		var color = Color.ALICE_BLUE
+		color.a = 0.3
+		draw_circle(Vector2(), get_detection_radius(), color)
 
 # Check health and other states of the ship that are not
 # movement / frame critical
