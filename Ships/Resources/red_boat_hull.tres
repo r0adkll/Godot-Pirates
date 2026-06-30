@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BoatHulls" format=3 uid="uid://df137ll0jkjad"]
+
+[ext_resource type="Texture2D" uid="uid://da7qo1apuss7n" path="res://Ships/Sprites/ship_red/red_dmg_heavy.png" id="1_ln83c"]
+[ext_resource type="Texture2D" uid="uid://mkrw44tolld0" path="res://Ships/Sprites/ship_red/red_dmg_light.png" id="2_fb3qd"]
+[ext_resource type="Texture2D" uid="uid://0gqq64fdfypl" path="res://Ships/Sprites/ship_red/red_dead.png" id="3_gofd7"]
+[ext_resource type="Texture2D" uid="uid://b8721t4pusfq0" path="res://Systems/Faction/Sprites/red.png" id="4_66qqo"]
+[ext_resource type="Texture2D" uid="uid://yhpnnwdixctl" path="res://Ships/Sprites/ship_red/red_new.png" id="5_ln2lj"]
+[ext_resource type="Script" uid="uid://by0je1l7i3ir4" path="res://Ships/Resources/boat_hulls.gd" id="6_3ye7c"]
+
+[resource]
+script = ExtResource("6_3ye7c")
+flag = ExtResource("4_66qqo")
+new_sprite = ExtResource("5_ln2lj")
+damage_light = ExtResource("2_fb3qd")
+damage_heavy = ExtResource("1_ln83c")
+dead = ExtResource("3_gofd7")
+metadata/_custom_type_script = "uid://by0je1l7i3ir4"

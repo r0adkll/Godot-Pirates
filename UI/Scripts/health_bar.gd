@@ -1,3 +1,4 @@
+@tool
 class_name HealthBar
 extends Control
 
@@ -5,20 +6,29 @@ extends Control
 @onready var low: NinePatchRect = $Low
 @onready var full: NinePatchRect = $Full
 
-@export_range(0, 1, 0.1) var progress: float = 1.0
+@export_range(0, 1, 0.1) var progress: float = 1.0:
+	set(new_value):
+		progress = new_value
+		if is_visible_in_tree():
+			_update_bar_width()
+			
 @export_range(0, 1, 0.1) var low_threshold: float = 0.3
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	# Keep the width of the progress bars 
-	low.size.x = _progress_width()
-	full.size.x = _progress_width()
+	_update_bar_width()
 	
 	# Switch texture visibility based on threshold
 	low.visible = progress <= low_threshold && progress > 0
 	full.visible = progress > low_threshold
 
+
+func _update_bar_width() -> void:
+	# Keep the width of the progress bars 
+	low.size.x = _progress_width()
+	full.size.x = _progress_width()
 
 ## Compute the progress width size of child elements
 func _progress_width() -> float:

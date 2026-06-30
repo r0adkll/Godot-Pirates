@@ -1,10 +1,10 @@
 class_name TrailSystem
 extends Node2D
 
-@export var tick_rate: float = 1
+@export var tick_rate: float = 0.05
 @export var trail_width_curve: Curve
 @export var trail_gradient: Gradient
-@export var trail_width: float = 20
+@export var trail_width: float = 30
 
 # Internal trail tracker
 var trails: Dictionary = {}

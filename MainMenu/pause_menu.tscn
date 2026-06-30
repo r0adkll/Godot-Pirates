@@ -1,0 +1,181 @@
+[gd_scene format=3 uid="uid://3mwawest4pc"]
+
+[ext_resource type="Script" uid="uid://g6k4rlun5br5" path="res://MainMenu/Scripts/pause_menu_ui.gd" id="1_k7k7m"]
+[ext_resource type="Texture2D" uid="uid://b6xg30ith3j4t" path="res://UI/Resources/BIG/banner_classic_curtain 1.png" id="2_omha6"]
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="3_j7l1e"]
+[ext_resource type="Texture2D" uid="uid://dcs3daorvjxep" path="res://UI/Resources/BIG/panel_brown_corners_b 1.png" id="4_b12ir"]
+[ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="5_jm8af"]
+
+[sub_resource type="Animation" id="Animation_omha6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scrim:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k7k7m"]
+resource_name = "transition"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Scrim:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("VBoxContainer:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_omha6"]
+_data = {
+&"RESET": SubResource("Animation_omha6"),
+&"transition": SubResource("Animation_k7k7m")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2ya"]
+bg_color = Color(0, 0, 0, 0.4)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b2ya"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xuqvo"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qsp4k"]
+line_spacing = 0.0
+font = ExtResource("3_j7l1e")
+font_size = 52
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3b2ya"]
+texture = ExtResource("4_b12ir")
+texture_margin_left = 108.0
+texture_margin_top = 100.0
+texture_margin_right = 113.0
+texture_margin_bottom = 92.0
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=798729079]
+layer = 7
+visible = false
+script = ExtResource("1_k7k7m")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=444209610]
+libraries/ = SubResource("AnimationLibrary_omha6")
+speed_scale = 2.0
+
+[node name="Scrim" type="Panel" parent="." unique_id=68017579]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3b2ya")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=274529714]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=290047914]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3b2ya")
+
+[node name="Banner" type="PanelContainer" parent="VBoxContainer/PanelContainer" unique_id=706825228]
+z_index = 1
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xuqvo")
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/Banner" unique_id=1793190971]
+layout_mode = 2
+texture = ExtResource("2_omha6")
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/Banner" unique_id=1365895336]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -16)
+text = "paused"
+label_settings = SubResource("LabelSettings_qsp4k")
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer" unique_id=2136161826]
+layout_mode = 2
+theme_override_constants/margin_top = 64
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/MarginContainer" unique_id=248491108]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_3b2ya")
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer" unique_id=1905273025]
+layout_mode = 2
+theme_override_constants/margin_top = 128
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer" unique_id=942936248]
+custom_minimum_size = Vector2(1000, 0)
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/separation = 32
+alignment = 2
+
+[node name="ResumeButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1552453986]
+layout_mode = 2
+theme = ExtResource("5_jm8af")
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=414071237]
+layout_mode = 2
+theme = ExtResource("5_jm8af")
+text = "Settings
+"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1796246766]
+layout_mode = 2
+theme = ExtResource("5_jm8af")
+text = "Quit
+"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

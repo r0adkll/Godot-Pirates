@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dq1s82mf1hed1"]
+
+[ext_resource type="Script" uid="uid://b08jljlljfs0j" path="res://MainMenu/Scripts/mock_ship.gd" id="1_ey0hi"]
+[ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="2_qy5s4"]
+[ext_resource type="Script" uid="uid://dnhs0l0c867uo" path="res://Systems/Trails/Scripts/trail_emitter.gd" id="3_vyrmu"]
+
+[node name="MockShip" type="Node2D" unique_id=1413147128]
+rotation = -1.5707964
+script = ExtResource("1_ey0hi")
+boat_texture = ExtResource("2_qy5s4")
+
+[node name="BoatSprite" type="Sprite2D" parent="." unique_id=1902107598]
+z_index = 1
+scale = Vector2(2, 2)
+texture = ExtResource("2_qy5s4")
+
+[node name="Trails" type="Node2D" parent="." unique_id=1450392450]
+
+[node name="Right" type="Marker2D" parent="Trails" unique_id=1245818450]
+position = Vector2(25, -50)
+script = ExtResource("3_vyrmu")
+point_velocity = Vector2(50, 0)
+point_lifetime = 0.75
+
+[node name="Left" type="Marker2D" parent="Trails" unique_id=1135848683]
+position = Vector2(-25, -50)
+script = ExtResource("3_vyrmu")
+point_velocity = Vector2(-50, 0)
+point_lifetime = 0.75

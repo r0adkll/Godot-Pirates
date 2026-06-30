@@ -80,6 +80,7 @@ var can_drift: bool = true
 
 func _ready() -> void:
 	cannon.faction = faction
+	boat_sprite.hulls = faction.boat
 
 # Called every frame.
 func _process(_delta: float) -> void:

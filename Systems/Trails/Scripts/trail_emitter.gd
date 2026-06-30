@@ -6,7 +6,7 @@ const GROUP: String = "trail_emitters"
 @export var point_velocity: Vector2 = Vector2.ZERO
 @export var point_lifetime: float = 5 # seconds
 
-var enabled: bool = true
+@export var enabled: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -12,7 +12,6 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 ## Nodes / Components
 @onready var sprite: BoatSprite = $BoatSprite
 @onready var player_input: PlayerInput = $PlayerInput
-@onready var broadsides: Broadsides = $Broadsides
 
 @onready var camera_harness: CameraHarness = $CameraHarness
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -26,7 +25,8 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 func _ready() -> void:
 	super._ready()
 	add_to_group(GROUP)
-	game_camera.set_following(camera_harness)
+	if game_camera:
+		game_camera.set_following(camera_harness)
 	# Setup mouse pointer
 	# TODO: Adjust for controller inputs
 	Input.set_custom_mouse_cursor(cursor_target, Input.CursorShape.CURSOR_ARROW, Vector2(16, 16))
@@ -79,7 +79,9 @@ func _physics_process(delta: float) -> void:
 		
 		# DEBUG: Kill our own ship, or exit builder mode
 		if Input.is_action_just_pressed("ui_cancel"):
-			die()
+			#die()
+			PauseMenu.pause()
+				
 		
 	# Clamp our velocity and compute speed percentage
 	var ship_speed = abs(ship_velocity) / MAX_FORWARD_SPEED

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Pirates of the Karebeean"
-run/main_scene="uid://dbc8p40r5bsej"
+run/main_scene="uid://dmt04rkfnmmkq"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,8 @@ FactionUtil="*uid://xnmuq8sfy68x"
 TimeUtil="*uid://4ldkr31864fi"
 SceneSpawnerSystem="*uid://0qntn4abemyy"
 FactionSystem="*uid://bqi10jkt7tl67"
+SceneLoader="*uid://bgsqk428a5wyi"
+PauseMenu="*uid://14scm4khkpen"
 
 [display]
 

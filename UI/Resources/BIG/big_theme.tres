@@ -1,0 +1,16 @@
+[gd_resource type="Theme" format=3 uid="uid://b2wbfh51kmy5l"]
+
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="1_7r4kq"]
+[ext_resource type="StyleBox" uid="uid://ccjg6h5fm0mpn" path="res://UI/Resources/BIG/disabled_button_texture.tres" id="2_22fmq"]
+[ext_resource type="StyleBox" uid="uid://d071hofbfy833" path="res://UI/Resources/BIG/hover_button_texture.tres" id="3_yykv4"]
+[ext_resource type="StyleBox" uid="uid://e4xft5q4tl2i" path="res://UI/Resources/BIG/normal_button_texture.tres" id="4_ejx4a"]
+[ext_resource type="StyleBox" uid="uid://b3fkloeugumjq" path="res://UI/Resources/BIG/pressed_button_texture.tres" id="5_sv0wh"]
+
+[resource]
+Button/colors/font_disabled_color = Color(1, 1, 1, 0.5137255)
+Button/font_sizes/font_size = 40
+Button/fonts/font = ExtResource("1_7r4kq")
+Button/styles/disabled = ExtResource("2_22fmq")
+Button/styles/hover = ExtResource("3_yykv4")
+Button/styles/normal = ExtResource("4_ejx4a")
+Button/styles/pressed = ExtResource("5_sv0wh")

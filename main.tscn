@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://bsjtm7nvw1ehf" path="res://UI/kill_counter.tscn" id="11_d13ii"]
 [ext_resource type="Resource" uid="uid://dqcd6i3uun0ul" path="res://Systems/Faction/player_faction.tres" id="12_d13ii"]
 [ext_resource type="Script" uid="uid://buvw8hjlglquk" path="res://Map/Scripts/data_map.gd" id="12_vivmo"]
+[ext_resource type="PackedScene" uid="uid://3mwawest4pc" path="res://MainMenu/pause_menu.tscn" id="14_0odxb"]
 [ext_resource type="Script" uid="uid://b4yyr2uupqogq" path="res://Systems/Trails/trail_system.gd" id="15_vivmo"]
 [ext_resource type="Script" uid="uid://b3liy0gjleis0" path="res://Camera/Scripts/camera_harness.gd" id="16_d13ii"]
 [ext_resource type="Curve" uid="uid://c68pd0cxxrjsx" path="res://Ships/Effects/Trail/trail_width_curve.tres" id="16_yaehf"]
@@ -48,6 +49,7 @@ baking_rect = Rect2(0, 0, 12800, 12800)
 
 [node name="Main" type="Node2D" unique_id=1410257342]
 script = ExtResource("1_1u8w0")
+player_faction = ExtResource("12_d13ii")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=567392199]
 layer = 2
@@ -198,6 +200,9 @@ faction = ExtResource("12_d13ii")
 layout_mode = 2
 faction = ExtResource("22_ryguw")
 
+[node name="PauseMenu" parent="." unique_id=798729079 instance=ExtResource("14_0odxb")]
+process_mode = 3
+
 [node name="TreasureMap" type="Node2D" parent="." unique_id=1234225736]
 script = ExtResource("10_getpj")
 map_size = Vector2i(100, 100)
@@ -250,10 +255,8 @@ position_smoothing_rate = 10000.0
 
 [node name="TrailSystem" type="Node2D" parent="." unique_id=1363062214]
 script = ExtResource("15_vivmo")
-tick_rate = 0.05
 trail_width_curve = ExtResource("16_yaehf")
 trail_gradient = ExtResource("17_074og")
-trail_width = 30.0
 metadata/_custom_type_script = "uid://b4yyr2uupqogq"
 
 [node name="ShipsSystem" type="Node2D" parent="." unique_id=774830947 node_paths=PackedStringArray("navigation_layer")]

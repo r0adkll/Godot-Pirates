@@ -11,7 +11,11 @@ enum State {
 # The state of the boat sprite
 var state: State = State.NEW
 
-@export var hulls: BoatHulls
+@export var hulls: BoatHulls:
+	set (new_value):
+		hulls = new_value
+		if new_value:
+			apply_state(state)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
