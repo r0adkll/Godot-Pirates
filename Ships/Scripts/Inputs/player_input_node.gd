@@ -8,4 +8,8 @@ extends Node
 ## Get the configured base ship from the PlayerInput node that
 ## this HAS to be a child of
 func get_ship() -> BaseShip:
-	return (get_parent() as PlayerInput).ship
+	var parent = get_parent()
+	if parent is PlayerInputNode:
+		return parent.get_ship()
+	else:
+		return (get_parent() as PlayerInput).ship

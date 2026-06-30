@@ -24,9 +24,11 @@ func process_input(delta: float) -> void:
 		ship.angular_velocity -= turning_strength * delta
 	else:
 		ship.angular_velocity = move_toward(ship.angular_velocity, 0, BaseShip.TURN_FRICTION * delta)
+	
+	var ship_speed = abs(ship.ship_velocity) / BaseShip.MAX_FORWARD_SPEED
+	var max_turning_strength = ship_speed * BaseShip.MAX_TURN_SPEED
+	ship.angular_velocity = clampf(ship.angular_velocity, -max_turning_strength, max_turning_strength)
+	ship.rotation += ship.angular_velocity * delta
 		
-	# Apply Sprint - TODO POWER UP
-	if Input.is_action_pressed("ui_sprint"):
-		ship.max_forward_speed = BaseShip.MAX_FORWARD_SPEED * BaseShip.SPRINT_MODIFIER
-	else:
-		ship.max_forward_speed = BaseShip.MAX_FORWARD_SPEED
+	# Point the cannon at the mouse
+	ship.cannon.look_at(ship.get_global_mouse_position())

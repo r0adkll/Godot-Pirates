@@ -12,6 +12,7 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 ## Nodes / Components
 @onready var sprite: BoatSprite = $BoatSprite
 @onready var player_input: PlayerInput = $PlayerInput
+@onready var aim_cursor: Sprite2D = $AimCursor
 
 @onready var camera_harness: CameraHarness = $CameraHarness
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -77,26 +78,19 @@ func _physics_process(delta: float) -> void:
 			# Decrease our cabin crew count
 			crew_cabin.deploy(self, beach_head.island, beach_head.get_landing_position(), rotation + 90)
 		
-		# DEBUG: Kill our own ship, or exit builder mode
+		# On Esc/ or start show the pause menu
 		if Input.is_action_just_pressed("ui_cancel"):
-			#die()
 			PauseMenu.pause()
 				
 		
 	# Clamp our velocity and compute speed percentage
-	var ship_speed = abs(ship_velocity) / MAX_FORWARD_SPEED
+	#var ship_speed = abs(ship_velocity) / MAX_FORWARD_SPEED
 		
 	# Compute rotation based on angular velocity
-	var max_turning_strength = ship_speed * MAX_TURN_SPEED
-	angular_velocity = clampf(angular_velocity, -max_turning_strength, max_turning_strength)
-	rotation += angular_velocity * delta
+	#var max_turning_strength = ship_speed * MAX_TURN_SPEED
+	#angular_velocity = clampf(angular_velocity, -max_turning_strength, max_turning_strength)
+	#rotation += angular_velocity * delta
 	emote.rotation = -rotation
-	
-	# Aim the cannon at mouse
-	# TODO: Will need to support controllers
-	if state == State.ALIVE:
-		cannon.look_at(get_global_mouse_position())
-		
 	
 	# Move the boat
 	move_and_slide()

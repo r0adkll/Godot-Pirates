@@ -30,6 +30,7 @@ func action() -> StringName:
 	return &"ui_accept"
 
 
+
 ## Fire the broadsides
 func fire() -> void:
 	for cannon in cannons:
