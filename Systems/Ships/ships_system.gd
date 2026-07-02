@@ -112,3 +112,8 @@ func _active_enemy_count() -> int:
 	return get_tree().get_nodes_in_group(BotShip.GROUP)\
 		.filter(func (e: BotShip): return e.state != BaseShip.State.DEAD)\
 		.size()
+
+
+func _on_treasure_map_map_generated() -> void:
+	spawn_player()
+	spawn_enemy()

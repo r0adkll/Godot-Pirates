@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_wqcru")
-id = "enemy1"
+id = 1
 type = 1
 boat = ExtResource("1_l6gty")
 metadata/_custom_type_script = "uid://cj4tu6bshyj28"

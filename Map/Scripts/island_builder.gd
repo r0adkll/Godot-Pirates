@@ -3,11 +3,11 @@ extends RefCounted
 ## A utility class for building islands in the game from blobs of generated
 ## land data
 
-var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var rng: RandomNumberGenerator
 
 ## Initialize the builder's RNG and noise
-func _init() -> void:
-	_rng.randomize()
+func _init(_rng: RandomNumberGenerator) -> void:
+	rng = _rng
 	
 
 ## Parse a blob of land cells for all individual islands
@@ -86,8 +86,8 @@ func enrich(
 				beach_grid.add(scell)
 				
 		# Check to add decor randomly
-		if _rng.randf() < decor_probability:
-			if _rng.randf() > 0.5:
+		if randf() < decor_probability:
+			if randf() > 0.5:
 				spec.shrubs.append(cell)
 			else:
 				spec.rocks.append(cell)
@@ -106,8 +106,10 @@ func enrich(
 	
 	# Print diagnostics
 	var fort_to_mass_ratio = float(spec.mass()) / float(fort_locations.size())
+	var fortz: Array = spec.forts.map(func (f: FortSpec): return str(f.bounds.position))
+
 	TimeUtil.print_time(start, "Island Enriched [shrubs: {0}, rocks: {1},\
- mass/forts/ratio: {2}/{3}/{4}]".format([spec.shrubs.size(), spec.rocks.size(), spec.mass(), fort_locations.size(), fort_to_mass_ratio]))
+ mass/forts/ratio: {2}/{3}/{4} - {5}]".format([spec.shrubs.size(), spec.rocks.size(), spec.mass(), fort_locations.size(), fort_to_mass_ratio, str(fortz)]))
 
 
 # Scan the land grid at the given coordinate to see if a fort would fit there
@@ -147,7 +149,8 @@ func _generate_fort_specs(
 			fort_count = 2
 		
 		for i in range(fort_count):
-			var fort_location: Vector2i = available_fort_locations.pick_random()
+			#var random_fort_idx = rng.randi_range(0, available_fort_locations.size() - 1)
+			var fort_location: Vector2i = available_fort_locations.get(0)
 			var fort_rect: Rect2i = Rect2i(fort_location, Vector2i(3, 3))
 			
 			# Check if far enough away from any already set locations
@@ -156,15 +159,18 @@ func _generate_fort_specs(
 				var prev_rect = Rect2i(prev_locs, Vector2i(3, 3))
 				if prev_rect.intersects(fort_rect):
 					too_close = true
+					print("-- INTERSECTS!")
 					break
 				
 				var dist = prev_locs.distance_to(fort_location)
 				if dist < min_fort_dist:
 					too_close = true
+					print("-- TOO CLOSE")
 					break
 			
 			if not too_close and fort_location:
 				fort_locations.append(fort_location)
+				available_fort_locations.erase(fort_location)
 				
 	return fort_locations.map(func (loc): return medium_fort(loc))
 

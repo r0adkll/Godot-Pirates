@@ -4,7 +4,7 @@ var entity_owner: Node2D
 
 
 func add_entity(node: Node2D) -> void:
-	entity_owner.add_child(node)
+	entity_owner.add_child(node, multiplayer.has_multiplayer_peer())
 	
 
 func remove_entity(node: Node2D) -> void:

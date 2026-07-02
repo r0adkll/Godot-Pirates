@@ -25,6 +25,7 @@ SceneSpawnerSystem="*uid://0qntn4abemyy"
 FactionSystem="*uid://bqi10jkt7tl67"
 SceneLoader="*uid://bgsqk428a5wyi"
 PauseMenu="*uid://14scm4khkpen"
+Lobby="*uid://f7pc5j0h6xvk"
 
 [display]
 
@@ -128,3 +129,4 @@ ui_sprint={
 
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true

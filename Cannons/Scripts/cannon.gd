@@ -21,13 +21,17 @@ func fire() -> bool:
 		new_fire.position = shoot_pos.position
 		add_child(new_fire)
 		
+		var is_multiplayer = multiplayer.has_multiplayer_peer()
 		var ball: CannonBall = cannon_ball_scene.instantiate()
+		if is_multiplayer:
+			ball.name = "player_" + str(faction.id) + "_cannon_ball"
 		ball.velocity = Vector2.RIGHT.rotated(global_rotation) * muzzle_power
 		ball.position = shoot_pos.global_position
 		ball.rotation = global_rotation
 		ball.damage = power
 		ball.origin = origin
 		ball.faction = faction
+		ball.is_remote = is_multiplayer and not multiplayer.is_server()
 		SceneSpawnerSystem.add_entity(ball)
 		
 		fire_sfx.play()

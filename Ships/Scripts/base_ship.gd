@@ -10,6 +10,9 @@ signal state_changed(ship: BaseShip, prev_state: State, new_state: State)
 signal coin_changed(amount: int)
 signal crew_returned(amount: int)
 
+# The control mode
+enum { LOCAL, REMOTE }
+
 ## The overall state that a ship can be in
 enum State {
 	ALIVE,   # Ship is alive and can move and interact
@@ -61,7 +64,11 @@ func set_state(new_state: State):
 	var prev_state = state
 	state = new_state
 	state_changed.emit(self, prev_state, new_state)
-	
+
+# Whether or not this ship is locally, or remotely controlled 
+# for this client
+var control = LOCAL
+
 ## Tracks what island we are "beached" on
 var beach_head: BeachHead
 
@@ -93,15 +100,17 @@ func _process(_delta: float) -> void:
 
 func _physics_process(_delta: float) -> void:
 	if state == State.ALIVE:
-		# Set the idling position when ship is not moving
-		if ship_velocity == 0 and _idle_position == Vector2.INF and can_drift:
-			_idle_position = position
-			_idle_rotation_degrees = rotation_degrees
-			_idle_ship()
-		elif ship_velocity != 0 and _idle_position != Vector2.INF:
-			_idle_position = Vector2.INF
-			if _drift_tween:
-				_drift_tween.kill()
+		# Set the idling position when ship is not moving, 
+		# but only in local control smode
+		if control == LOCAL:
+			if ship_velocity == 0 and _idle_position == Vector2.INF and can_drift:
+				_idle_position = position
+				_idle_rotation_degrees = rotation_degrees
+				_idle_ship()
+			elif ship_velocity != 0 and _idle_position != Vector2.INF:
+				_idle_position = Vector2.INF
+				if _drift_tween:
+					_drift_tween.kill()
 				
 	# Compute velocity based on raw velocity + rotation
 	ship_velocity = clampf(ship_velocity, -MAX_REVERSE_SPEED, max_forward_speed)

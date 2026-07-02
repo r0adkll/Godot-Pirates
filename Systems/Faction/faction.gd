@@ -17,7 +17,7 @@ enum Type {
 
 
 ## The id of the faction that this node is identifying
-@export var id: String
+@export var id: int
 @export var type: Type
 @export var boat: BoatHulls
 

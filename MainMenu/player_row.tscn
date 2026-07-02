@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://b4gdhevmstafe"]
+
+[ext_resource type="Texture2D" uid="uid://80rj3nu7vei4" path="res://UI/Resources/BIG/panel_grey_bolts_red 1.png" id="1_3iywr"]
+[ext_resource type="Texture2D" uid="uid://vony0r6hc0i3" path="res://Systems/Faction/Sprites/plain.png" id="2_ani06"]
+[ext_resource type="Script" uid="uid://w6tuoiq5wtar" path="res://MainMenu/Scripts/player_row.gd" id="2_ou34l"]
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="3_ou34l"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wb4rj"]
+content_margin_top = 64.0
+content_margin_bottom = 64.0
+texture = ExtResource("1_3iywr")
+texture_margin_left = 72.0
+texture_margin_top = 72.0
+texture_margin_right = 72.0
+texture_margin_bottom = 72.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_qnqvl"]
+font = ExtResource("3_ou34l")
+font_size = 32
+outline_size = 2
+
+[node name="PlayerRow" type="PanelContainer" unique_id=2116557697]
+theme_override_styles/panel = SubResource("StyleBoxTexture_wb4rj")
+script = ExtResource("2_ou34l")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2073636134]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="PlayerFlag" type="TextureRect" parent="HBoxContainer" unique_id=58472256]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+texture = ExtResource("2_ani06")
+expand_mode = 5
+
+[node name="PlayerName" type="Label" parent="HBoxContainer" unique_id=2083579827]
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_qnqvl")

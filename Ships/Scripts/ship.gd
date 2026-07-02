@@ -8,11 +8,14 @@ const cursor_target := preload("res://UI/Cursor/target_round_a.png")
 const floating_crew := preload("res://Crew/floating_crew.tscn")
 
 @export var game_camera: PlayerCamera
+@export var player_system: PlayerSystem
 
 ## Nodes / Components
 @onready var sprite: BoatSprite = $BoatSprite
 @onready var player_input: PlayerInput = $PlayerInput
+@onready var multiplayer_input: PlayerInput = $MultiplayerInput
 @onready var aim_cursor: Sprite2D = $AimCursor
+@onready var weapon_system: WeaponSystem = $WeaponSystem
 
 @onready var camera_harness: CameraHarness = $CameraHarness
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -22,14 +25,16 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 @onready var emote: Emote = $Emote
 @onready var hud: Hud = $"../HUD" #FIXME: This is broke af
 
-
 func _ready() -> void:
 	super._ready()
 	add_to_group(GROUP)
+	
+	# Some ships, i.e. multiplayer, are not always directly user controlled
+	# so only setup to follow the ship if attached
 	if game_camera:
 		game_camera.set_following(camera_harness)
+		
 	# Setup mouse pointer
-	# TODO: Adjust for controller inputs
 	Input.set_custom_mouse_cursor(cursor_target, Input.CursorShape.CURSOR_ARROW, Vector2(16, 16))
 	
 	# Connect the HUD
@@ -40,7 +45,22 @@ func _ready() -> void:
 		hud.set_crew_count(crew_cabin.crew, crew_cabin.max_crew)
 		coin_changed.connect(hud.set_coin_count)
 		hud.set_coin_count(coin)
-		
+
+
+func setup_local_control() -> void:
+	control = LOCAL
+	player_input.enabled = true
+	multiplayer_input.enabled = true
+
+
+func setup_remote_control() -> void:
+	control = REMOTE
+	player_input.enabled = false
+	multiplayer_input.enabled = false
+	# FIXME: Hack since our scene includes Broadsides by default without input control
+	#        This is probably a sign of poor architecture with the weapon system and input systems
+	weapon_system.remove_child(weapon_system.get_child(0))
+	
 
 func _exit_tree() -> void:
 	if hud:
@@ -71,28 +91,21 @@ func _physics_process(delta: float) -> void:
 	can_drift = beach_head == null
 	super._physics_process(delta)
 	# Apply inputs if ship is alive
-	if state == State.ALIVE:
-			
-		# Deploy crew if we are beached and we have crew
-		if Input.is_action_just_pressed("ui_deploy") and beach_head and crew_cabin.crew > 0:
-			# Decrease our cabin crew count
-			crew_cabin.deploy(self, beach_head.island, beach_head.get_landing_position(), rotation + 90)
-		
+	if state == State.ALIVE and control == LOCAL:
 		# On Esc/ or start show the pause menu
 		if Input.is_action_just_pressed("ui_cancel"):
 			PauseMenu.pause()
-				
-		
-	# Clamp our velocity and compute speed percentage
-	#var ship_speed = abs(ship_velocity) / MAX_FORWARD_SPEED
-		
-	# Compute rotation based on angular velocity
-	#var max_turning_strength = ship_speed * MAX_TURN_SPEED
-	#angular_velocity = clampf(angular_velocity, -max_turning_strength, max_turning_strength)
-	#rotation += angular_velocity * delta
+	
+	# Make sure our emoji is always pointing up
 	emote.rotation = -rotation
 	
-	# Move the boat
+	# If this is remotely controlled, then zero out the velocity
+	# so the move_and_slide call just does collision checks
+	# this may be broke-af
+	if control == REMOTE:
+		velocity = Vector2.ZERO
+	
+	# Move the boat	
 	move_and_slide()
 	
 	# Update beached state
@@ -106,7 +119,8 @@ func _on_die(_source: Faction) -> void:
 	collision_shape.disabled = true
 	remove_from_group(GROUP)
 	
-	game_camera.add_trauma(0.8)
+	if game_camera:
+		game_camera.add_trauma(0.8)
 	$Sfx/WoodBreaking.play()
 	
 	if hud:
@@ -139,7 +153,8 @@ func _on_damage_target_apply_damage(hit_faction: Faction, amount: float) -> void
 		animation_player.play(&"hit_flash", -1, 2.5)
 		
 		# Camera shake
-		game_camera.add_trauma(0.35)
+		if game_camera:
+			game_camera.add_trauma(0.35)
 		
 		# Emote
 		emote.emote = Emote.Emotes.ANGRY
@@ -147,9 +162,21 @@ func _on_damage_target_apply_damage(hit_faction: Faction, amount: float) -> void
 		emote.show_emote()
 		
 		# Decrement health / check for death
-		health -= amount
-		if health <= 0:
-			die(hit_faction)
+		if multiplayer.has_multiplayer_peer():
+			_apply_damage.rpc(hit_faction.id, amount)
+		else:
+			health -= amount
+			if health <= 0:
+				die(hit_faction)
+
+@rpc("any_peer", "call_local", "reliable")
+func _apply_damage(hit_faction_id: int, amount: float):
+	health -= amount
+	if health <= 0:
+		# FIXME: This is hacky AF and we should probably pass this as part of the system
+		#        to make less fragile
+		var hit_faction = player_system.get_faction(hit_faction_id)
+		die(hit_faction)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

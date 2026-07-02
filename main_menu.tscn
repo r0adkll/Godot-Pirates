@@ -24,6 +24,8 @@
 [ext_resource type="StyleBox" uid="uid://e4xft5q4tl2i" path="res://UI/Resources/BIG/normal_button_texture.tres" id="15_8u0te"]
 [ext_resource type="Resource" uid="uid://b0dej5pbj0jp1" path="res://Ships/Resources/yellow_boat_hull.tres" id="15_ka3nr"]
 [ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="16_saq78"]
+[ext_resource type="Script" uid="uid://cjl7bna2mmxgx" path="res://MainMenu/Scripts/join_game_menu.gd" id="25_ka3nr"]
+[ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="25_ql5ya"]
 
 [sub_resource type="Curve2D" id="Curve2D_glbon"]
 _data = {
@@ -74,6 +76,9 @@ font = ExtResource("10_0o4t1")
 font_size = 52
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2ya"]
+bg_color = Color(0, 0, 0, 0.47843137)
 
 [node name="MainMenu" type="Node2D" unique_id=809785749]
 
@@ -146,6 +151,7 @@ metadata/_custom_type_script = "uid://b4yyr2uupqogq"
 [node name="Menu" type="CanvasLayer" parent="." unique_id=1462163422]
 script = ExtResource("9_oiatc")
 game_scene = &"uid://dbc8p40r5bsej"
+lobby_scene = &"uid://c7djubyw8gbyr"
 boat_hulls = Array[ExtResource("10_e5qqf")]([ExtResource("3_jix8l"), ExtResource("12_8uw0o"), ExtResource("12_7bbuq"), ExtResource("14_ql5ya"), ExtResource("15_ka3nr")])
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu" unique_id=1069369484]
@@ -199,6 +205,7 @@ alignment = 1
 
 [node name="NewGameButton" type="Button" parent="Menu/PanelContainer/VBoxContainer/Buttons" unique_id=347002807]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_0o4t1")
 theme_override_font_sizes/font_size = 40
@@ -209,6 +216,7 @@ text = "New Game"
 
 [node name="SettingsButton" type="Button" parent="Menu/PanelContainer/VBoxContainer/Buttons" unique_id=680208313]
 layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("10_0o4t1")
 theme_override_font_sizes/font_size = 40
@@ -216,6 +224,33 @@ theme_override_styles/normal = ExtResource("15_8u0te")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_g8g3n")
 theme_override_styles/hover = SubResource("StyleBoxTexture_oiatc")
 text = "Settings"
+
+[node name="Buttons2" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer" unique_id=1342687757]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="MultiplayerButton" type="Button" parent="Menu/PanelContainer/VBoxContainer/Buttons2" unique_id=405559834]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_0o4t1")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("15_8u0te")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g8g3n")
+theme_override_styles/hover = SubResource("StyleBoxTexture_oiatc")
+text = "Host Game"
+
+[node name="JoinGameButton" type="Button" parent="Menu/PanelContainer/VBoxContainer/Buttons2" unique_id=389474795]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_0o4t1")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("15_8u0te")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g8g3n")
+theme_override_styles/hover = SubResource("StyleBoxTexture_oiatc")
+text = "Join Game"
 
 [node name="Banner" type="PanelContainer" parent="Menu" unique_id=266015412]
 offset_left = 294.0
@@ -236,7 +271,95 @@ text = "Pirates of the Karabean"
 label_settings = SubResource("LabelSettings_684vk")
 horizontal_alignment = 1
 
+[node name="JoinGameMenu" type="CanvasLayer" parent="." unique_id=647083332]
+visible = false
+script = ExtResource("25_ka3nr")
+
+[node name="Panel" type="Panel" parent="JoinGameMenu" unique_id=1268519510]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3b2ya")
+
+[node name="PanelContainer" type="PanelContainer" parent="JoinGameMenu" unique_id=279147042]
+offset_left = 700.0
+offset_top = 328.0
+offset_right = 1975.0
+offset_bottom = 1152.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_3b2ya")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="JoinGameMenu/PanelContainer" unique_id=1152831998]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 2
+
+[node name="Spacer" type="Control" parent="JoinGameMenu/PanelContainer/VBoxContainer" unique_id=1300100343]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+
+[node name="NameInput" type="LineEdit" parent="JoinGameMenu/PanelContainer/VBoxContainer" unique_id=1774194564]
+layout_mode = 2
+theme = ExtResource("25_ql5ya")
+placeholder_text = "Player Name"
+
+[node name="AddressInput" type="LineEdit" parent="JoinGameMenu/PanelContainer/VBoxContainer" unique_id=32256283]
+layout_mode = 2
+theme = ExtResource("25_ql5ya")
+text = "127.0.0.1"
+placeholder_text = "127.0.0.1"
+
+[node name="Buttons" type="HBoxContainer" parent="JoinGameMenu/PanelContainer/VBoxContainer" unique_id=1233493166]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="JoinGameMenu/PanelContainer/VBoxContainer/Buttons" unique_id=543260797]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("10_0o4t1")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = ExtResource("15_8u0te")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_g8g3n")
+theme_override_styles/hover = SubResource("StyleBoxTexture_oiatc")
+text = "Cancel"
+
+[node name="JoinButton" type="Button" parent="JoinGameMenu/PanelContainer/VBoxContainer/Buttons" unique_id=1827096381]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("25_ql5ya")
+disabled = true
+text = "Join"
+
+[node name="Banner" type="PanelContainer" parent="JoinGameMenu" unique_id=789116038]
+offset_left = 826.0
+offset_top = 262.0
+offset_right = 1850.0
+offset_bottom = 518.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3b2ya")
+
+[node name="TextureRect" type="TextureRect" parent="JoinGameMenu/Banner" unique_id=1814680259]
+layout_mode = 2
+texture = ExtResource("9_dy7ct")
+
+[node name="Label" type="Label" parent="JoinGameMenu/Banner" unique_id=2066467030]
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -16)
+text = "Join Game"
+label_settings = SubResource("LabelSettings_684vk")
+horizontal_alignment = 1
+
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/LeftShipSelector" to="Menu" method="_on_left_ship_selector_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/RightShipSelector" to="Menu" method="_on_right_ship_selector_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons/NewGameButton" to="Menu" method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons/SettingsButton" to="Menu" method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons2/MultiplayerButton" to="Menu" method="_on_multiplayer_button_pressed"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons2/JoinGameButton" to="Menu" method="_on_join_game_button_pressed"]
+[connection signal="join_game" from="JoinGameMenu" to="Menu" method="_on_join_game_menu_join_game"]
+[connection signal="text_changed" from="JoinGameMenu/PanelContainer/VBoxContainer/NameInput" to="JoinGameMenu" method="_on_name_input_text_changed"]
+[connection signal="text_changed" from="JoinGameMenu/PanelContainer/VBoxContainer/AddressInput" to="JoinGameMenu" method="_on_address_input_text_changed"]
+[connection signal="pressed" from="JoinGameMenu/PanelContainer/VBoxContainer/Buttons/CancelButton" to="JoinGameMenu" method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="JoinGameMenu/PanelContainer/VBoxContainer/Buttons/JoinButton" to="JoinGameMenu" method="_on_join_button_pressed"]

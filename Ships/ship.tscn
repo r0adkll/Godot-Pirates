@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://h80fj2pfv1nd" path="res://Cannons/cannon.tscn" id="13_a86iu"]
 [ext_resource type="Animation" uid="uid://bkwilblbe1swk" path="res://Ships/Effects/hit_flash.res" id="13_ttvci"]
 [ext_resource type="Script" uid="uid://bc5yiewe4toml" path="res://Ships/Scripts/Inputs/input_splitter.gd" id="16_pksjs"]
+[ext_resource type="Script" uid="uid://c10lrnvgv6het" path="res://Ships/Scripts/Inputs/transform_rpc_input.gd" id="16_ujngh"]
 [ext_resource type="AudioStream" uid="uid://doeqat548ha24" path="res://Ships/Effects/Sfx/wood_breaking.mp3" id="17_em2b4"]
 [ext_resource type="Script" uid="uid://bewtg2en1w3po" path="res://Ships/Scripts/Inputs/gamepad_player_movement_input.gd" id="18_02vqd"]
 [ext_resource type="AudioStream" uid="uid://d15bm65mts5ap" path="res://Ships/Effects/Sfx/wood_impact.mp3" id="18_84lgx"]
@@ -26,6 +27,7 @@
 [ext_resource type="Script" uid="uid://do7vexllvljna" path="res://Ships/Scripts/Inputs/sprint_input.gd" id="20_02vqd"]
 [ext_resource type="Script" uid="uid://dnhs0l0c867uo" path="res://Systems/Trails/Scripts/trail_emitter.gd" id="20_a86iu"]
 [ext_resource type="PackedScene" uid="uid://dyxsvt3jxenvf" path="res://Ships/Weapons/broadsides.tscn" id="22_sb8vm"]
+[ext_resource type="Script" uid="uid://dbm02b7s7jet3" path="res://Ships/Scripts/Inputs/crew_deploy_input.gd" id="23_akqdl"]
 [ext_resource type="Script" uid="uid://6os0n23546yr" path="res://Ships/Scripts/Weapons/weapon_system.gd" id="23_m3k8j"]
 
 [sub_resource type="Animation" id="Animation_cxoxt"]
@@ -163,6 +165,7 @@ origin = NodePath("..")
 magazine = NodePath("../Magazine")
 
 [node name="AimCursor" type="Sprite2D" parent="." unique_id=1984335755]
+visible = false
 z_index = 2
 scale = Vector2(2, 2)
 texture = ExtResource("11_g1xq6")
@@ -176,6 +179,15 @@ offset_top = -33.0
 offset_bottom = -33.0
 pivot_offset = Vector2(0, 33)
 duration = 2
+
+[node name="MultiplayerInput" type="Node" parent="." unique_id=673866338 node_paths=PackedStringArray("ship")]
+script = ExtResource("4_a86iu")
+ship = NodePath("..")
+enabled = false
+metadata/_custom_type_script = "uid://c0g0sy824hji6"
+
+[node name="TransformRpcInput" type="Node" parent="MultiplayerInput" unique_id=1326420649]
+script = ExtResource("16_ujngh")
 
 [node name="PlayerInput" type="Node" parent="." unique_id=2096444177 node_paths=PackedStringArray("ship")]
 script = ExtResource("4_a86iu")
@@ -202,6 +214,9 @@ script = ExtResource("18_02vqd")
 
 [node name="PlayerShootInput" type="Node" parent="PlayerInput" unique_id=1576787881]
 script = ExtResource("7_m3k8j")
+
+[node name="CrewDeployInput" type="Node" parent="PlayerInput" unique_id=1361426898]
+script = ExtResource("23_akqdl")
 
 [node name="Sfx" type="Node" parent="." unique_id=2017829903]
 

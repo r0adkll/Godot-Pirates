@@ -4,6 +4,9 @@ extends Node2D
 ## For the first iteration, it will be very hand built as we transition 
 ## into a more generative design
 
+## Signal observers that the map is generated and ready
+signal map_generated
+
 const fort_scene := preload("res://Map/Forts/fort.tscn")
 
 @onready var player_camera: PlayerCamera = %PlayerCamera
@@ -20,10 +23,13 @@ const fort_scene := preload("res://Map/Forts/fort.tscn")
 @onready var navigation_region_2d: NavigationRegion2D = $"../NavigationRegion2D"
 
 @export var map_size: Vector2i
+@export var generate_map_on_ready: bool = true
+
+var map_ready: bool = false
 
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _noise: FastNoiseLite = FastNoiseLite.new()
-var _island_builder: IslandBuilder = IslandBuilder.new()
+var _island_builder: IslandBuilder = IslandBuilder.new(_rng)
 
 ## TileSet Cell Data for easily applying specific tiles to a map 
 var water_tile: CellData = CellData.new(0, Vector2i(8, 4), 0)
@@ -31,16 +37,12 @@ var translucent_water_tile: CellData = CellData.new(0, Vector2i(8, 4), 1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_rng.randomize()
-	_noise.seed = _rng.randi()
-	_noise.fractal_octaves = 3
-	_noise.fractal_lacunarity = 1.575
-	_noise.frequency = 0.08
-	_noise.noise_type = FastNoiseLite.TYPE_PERLIN
-	
-	_generate_map()
-	
-	
+	# If this component is setup to generate a map, go ahead
+	# and do so
+	if generate_map_on_ready:
+		generate_server_map()
+
+
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_focus_next"):
 		var player: Ship = get_tree().get_first_node_in_group(Ship.GROUP)
@@ -50,9 +52,27 @@ func _physics_process(_delta: float) -> void:
 			player_camera.set_following(camera_harness)
 
 
+func setup_rng(rng_seed: int, rng_state: int, noise_seed: int) -> void:
+	_rng.seed = rng_seed
+	_rng.state = rng_state
+	_noise.seed = noise_seed
+	_noise.fractal_octaves = 3
+	_noise.fractal_lacunarity = 1.575
+	_noise.frequency = 0.08
+	_noise.noise_type = FastNoiseLite.TYPE_PERLIN
+
+
+## Setup the map RNG and generate a new map for a server to communicate to clients
+## This should only be used in Multiplayer games
+func generate_server_map() -> void:
+	_rng.randomize()
+	setup_rng(_rng.seed, _rng.state, _rng.randi())
+	generate_map()
+
+
 ## Generate the automatic layers of the map (sea floor and ocean layers)
 ## Based on the map size
-func _generate_map() -> void:	
+func generate_map() -> void:	
 	_setup_camera_limits()
 	
 	var land_cells: Array[Vector2i] = []
@@ -84,10 +104,9 @@ func _generate_map() -> void:
 	navigation_region_2d.bake_navigation_polygon(false)	
 	TimeUtil.print_time(nav_bake_start, "Baked NavRegtion")
 	
-	# TEST: Add a player to the map
-	%ShipsSystem.spawn_player()
-	%ShipsSystem.spawn_enemy()
-	
+	# Notify observers
+	map_ready = true
+	map_generated.emit()
 
 
 ## Process an island spec into its tilemap tiles and generate it's Island

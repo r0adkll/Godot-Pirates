@@ -14,14 +14,15 @@ const FRICTION: float = 300
 # Set by the firing cannon
 var origin: Node2D
 var faction: Faction
+var is_remote: bool = false
 
 # The amount of damage this cannon ball will inflict on colliding targets
 var damage: float = 15.0
 var velocity: Vector2 = Vector2.RIGHT
+
 var _initial_velocity: Vector2 = velocity
 var _trail_scale_y: float = 0.224
 var _is_sinking: bool = false
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -49,7 +50,7 @@ func _physics_process(delta: float) -> void:
 		
 	
 	# Check collisions
-	if ray_cast.is_colliding():
+	if not is_remote and ray_cast.is_colliding():
 		var collider: Node2D = ray_cast.get_collider()
 		
 		# Apply damage, if colliding subject can take damage
@@ -59,9 +60,17 @@ func _physics_process(delta: float) -> void:
 				(target as DamageTarget).damage(faction, damage)
 				
 			# Explode
-			_explode()
+			explode()
 
 
+func explode() -> void:
+	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
+		_explode.rpc()
+	else:
+		_explode()
+
+
+@rpc("any_peer", "call_local", "reliable")
 func _explode() -> void:
 	var new_exp: Explosion = explosion.instantiate()
 	new_exp.global_position = global_position

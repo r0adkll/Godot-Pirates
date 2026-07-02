@@ -5,6 +5,16 @@
 [ext_resource type="StyleBox" uid="uid://d071hofbfy833" path="res://UI/Resources/BIG/hover_button_texture.tres" id="3_yykv4"]
 [ext_resource type="StyleBox" uid="uid://e4xft5q4tl2i" path="res://UI/Resources/BIG/normal_button_texture.tres" id="4_ejx4a"]
 [ext_resource type="StyleBox" uid="uid://b3fkloeugumjq" path="res://UI/Resources/BIG/pressed_button_texture.tres" id="5_sv0wh"]
+[ext_resource type="Texture2D" uid="uid://d13qpte7rlegc" path="res://UI/Resources/BIG/checkbox_beige_cross 1.png" id="6_yykv4"]
+[ext_resource type="Texture2D" uid="uid://id8y43i6trhp" path="res://UI/Resources/BIG/checkbox_beige_empty 1.png" id="7_ejx4a"]
+[ext_resource type="Texture2D" uid="uid://cotxo6ktbiik6" path="res://UI/Resources/BIG/panel_border_brown_detail 1.png" id="8_ejx4a"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3b2ya"]
+texture = ExtResource("8_ejx4a")
+texture_margin_left = 74.0
+texture_margin_top = 73.0
+texture_margin_right = 74.0
+texture_margin_bottom = 74.0
 
 [resource]
 Button/colors/font_disabled_color = Color(1, 1, 1, 0.5137255)
@@ -14,3 +24,14 @@ Button/styles/disabled = ExtResource("2_22fmq")
 Button/styles/hover = ExtResource("3_yykv4")
 Button/styles/normal = ExtResource("4_ejx4a")
 Button/styles/pressed = ExtResource("5_sv0wh")
+CheckBox/icons/checked = ExtResource("6_yykv4")
+CheckBox/icons/checked_disabled = ExtResource("6_yykv4")
+CheckBox/icons/unchecked = ExtResource("7_ejx4a")
+CheckBox/styles/normal = ExtResource("4_ejx4a")
+CheckBox/styles/pressed = ExtResource("5_sv0wh")
+LineEdit/colors/caret_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_color = Color(0, 0, 0, 1)
+LineEdit/colors/font_placeholder_color = Color(0.69965345, 0.6996535, 0.6996533, 1)
+LineEdit/font_sizes/font_size = 48
+LineEdit/fonts/font = ExtResource("1_7r4kq")
+LineEdit/styles/normal = SubResource("StyleBoxTexture_3b2ya")
