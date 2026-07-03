@@ -49,21 +49,43 @@ func deploy(
 
 # Dump all crew member's into the 'Water' to be picked up by any vessel
 func abandon_ship() -> void:
+	var offsets: PackedFloat64Array = []
+	var speeds: PackedFloat64Array = []
+	var frictions: PackedFloat64Array = []
+	
 	for i in range(crew):
 		# Evenly disperse the crew
 		var rotation_jitter_amt = deg_to_rad(20)
 		var rotation_jitter = randf_range(-rotation_jitter_amt, rotation_jitter_amt)
 		var offset_rotation = ((2*PI) / crew) * i + rotation_jitter
+		offsets.append(offset_rotation)
+		speeds.append(randf_range(80, 120))
+		frictions.append(randf_range(28, 32))
+		
+	if multiplayer.has_multiplayer_peer():
+		dump_all_crew.rpc(crew, offsets, speeds, frictions)
+	else:
+		dump_all_crew(crew, offsets, speeds, frictions)
+
+@rpc("any_peer", "call_local", "reliable")
+func dump_all_crew(
+	count: int, 
+	offsets: PackedFloat64Array, 
+	speeds: PackedFloat64Array, 
+	frictions: PackedFloat64Array,
+) -> void:
+	for i in range(count):
+		# Evenly disperse the crew
+		var offset_rotation = offsets[i]
 		
 		var new_crew: FloatingCrew = floating_crew.instantiate()
 		new_crew.position = global_position
 		new_crew.direction = Vector2(1, 0).rotated(offset_rotation)
-		new_crew.swim_speed = randf_range(80, 120)
-		new_crew.friction = randf_range(28, 32)
+		new_crew.swim_speed = speeds[i]
+		new_crew.friction = frictions[i]
 		new_crew.origin = self
 		SceneSpawnerSystem.add_entity(new_crew)
 	
 	# Set crew to 0, and emit an update to the state
 	crew = 0
 	crew_updated.emit(0, max_crew)
-	

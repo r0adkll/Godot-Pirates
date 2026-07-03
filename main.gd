@@ -5,12 +5,17 @@ extends Node2D
 @onready var hud: Hud = $HUD
 
 @export var player_faction: Faction
+@export var enemy_faction: Faction
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SceneSpawnerSystem.entity_owner = self
 	ships_system.player_faction = player_faction
 	hud.player_counter.faction = player_faction
+	
+	# Setup the faction system for this local game
+	FactionSystem.factions[player_faction.id] = player_faction
+	FactionSystem.factions[enemy_faction.id] = enemy_faction
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

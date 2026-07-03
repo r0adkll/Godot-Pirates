@@ -184,6 +184,7 @@ func _on_die(source: Faction) -> void:
 	pass
 
 ## "Kill" the ship and execute all eol functions
+@rpc("any_peer", "call_local", "reliable")
 func die(source: Faction = null) -> void:
 	# Set stats
 	health = 0

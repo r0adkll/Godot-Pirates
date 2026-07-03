@@ -50,6 +50,7 @@ baking_rect = Rect2(0, 0, 12800, 12800)
 [node name="Main" type="Node2D" unique_id=1410257342]
 script = ExtResource("1_1u8w0")
 player_faction = ExtResource("12_d13ii")
+enemy_faction = ExtResource("22_ryguw")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=567392199]
 layer = 2

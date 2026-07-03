@@ -574,7 +574,6 @@ texture_region_size = Vector2i(128, 128)
 
 [sub_resource type="Resource" id="Resource_7w5dg"]
 script = ExtResource("2_itg1u")
-id = "p1"
 metadata/_custom_type_script = "uid://cj4tu6bshyj28"
 
 [sub_resource type="Resource" id="Resource_3kwnv"]
@@ -584,7 +583,6 @@ metadata/_custom_type_script = "uid://d18r0sjd1actx"
 
 [sub_resource type="Resource" id="Resource_p8gjn"]
 script = ExtResource("2_itg1u")
-id = "enemy1"
 type = 1
 metadata/_custom_type_script = "uid://cj4tu6bshyj28"
 
@@ -595,7 +593,6 @@ metadata/_custom_type_script = "uid://d18r0sjd1actx"
 
 [sub_resource type="Resource" id="Resource_s047o"]
 script = ExtResource("2_itg1u")
-id = "enemy2"
 type = 1
 metadata/_custom_type_script = "uid://cj4tu6bshyj28"
 

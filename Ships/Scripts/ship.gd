@@ -148,6 +148,17 @@ func _on_lost_beach_head(_beach: BaseShip.BeachHead) -> void:
 
 
 func _on_damage_target_apply_damage(hit_faction: Faction, amount: float) -> void:
+	# Decrement health / check for death
+	if multiplayer.has_multiplayer_peer():
+		_apply_damage.rpc(hit_faction.id, amount)
+	else:
+		_apply_damage(hit_faction.id, amount)
+
+## Multiplayer compatible way to apply damage to a ship
+## If connected to a MP game it will .rpc() call this function
+## causing all clients to reflect 
+@rpc("any_peer", "call_local", "reliable")
+func _apply_damage(hit_faction_id: int, amount: float):
 	if state == State.ALIVE:
 		# Hit Flash
 		animation_player.play(&"hit_flash", -1, 2.5)
@@ -161,22 +172,12 @@ func _on_damage_target_apply_damage(hit_faction: Faction, amount: float) -> void
 		emote.duration = Emote.Duration.SHORT
 		emote.show_emote()
 		
-		# Decrement health / check for death
-		if multiplayer.has_multiplayer_peer():
-			_apply_damage.rpc(hit_faction.id, amount)
-		else:
-			health -= amount
-			if health <= 0:
-				die(hit_faction)
-
-@rpc("any_peer", "call_local", "reliable")
-func _apply_damage(hit_faction_id: int, amount: float):
-	health -= amount
-	if health <= 0:
-		# FIXME: This is hacky AF and we should probably pass this as part of the system
-		#        to make less fragile
-		var hit_faction = player_system.get_faction(hit_faction_id)
-		die(hit_faction)
+		# ONLY the host should actual do the damage math 
+		# and ultimately the death call
+		health -= amount
+		if health <= 0:
+			var hit_faction = FactionSystem.get_faction(hit_faction_id)
+			die(hit_faction)
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

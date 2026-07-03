@@ -13,8 +13,14 @@ func _physics_process(_delta: float) -> void:
 		_lead_target(target)
 		
 		# Fire
-		cannon.fire()
+		if multiplayer.has_multiplayer_peer():
+			fire.rpc()
+		else:
+			fire()
 
+@rpc("any_peer", "call_local", "reliable")
+func fire() -> void:
+	cannon.fire()
 
 func _lead_target(node: Node2D) -> void:
 	if is_instance_of(node, CharacterBody2D):
