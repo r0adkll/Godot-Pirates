@@ -102,9 +102,9 @@ tile_set = ExtResource("1_2ft0c")
 curve = SubResource("Curve2D_glbon")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Map/Path2D" unique_id=1871718425]
-position = Vector2(1704.6088, 1029.1226)
-rotation = 0.5910455
-progress = 875.623
+position = Vector2(2169.1682, 1131.7211)
+rotation = -0.14312208
+progress = 1371.6251
 script = ExtResource("2_seo4f")
 editor_enabled = false
 speed = 250.0
@@ -113,9 +113,9 @@ speed = 250.0
 path_follow = NodePath("..")
 
 [node name="PathFollow2D2" type="PathFollow2D" parent="Map/Path2D" unique_id=1786500982]
-position = Vector2(3627.4312, 2019.8135)
-rotation = 1.3281472
-progress = 3267.8665
+position = Vector2(2158.9949, 1133.2272)
+rotation = -0.15089329
+progress = 1361.3395
 script = ExtResource("2_seo4f")
 editor_enabled = false
 speed = 250.0
@@ -125,9 +125,9 @@ path_follow = NodePath("..")
 boat_texture = ExtResource("4_xqinx")
 
 [node name="PathFollow2D3" type="PathFollow2D" parent="Map/Path2D" unique_id=2105986326]
-position = Vector2(1477.9666, 3256.0535)
-rotation = -3.0603268
-progress = 6535.733
+position = Vector2(3652.9666, 2592.6912)
+rotation = 1.6263916
+progress = 3843.947
 script = ExtResource("2_seo4f")
 editor_enabled = false
 speed = 250.0

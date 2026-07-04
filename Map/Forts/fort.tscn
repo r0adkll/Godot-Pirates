@@ -2,17 +2,21 @@
 
 [ext_resource type="Texture2D" uid="uid://dgf2h230irp1v" path="res://BuilderMode/Sprites/fort_medium.png" id="1_58cr6"]
 [ext_resource type="Script" uid="uid://bfgkh78kyfi0o" path="res://Map/Forts/Scripts/fort.gd" id="1_rakby"]
-[ext_resource type="Texture2D" uid="uid://vony0r6hc0i3" path="res://Systems/Faction/Sprites/plain.png" id="3_p54y3"]
+[ext_resource type="Texture2D" uid="uid://cp4d1jmw4akv3" path="res://Ships/Sprites/ship_pirate/pirate_flag.png" id="3_5wmh5"]
 [ext_resource type="PackedScene" uid="uid://7j657q17dshm" path="res://Map/Forts/fort_cannon.tscn" id="3_wtxsg"]
 [ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="4_p54y3"]
+[ext_resource type="Texture2D" uid="uid://c4q20wp6brlm3" path="res://Ships/Sprites/ship_plain/plain_flag.png" id="5_as62f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b2ya"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_wtxsg"]
 font = ExtResource("4_p54y3")
-font_size = 30
-outline_size = 10
+font_size = 72
+outline_size = 20
 outline_color = Color(0, 0, 0, 1)
-shadow_size = 10
-shadow_color = Color(0, 0, 0, 1)
+shadow_size = 40
+shadow_color = Color(1, 1, 1, 0.45490196)
+shadow_offset = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3b2ya"]
 size = Vector2(256, 256)
@@ -29,21 +33,32 @@ script = ExtResource("1_rakby")
 position = Vector2(192, 192)
 texture = ExtResource("1_58cr6")
 
-[node name="FactionFlag" type="Sprite2D" parent="." unique_id=1395716489]
-position = Vector2(192, 192)
-scale = Vector2(2, 2)
-texture = ExtResource("3_p54y3")
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1051619557]
+custom_minimum_size = Vector2(384, 384)
+offset_right = 384.0
+offset_bottom = 384.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3b2ya")
 
-[node name="Count" type="Label" parent="FactionFlag" unique_id=726567162]
+[node name="FactionFlag" type="TextureRect" parent="PanelContainer" unique_id=327068661]
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_5wmh5")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="Count" type="Label" parent="PanelContainer/FactionFlag" unique_id=726567162]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -53.0
-offset_top = -34.5
-offset_right = -13.0
-offset_bottom = -11.5
+offset_left = -20.0
+offset_top = -19.0
+offset_right = 20.0
+offset_bottom = 19.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
@@ -52,6 +67,12 @@ text = "4"
 label_settings = SubResource("LabelSettings_wtxsg")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FactionFlag" type="Sprite2D" parent="." unique_id=1395716489]
+visible = false
+position = Vector2(192, 192)
+scale = Vector2(2, 2)
+texture = ExtResource("5_as62f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1388149839]
 visible = false

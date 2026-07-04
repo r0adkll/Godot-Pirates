@@ -2,7 +2,7 @@
 class_name PlayerInput
 extends Node
 
-@export var ship: BaseShip
+@export var ship: Ship
 @export var enabled: bool = true
 
 
@@ -17,8 +17,7 @@ func _physics_process(delta: float) -> void:
 ## Process the input handling of all children nodes
 func _process_input(delta: float) -> void:
 	for child in get_children():
-		if is_instance_of(child, PlayerInputNode):
-			(child as PlayerInputNode).process_input(delta)
+		(child as PlayerInputNode).process_input(ship, delta)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

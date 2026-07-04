@@ -13,7 +13,7 @@ const VOLUME_DEC_RATE: float = 25
 var _theme_volume: float = MIN_VOLUME
 
 
-func process_input(delta: float) -> void:
+func process_input(ship: Ship, delta: float) -> void:
 	if enabled:
 		var is_movement_pressed = (Input.is_action_pressed("ui_up") or Input.is_action_pressed("ui_down") or Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"))
 		if is_movement_pressed:

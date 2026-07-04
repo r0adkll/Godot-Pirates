@@ -1,9 +1,7 @@
 extends PlayerInputNode
 
 
-func process_input(delta: float) -> void:
-	var ship = get_ship()
-	
+func process_input(ship: Ship, delta: float) -> void:
 	# Apply Speed Input
 	if Input.is_action_pressed("ui_up"):
 		ship.ship_velocity += BaseShip.ACCELERATION * delta

@@ -21,7 +21,7 @@ func fire() -> bool:
 		new_fire.position = shoot_pos.position
 		add_child(new_fire)
 		
-		var is_multiplayer = multiplayer.has_multiplayer_peer()
+		var is_multiplayer = Lobby.active
 		var ball: CannonBall = cannon_ball_scene.instantiate()
 		if is_multiplayer:
 			ball.name = "player_" + str(faction.id) + "_cannon_ball"

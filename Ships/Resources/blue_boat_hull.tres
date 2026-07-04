@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c0nwc61r80ht" path="res://Ships/Sprites/ship_blue/blue_dmg_heavy.png" id="1_8njyi"]
 [ext_resource type="Texture2D" uid="uid://ub6vpxq0glfa" path="res://Ships/Sprites/ship_blue/blue_dmg_light.png" id="2_r4io0"]
 [ext_resource type="Texture2D" uid="uid://cdg8gqf3qtu5w" path="res://Ships/Sprites/ship_blue/blue_dead.png" id="3_qmlnl"]
-[ext_resource type="Texture2D" uid="uid://fb0pduvl3kq0" path="res://Systems/Faction/Sprites/blue.png" id="4_r4io0"]
+[ext_resource type="Texture2D" uid="uid://cfnvb6c1yv12j" path="res://Ships/Sprites/ship_blue/blue_flag.png" id="4_r4io0"]
 [ext_resource type="Texture2D" uid="uid://b7w1ux0n7b5ar" path="res://Ships/Sprites/ship_blue/blue_new.png" id="4_thj53"]
 [ext_resource type="Script" uid="uid://by0je1l7i3ir4" path="res://Ships/Resources/boat_hulls.gd" id="5_og8rg"]
 

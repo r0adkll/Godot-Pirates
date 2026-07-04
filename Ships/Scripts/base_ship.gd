@@ -9,6 +9,7 @@ extends CharacterBody2D
 signal state_changed(ship: BaseShip, prev_state: State, new_state: State)
 signal coin_changed(amount: int)
 signal crew_returned(amount: int)
+signal sprint_changed(percent: float)
 
 # The control mode
 enum { LOCAL, REMOTE }
@@ -51,7 +52,12 @@ const TRAIL_ANGLE: float = 90
 @export var left_trail: TrailEmitter
 @export var right_trail: TrailEmitter
 @export var max_health: float = 100
+@export var max_sprint: float = 500
 @onready var health: float = max_health
+@onready var sprint: float = max_sprint:
+	set(new_value):
+		sprint = new_value
+		sprint_changed.emit(sprint / max_sprint)
 
 @export var coin: int = 0: set = _set_coin
 func _set_coin(new_value: int) -> void:
@@ -148,6 +154,7 @@ func _idle_ship() -> void:
 
 
 ## Fire the ship's main cannons
+@rpc("any_peer", "call_remote", "reliable")
 func fire_main_cannon() -> void:
 	cannon.fire()
 

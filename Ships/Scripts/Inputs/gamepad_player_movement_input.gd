@@ -5,9 +5,7 @@ extends PlayerInputNode
 var left_joystick_vector: Vector2 = Vector2()
 var right_joystick_vector: Vector2 = Vector2()
 
-func process_input(delta: float) -> void:
-	var ship = get_ship()
-	
+func process_input(ship: Ship, delta: float) -> void:
 	left_joystick_vector.x = Input.get_joy_axis(0, JOY_AXIS_LEFT_X)
 	left_joystick_vector.y = Input.get_joy_axis(0, JOY_AXIS_LEFT_Y)
 	right_joystick_vector.x = Input.get_joy_axis(0, JOY_AXIS_RIGHT_X)

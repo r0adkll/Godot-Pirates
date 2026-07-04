@@ -14,7 +14,10 @@ offset_left = -990.0
 offset_right = -890.0
 offset_bottom = 32.0
 grow_horizontal = 2
+size_flags_horizontal = 3
 script = ExtResource("1_qh381")
+low_texture = ExtResource("3_m6ls7")
+full_texture = ExtResource("4_ykvmv")
 
 [node name="Background" type="NinePatchRect" parent="." unique_id=159187932]
 custom_minimum_size = Vector2(0, 32)

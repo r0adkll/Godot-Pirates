@@ -14,6 +14,13 @@ extends Control
 			
 @export_range(0, 1, 0.1) var low_threshold: float = 0.3
 
+@export var low_texture: Texture2D
+@export var full_texture: Texture2D
+
+
+func _ready() -> void:
+	low.texture = low_texture
+	full.texture = full_texture
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -29,6 +36,7 @@ func _update_bar_width() -> void:
 	# Keep the width of the progress bars 
 	low.size.x = _progress_width()
 	full.size.x = _progress_width()
+	background.size.x = size.x
 
 ## Compute the progress width size of child elements
 func _progress_width() -> float:

@@ -24,6 +24,9 @@ var player_info = {
 
 var players_loaded = 0
 
+## Whether or not multiplayer is currently active
+## Used throughout the codebase to make multiplayer based calls/decisions
+var active: bool = false
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_player_connected)
@@ -41,6 +44,9 @@ func join_game(address = ""):
 	if error:
 		return error
 	multiplayer.multiplayer_peer = peer
+	
+	## Mark multiplayer mode as active
+	active = true
 
 
 func create_game():
@@ -52,11 +58,15 @@ func create_game():
 
 	players[1] = player_info
 	player_connected.emit(1, player_info)
+	
+	## Mark multiplayer mode as active
+	active = true
 
 
 func remove_multiplayer_peer():
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	players.clear()
+	active = false
 
 
 # When the server decides to start the game from a UI scene,
@@ -81,12 +91,14 @@ func player_loaded():
 func _on_player_connected(id):
 	_register_player.rpc_id(id, player_info)
 
+
 # Notify other connections that this player is updated
 func _on_player_updated():
 	var peer_id = multiplayer.get_unique_id()
 	players[peer_id] = player_info
 	player_connected.emit(peer_id, player_info)
 	_register_player.rpc(player_info)
+
 
 @rpc("any_peer", "reliable")
 func _register_player(new_player_info):

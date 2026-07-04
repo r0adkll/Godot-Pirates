@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://63wxoecufwfe" path="res://Ships/Scripts/boat_sprite.gd" id="3_ho0l7"]
 [ext_resource type="Script" uid="uid://c0g0sy824hji6" path="res://Ships/Scripts/Inputs/player_input.gd" id="4_a86iu"]
 [ext_resource type="Script" uid="uid://be142l01efsi4" path="res://Ships/Scripts/Inputs/theme_song_input.gd" id="5_10d41"]
-[ext_resource type="Resource" uid="uid://b41sp1cm34ll6" path="res://Ships/Resources/blue_boat_hull.tres" id="6_84lgx"]
+[ext_resource type="Resource" uid="uid://beyw4n2x3ucvv" path="res://Ships/Resources/plain_boat_hull.tres" id="5_akqdl"]
 [ext_resource type="Script" uid="uid://dfkl3ktuj1gqw" path="res://Ships/Scripts/Inputs/player_movement_input.gd" id="6_sb8vm"]
 [ext_resource type="Script" uid="uid://bvpay758pgbvr" path="res://Ships/Scripts/Inputs/player_shoot_input.gd" id="7_m3k8j"]
 [ext_resource type="PackedScene" uid="uid://ca4534vsk0742" path="res://Cannons/magazine.tscn" id="9_njxlb"]
@@ -138,9 +138,10 @@ coin = 500
 scale = Vector2(2, 2)
 texture = ExtResource("2_ho0l7")
 script = ExtResource("3_ho0l7")
-hulls = ExtResource("6_84lgx")
+hulls = ExtResource("5_akqdl")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=2004901318]
+visible = false
 scale = Vector2(1.9551865, 2.0247545)
 polygon = PackedVector2Array(20, -32, 19.946945, 18.767706, 15.343803, 34.078205, 10, 43, 5.114601, 46.425377, 0, 47.413155, -5.114601, 46.425377, -11, 43, -16, 33, -19.435484, 17.779932, -19, -32, -17, -39, -12, -46, -6, -50, 0, -52, 6, -50, 12, -46, 17, -39)
 
@@ -155,7 +156,7 @@ metadata/_custom_type_script = "uid://b3liy0gjleis0"
 script = ExtResource("11_onxlx")
 
 [node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("9_njxlb")]
-capacity = 20
+capacity = 10
 reload_speed_sec = 1.0
 
 [node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("origin", "magazine") instance=ExtResource("13_a86iu")]
@@ -192,9 +193,6 @@ script = ExtResource("16_ujngh")
 script = ExtResource("4_a86iu")
 ship = NodePath("..")
 
-[node name="PlayerShootInput" type="Node" parent="PlayerInput" unique_id=1576787881]
-script = ExtResource("7_m3k8j")
-
 [node name="ThemeSongInput" type="Node" parent="PlayerInput" unique_id=1956139088]
 script = ExtResource("5_10d41")
 enabled = false
@@ -213,6 +211,9 @@ script = ExtResource("6_sb8vm")
 
 [node name="GamepadPlayerMovementInput" type="Node" parent="PlayerInput/InputSplitter" unique_id=580025588]
 script = ExtResource("18_02vqd")
+
+[node name="PlayerShootInput" type="Node" parent="PlayerInput" unique_id=1576787881]
+script = ExtResource("7_m3k8j")
 
 [node name="CrewDeployInput" type="Node" parent="PlayerInput" unique_id=1361426898]
 script = ExtResource("23_akqdl")

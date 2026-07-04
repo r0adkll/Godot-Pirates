@@ -44,6 +44,7 @@ func _ready() -> void:
 		hud.connect_magazine(cannon.magazine)
 		hud.set_crew_count(crew_cabin.crew, crew_cabin.max_crew)
 		coin_changed.connect(hud.set_coin_count)
+		sprint_changed.connect(hud.set_sprint_percentage)
 		hud.set_coin_count(coin)
 
 
@@ -149,7 +150,7 @@ func _on_lost_beach_head(_beach: BaseShip.BeachHead) -> void:
 
 func _on_damage_target_apply_damage(hit_faction: Faction, amount: float) -> void:
 	# Decrement health / check for death
-	if multiplayer.has_multiplayer_peer():
+	if Lobby.active:
 		_apply_damage.rpc(hit_faction.id, amount)
 	else:
 		_apply_damage(hit_faction.id, amount)

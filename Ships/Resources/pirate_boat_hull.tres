@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bnsvokp371qxr" path="res://Ships/Sprites/ship_pirate/pirate_dmg_light.png" id="2_8jlit"]
 [ext_resource type="Texture2D" uid="uid://dffitx4uv4oqy" path="res://Ships/Sprites/ship_pirate/pirate_dmg_dead.png" id="3_7w4ob"]
 [ext_resource type="Texture2D" uid="uid://05na1be36kmh" path="res://Ships/Sprites/ship_pirate/pirate_new.png" id="4_2pn1a"]
-[ext_resource type="Texture2D" uid="uid://ddwkvv81t8vl8" path="res://Systems/Faction/Sprites/pirate.png" id="4_8jlit"]
+[ext_resource type="Texture2D" uid="uid://cp4d1jmw4akv3" path="res://Ships/Sprites/ship_pirate/pirate_flag.png" id="4_8jlit"]
 [ext_resource type="Script" uid="uid://by0je1l7i3ir4" path="res://Ships/Resources/boat_hulls.gd" id="5_eub4g"]
 
 [resource]

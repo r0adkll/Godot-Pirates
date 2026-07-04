@@ -62,7 +62,7 @@ func abandon_ship() -> void:
 		speeds.append(randf_range(80, 120))
 		frictions.append(randf_range(28, 32))
 		
-	if multiplayer.has_multiplayer_peer():
+	if Lobby.active:
 		dump_all_crew.rpc(crew, offsets, speeds, frictions)
 	else:
 		dump_all_crew(crew, offsets, speeds, frictions)

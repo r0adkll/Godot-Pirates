@@ -2,8 +2,8 @@ class_name Fort
 extends StaticBody2D
 
 @onready var sprite: Sprite2D = $Sprite
-@onready var faction_flag: Sprite2D = $FactionFlag
-@onready var count: Label = $FactionFlag/Count
+@onready var faction_flag: TextureRect = $PanelContainer/FactionFlag
+@onready var count: Label = $PanelContainer/FactionFlag/Count
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var detection_area: Area2D = $DetectionArea
 @onready var tl_cannon: FortCannon = $TL_Cannon

@@ -3,12 +3,13 @@ extends CanvasLayer
 
 const kill_counter_scene := preload("res://UI/kill_counter.tscn")
 
-@onready var ammo_container: UiAmmoContainer = $PlayerContainer/Magazine/MarginContainer/AmmoContainer
-@onready var crew_counter: Label = $PlayerContainer/CrewCounter/HBoxContainer/MarginContainer/Label
-@onready var coin_counter: Label = $PlayerContainer/Coins/HBoxContainer/MarginContainer/Label
+@onready var ammo_container: UiAmmoContainer = %AmmoContainer
+@onready var crew_counter: Label = %CrewCountLabel
+@onready var coin_counter: Label = %CoinCountLabel
+@onready var sprint_meter: HealthBar = %SprintMeter
 
-@onready var player_counter: KillCounter = $KillCounters/PlayerCounter
-@onready var enemy_counter: KillCounter = $KillCounters/EnemyCounter
+@onready var player_counter: KillCounter = $ScoreMeter/PlayerCounter
+@onready var enemy_counter: KillCounter = $ScoreMeter/EnemyCounter
 
 
 func _ready() -> void:
@@ -35,6 +36,8 @@ func _on_magazine_changed(count: int, capacity: int) -> void:
 func set_coin_count(amount: int) -> void:
 	coin_counter.text = "%d" % amount
 
+func set_sprint_percentage(percent: float) -> void:
+	sprint_meter.progress = percent
 
 func _on_faction_kills_updated(faction: Faction, count: int) -> void:
 	## TODO: This should probably be more dynamic or configured by 

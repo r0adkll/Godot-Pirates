@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bsjtm7nvw1ehf"]
 
 [ext_resource type="Script" uid="uid://cljgsylucevra" path="res://UI/Scripts/kill_counter.gd" id="1_hoivn"]
-[ext_resource type="Texture2D" uid="uid://vony0r6hc0i3" path="res://Systems/Faction/Sprites/plain.png" id="1_j2rk1"]
 [ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="2_hoivn"]
+[ext_resource type="Texture2D" uid="uid://c4q20wp6brlm3" path="res://Ships/Sprites/ship_plain/plain_flag.png" id="2_ksr4g"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b2ya"]
 
@@ -29,7 +29,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_3b2ya")
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer" unique_id=972597269]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-texture = ExtResource("1_j2rk1")
+texture = ExtResource("2_ksr4g")
 expand_mode = 5
 
 [node name="Label" type="Label" parent="HBoxContainer" unique_id=1930379798]

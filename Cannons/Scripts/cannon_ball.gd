@@ -64,7 +64,7 @@ func _physics_process(delta: float) -> void:
 
 
 func explode() -> void:
-	if multiplayer.has_multiplayer_peer() and multiplayer.is_server():
+	if Lobby.active and multiplayer.is_server():
 		_explode.rpc()
 	else:
 		_explode()

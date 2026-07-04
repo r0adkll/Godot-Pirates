@@ -1,8 +1,7 @@
 extends PlayerInputNode
 
 ## When enabled, and still alive, communicate its transform info
-func process_input(_delta: float) -> void:
-	var ship: Ship = get_ship()
+func process_input(ship: Ship, _delta: float) -> void:
 	_update_transform.rpc(
 		ship.position,
 		ship.rotation,

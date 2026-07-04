@@ -33,7 +33,6 @@
 
 [sub_resource type="Resource" id="Resource_wlg32"]
 script = ExtResource("2_1mq6f")
-id = "enemy1"
 type = 1
 boat = ExtResource("5_w87dw")
 metadata/_custom_type_script = "uid://cj4tu6bshyj28"
@@ -160,7 +159,6 @@ polygon = PackedVector2Array(20, -32, 19.946945, 18.767706, 15.343803, 34.078205
 
 [node name="CrewCabin" type="Node2D" parent="." unique_id=201274847]
 script = ExtResource("9_35pnw")
-crew = 20
 
 [node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("origin", "magazine") instance=ExtResource("8_35pnw")]
 position = Vector2(0, 62)
@@ -209,7 +207,7 @@ point_lifetime = 0.75
 
 [node name="BeehaveTree" type="Node" parent="." unique_id=1407640588 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("14_yxj2c")
-blackboard = NodePath("@Node@53001")
+blackboard = NodePath("@Node@343725")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 

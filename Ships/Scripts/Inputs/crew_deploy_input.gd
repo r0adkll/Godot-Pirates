@@ -1,9 +1,9 @@
 extends PlayerInputNode
 
 
-func process_input(_delta: float) -> void:
+func process_input(ship: Ship, _delta: float) -> void:
 	if Input.is_action_just_pressed("ui_deploy"):
-		if multiplayer.has_multiplayer_peer():
+		if Lobby.active:
 			deploy_crew.rpc()
 		else:
 			deploy_crew()

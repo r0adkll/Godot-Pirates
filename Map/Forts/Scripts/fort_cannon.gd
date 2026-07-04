@@ -13,7 +13,7 @@ func _physics_process(_delta: float) -> void:
 		_lead_target(target)
 		
 		# Fire
-		if multiplayer.has_multiplayer_peer():
+		if Lobby.active:
 			fire.rpc()
 		else:
 			fire()

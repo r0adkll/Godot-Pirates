@@ -16,8 +16,8 @@ func _input(event: InputEvent) -> void:
 			print("Keyboard Detected")
 		is_gamepad = false
 
-func process_input(delta: float) -> void:
+func process_input(ship: Ship, delta: float) -> void:
 	if is_gamepad:
-		gamepad_input_node.process_input(delta)
+		gamepad_input_node.process_input(ship, delta)
 	else:
-		keyboard_input_node.process_input(delta)
+		keyboard_input_node.process_input(ship, delta)
