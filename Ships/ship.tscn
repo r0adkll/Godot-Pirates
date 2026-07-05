@@ -184,6 +184,7 @@ metadata/_custom_type_script = "uid://b3liy0gjleis0"
 script = ExtResource("11_onxlx")
 crew = 40
 max_crew = 40
+crew_walking_speed = 500.0
 
 [node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("9_njxlb")]
 capacity = 10

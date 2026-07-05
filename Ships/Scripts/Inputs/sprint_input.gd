@@ -1,7 +1,7 @@
 extends PlayerInputNode
 
 @export var sprint_drain_rate: float = 100.0
-@export var sprint_gain_rate: float = 50.0
+@export var sprint_gain_rate: float = 75.0
 
 func process_input(ship: Ship, delta: float) -> void:
 	# Apply Sprint - TODO POWER UP

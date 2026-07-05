@@ -3,7 +3,7 @@ extends CharacterBody2D
 
 enum State { IDLE, TARGET, WANDER }
 
-const walk_speed = 200
+const DEFAULT_WALK_SPEED: float = 200
 const interaction_dist = 100
 
 @onready var sprite: AnimatedSprite2D = $Sprite2D
@@ -18,6 +18,7 @@ const interaction_dist = 100
 
 var state: State = State.IDLE
 var health: float = 100
+var walk_speed: float = DEFAULT_WALK_SPEED
 var deployment: Deployment
 
 ## The target position to move towards

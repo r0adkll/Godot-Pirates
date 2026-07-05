@@ -8,8 +8,8 @@ const kill_counter_scene := preload("res://UI/kill_counter.tscn")
 @onready var coin_counter: Label = %CoinCountLabel
 @onready var sprint_meter: HealthBar = %SprintMeter
 
-@onready var player_counter: KillCounter = $ScoreMeter/PlayerCounter
-@onready var enemy_counter: KillCounter = $ScoreMeter/EnemyCounter
+@onready var player_counter: KillCounter = $VBoxContainer/ScoreMeter/PlayerCounter
+@onready var enemy_counter: KillCounter = $VBoxContainer/ScoreMeter/EnemyCounter
 
 
 func _ready() -> void:

@@ -9,6 +9,7 @@ const walking_crew := preload("res://Crew/walking_crew.tscn")
 # The amount of crew above the vessel/structure this is attached to
 @export var crew: int = 6
 @export var max_crew: int = 20
+@export var crew_walking_speed: float = WalkingCrew.DEFAULT_WALK_SPEED
 @export var blackboard: Blackboard = Blackboard.new()
 
 func _ready() -> void:
@@ -36,7 +37,7 @@ func deploy(
 	var new_crew: WalkingCrew = walking_crew.instantiate()
 	new_crew.global_position = landing_pos
 	new_crew.rotation = deploy_rotation
-	#new_crew.add_collision_exception_with(ship)
+	new_crew.walk_speed = crew_walking_speed
 	new_crew.deployment = WalkingCrew.Deployment.new(ship.faction, island, landing_pos)
 	new_crew.blackboard = blackboard
 	SceneSpawnerSystem.add_entity(new_crew)

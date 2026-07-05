@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://3mwawest4pc"]
+[gd_scene format=3 uid="uid://ykaepquiprnp"]
 
-[ext_resource type="Script" uid="uid://g6k4rlun5br5" path="res://MainMenu/Scripts/pause_menu_ui.gd" id="1_k7k7m"]
-[ext_resource type="Texture2D" uid="uid://b6xg30ith3j4t" path="res://UI/Resources/BIG/banner_classic_curtain 1.png" id="2_omha6"]
-[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="3_j7l1e"]
-[ext_resource type="Texture2D" uid="uid://dcs3daorvjxep" path="res://UI/Resources/BIG/panel_brown_corners_b 1.png" id="4_b12ir"]
-[ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="5_jm8af"]
+[ext_resource type="Script" uid="uid://du2isglgrnylv" path="res://MainMenu/Scripts/game_over_menu_ui.gd" id="1_1n3ef"]
+[ext_resource type="Texture2D" uid="uid://b6xg30ith3j4t" path="res://UI/Resources/BIG/banner_classic_curtain 1.png" id="2_lgio4"]
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="3_7xrwh"]
+[ext_resource type="Texture2D" uid="uid://dcs3daorvjxep" path="res://UI/Resources/BIG/panel_brown_corners_b 1.png" id="4_k4sfr"]
+[ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="5_ue3qm"]
 
 [sub_resource type="Animation" id="Animation_omha6"]
 length = 0.001
@@ -76,22 +76,31 @@ bg_color = Color(0, 0, 0, 0.4)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qsp4k"]
 line_spacing = 0.0
-font = ExtResource("3_j7l1e")
+font = ExtResource("3_7xrwh")
 font_size = 52
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3b2ya"]
-texture = ExtResource("4_b12ir")
+texture = ExtResource("4_k4sfr")
 texture_margin_left = 108.0
 texture_margin_top = 100.0
 texture_margin_right = 113.0
 texture_margin_bottom = 92.0
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=798729079]
+[sub_resource type="LabelSettings" id="LabelSettings_1n3ef"]
+font = ExtResource("3_7xrwh")
+font_size = 48
+font_color = Color(0, 0, 0, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[node name="GameOverMenu" type="CanvasLayer" unique_id=798729079]
 process_mode = 3
 layer = 7
-script = ExtResource("1_k7k7m")
+script = ExtResource("1_1n3ef")
+new_game_scene = &"uid://dbc8p40r5bsej"
+main_menu_scene = &"uid://dmt04rkfnmmkq"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=444209610]
 libraries/ = SubResource("AnimationLibrary_omha6")
@@ -128,13 +137,13 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_xuqvo")
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/PanelContainer/Banner" unique_id=1793190971]
 layout_mode = 2
-texture = ExtResource("2_omha6")
+texture = ExtResource("2_lgio4")
 
-[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/Banner" unique_id=1365895336]
+[node name="Banner" type="Label" parent="VBoxContainer/PanelContainer/Banner" unique_id=1365895336]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -16)
-text = "paused"
+text = "Game Over"
 label_settings = SubResource("LabelSettings_qsp4k")
 horizontal_alignment = 1
 
@@ -159,23 +168,35 @@ offset_transform_enabled = true
 theme_override_constants/separation = 32
 alignment = 2
 
-[node name="ResumeButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1552453986]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=592600685]
 layout_mode = 2
-theme = ExtResource("5_jm8af")
-text = "Resume"
+size_flags_horizontal = 4
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_bottom = 32
 
-[node name="SettingsButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=414071237]
+[node name="GameOverDescription" type="Label" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/MarginContainer" unique_id=167248383]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+custom_maximum_size = Vector2(800, -1)
 layout_mode = 2
-theme = ExtResource("5_jm8af")
-text = "Settings
-"
+size_flags_horizontal = 3
+theme_override_constants/outline_size = 5
+text = "All hands salute ye! - king o' the Karebeean!"
+label_settings = SubResource("LabelSettings_1n3ef")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
-[node name="QuitButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1796246766]
+[node name="NewGame" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1552453986]
 layout_mode = 2
-theme = ExtResource("5_jm8af")
-text = "Quit
-"
+theme = ExtResource("5_ue3qm")
+text = "New Game"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1796246766]
+layout_mode = 2
+theme = ExtResource("5_ue3qm")
+text = "Exit"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
-[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/NewGame" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

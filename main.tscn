@@ -30,8 +30,10 @@
 [ext_resource type="Texture2D" uid="uid://j6w4bmw3ak6r" path="res://UI/Resources/BIG/pattern_diagonal_red_small 1.png" id="19_0rl1p"]
 [ext_resource type="PackedScene" uid="uid://cooq5awbwhbp" path="res://Camera/player_camera.tscn" id="20_82xsv"]
 [ext_resource type="StyleBox" uid="uid://cik0ovxds67fr" path="res://UI/Resources/BIG/Panels/panel_border_brown_9patch.tres" id="20_ok6jj"]
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="22_4k2k6"]
 [ext_resource type="Resource" uid="uid://cgndd52r241g3" path="res://Systems/Faction/enemy_faction.tres" id="22_ryguw"]
 [ext_resource type="Script" uid="uid://2rv3pd8at6fi" path="res://Systems/Ships/ships_system.gd" id="23_d13ii"]
+[ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="24_0rl1p"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="24_1u8w0"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7enqr"]
@@ -100,6 +102,19 @@ bg_color = Color(0.8899407, 0.4068356, 0.3598077, 1)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0mb4"]
 texture = ExtResource("19_0rl1p")
 axis_stretch_horizontal = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_3b2ya"]
+font = ExtResource("22_4k2k6")
+font_size = 52
+font_color = Color(1, 0.20373312, 0.15207395, 1)
+outline_size = 4
+outline_color = Color(1, 0.20392157, 0.15294118, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.60784316)
+shadow_offset = Vector2(2, 2)
+stacked_outline_count = 1
+stacked_outline_0/size = 4
+stacked_outline_0/color = Color(1, 1, 1, 0.24313726)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3b2ya"]
 parsed_collision_mask = 4294967280
@@ -231,94 +246,106 @@ layout_mode = 2
 size_flags_vertical = 4
 full_texture = ExtResource("14_a6jrf")
 
-[node name="ScoreMeter" type="HBoxContainer" parent="HUD" unique_id=765381721]
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD" unique_id=1478416867]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -676.0
-offset_top = 20.0
+offset_top = 24.0
 offset_right = 676.0
-offset_bottom = 220.0
+offset_bottom = 224.0
 grow_horizontal = 2
-alignment = 1
 script = ExtResource("15_jq2sk")
 
-[node name="PlayerCounter" parent="HUD/ScoreMeter" unique_id=167486497 instance=ExtResource("11_d13ii")]
+[node name="ScoreMeter" type="HBoxContainer" parent="HUD/VBoxContainer" unique_id=765381721]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerCounter" parent="HUD/VBoxContainer/ScoreMeter" unique_id=167486497 instance=ExtResource("11_d13ii")]
 layout_mode = 2
 faction = ExtResource("12_d13ii")
 
-[node name="ControlBar" type="PanelContainer" parent="HUD/ScoreMeter" unique_id=473758431]
+[node name="ControlBar" type="PanelContainer" parent="HUD/VBoxContainer/ScoreMeter" unique_id=473758431]
 custom_minimum_size = Vector2(800, 150)
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxEmpty_xw5pn")
 
-[node name="Background" type="MarginContainer" parent="HUD/ScoreMeter/ControlBar" unique_id=1867887335]
+[node name="Background" type="MarginContainer" parent="HUD/VBoxContainer/ScoreMeter/ControlBar" unique_id=1867887335]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="Panel" type="Panel" parent="HUD/ScoreMeter/ControlBar/Background" unique_id=1187657955]
+[node name="Panel" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Background" unique_id=1187657955]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_wb4rj")
 
-[node name="Meter" type="MarginContainer" parent="HUD/ScoreMeter/ControlBar" unique_id=499390744]
+[node name="Meter" type="MarginContainer" parent="HUD/VBoxContainer/ScoreMeter/ControlBar" unique_id=499390744]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HUD/ScoreMeter/ControlBar/Meter" unique_id=1529758343]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter" unique_id=1529758343]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="PlayerProgress" type="Panel" parent="HUD/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=709035109]
+[node name="PlayerProgress" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=709035109]
 propagate_maximum_size = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_mdkua")
 
-[node name="PlayerDivider" type="Panel" parent="HUD/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=1380343528]
+[node name="PlayerDivider" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=1380343528]
 custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3b2ya")
 
-[node name="EmptyProgress" type="Panel" parent="HUD/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=317766355]
+[node name="EmptyProgress" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=317766355]
 propagate_maximum_size = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_facbu")
 
-[node name="EnemyDivider" type="Panel" parent="HUD/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=131748411]
+[node name="EnemyDivider" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=131748411]
 custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3b2ya")
 
-[node name="EnemyProgress" type="PanelContainer" parent="HUD/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=1433326881]
+[node name="EnemyProgress" type="PanelContainer" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=1433326881]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_v0ysg")
 
-[node name="EnemyProgressPattern" type="Panel" parent="HUD/ScoreMeter/ControlBar/Meter/HBoxContainer/EnemyProgress" unique_id=138998228]
+[node name="EnemyProgressPattern" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer/EnemyProgress" unique_id=138998228]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_r0mb4")
 
-[node name="Border" type="Panel" parent="HUD/ScoreMeter/ControlBar" unique_id=1081071217]
+[node name="Border" type="Panel" parent="HUD/VBoxContainer/ScoreMeter/ControlBar" unique_id=1081071217]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("20_ok6jj")
 
-[node name="EnemyCounter" parent="HUD/ScoreMeter" unique_id=1167181252 instance=ExtResource("11_d13ii")]
+[node name="EnemyCounter" parent="HUD/VBoxContainer/ScoreMeter" unique_id=1167181252 instance=ExtResource("11_d13ii")]
 layout_mode = 2
 faction = ExtResource("22_ryguw")
 
+[node name="VictoryTimer" type="Label" parent="HUD/VBoxContainer" unique_id=234631384]
+visible = false
+layout_mode = 2
+text = "5:23 until victory"
+label_settings = SubResource("LabelSettings_3b2ya")
+
 [node name="PauseMenu" parent="." unique_id=798729079 instance=ExtResource("14_0odxb")]
-process_mode = 3
+visible = false
+
+[node name="GameOverMenu" parent="." unique_id=792035010 instance=ExtResource("24_0rl1p")]
+visible = false
 
 [node name="TreasureMap" type="Node2D" parent="." unique_id=1234225736]
 script = ExtResource("10_getpj")

@@ -37,6 +37,20 @@ type = 1
 boat = ExtResource("5_w87dw")
 metadata/_custom_type_script = "uid://cj4tu6bshyj28"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hd0c"]
+resource_local_to_scene = true
+shader = ExtResource("3_w87dw")
+shader_parameter/flash_active = false
+shader_parameter/dutchman_strength = 0.0
+shader_parameter/ghost_color = Color(0.35, 0.65, 0.45, 1)
+shader_parameter/glow_color = Color(0.45, 0.95, 0.6, 1)
+shader_parameter/glow_width = 2.0
+shader_parameter/glow_intensity = 1.2
+shader_parameter/pulse_speed = 2.0
+shader_parameter/ghost_alpha = 0.85
+shader_parameter/halo_size = 16.0
+shader_parameter/halo_strength = 0.55
+
 [sub_resource type="Animation" id="Animation_cxoxt"]
 length = 0.001
 tracks/0/type = "value"
@@ -63,12 +77,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3hd0c"]
-resource_local_to_scene = true
-shader = ExtResource("3_w87dw")
-shader_parameter/flash_active = false
-shader_parameter/dutchman_strength = 0.0
 
 [sub_resource type="Animation" id="Animation_ylcei"]
 length = 0.2
@@ -158,6 +166,7 @@ polygon = PackedVector2Array(20, -32, 19.946945, 18.767706, 15.343803, 34.078205
 
 [node name="CrewCabin" type="Node2D" parent="." unique_id=201274847]
 script = ExtResource("9_35pnw")
+crew = 20
 
 [node name="Cannon" parent="." unique_id=123988509 node_paths=PackedStringArray("origin", "magazine") instance=ExtResource("8_35pnw")]
 position = Vector2(0, 62)
@@ -206,7 +215,7 @@ point_lifetime = 0.75
 
 [node name="BeehaveTree" type="Node" parent="." unique_id=1407640588 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("14_yxj2c")
-blackboard = NodePath("@Node@343725")
+blackboard = NodePath("@Node@782212")
 actor = NodePath("..")
 metadata/_custom_type_script = "uid://bb0t2ovl7wifo"
 
