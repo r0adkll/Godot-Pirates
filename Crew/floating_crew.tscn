@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8bo8c4sqhyl7" path="res://Crew/Scripts/floating_crew.gd" id="1_j8ehc"]
 [ext_resource type="Texture2D" uid="uid://2hamnux5j6lv" path="res://Crew/Sprites/crew_1.png" id="2_qte30"]
-[ext_resource type="Script" path="res://Crew/Scripts/highlight_ring.gd" id="3_ring"]
+[ext_resource type="Script" uid="uid://r4mjakofhitm" path="res://Crew/Scripts/highlight_ring.gd" id="3_ring"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5s8xe"]
 radius = 22.0
@@ -92,6 +92,10 @@ _data = {
 &"drowning": SubResource("Animation_qte30")
 }
 
+[sub_resource type="Curve" id="Curve_86il3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.49267402, 0.48795182), -3.1325274, -3.1325274, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_qte30"]
 radius = 200.0
 
@@ -102,6 +106,7 @@ script = ExtResource("1_j8ehc")
 texture = ExtResource("2_qte30")
 
 [node name="Shape" type="CollisionShape2D" parent="." unique_id=48213844]
+visible = false
 shape = SubResource("CircleShape2D_5s8xe")
 
 [node name="DrowningTimer" type="Timer" parent="." unique_id=2005967498]
@@ -115,8 +120,10 @@ libraries/ = SubResource("AnimationLibrary_86il3")
 [node name="HighlightRing" type="Node2D" parent="." unique_id=339947760]
 z_index = -1
 script = ExtResource("3_ring")
+curve = SubResource("Curve_86il3")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=725781439]
+visible = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=781249640]
