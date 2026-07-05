@@ -7,6 +7,7 @@ extends CanvasLayer
 @export var boat_hulls: Array[BoatHulls] = []
 
 @onready var ship_texture: TextureRect = $PanelContainer/VBoxContainer/ShipSelector/ShipTexture
+@onready var multiplayer_buttons: HBoxContainer = $PanelContainer/VBoxContainer/Buttons2
 @onready var join_game_menu: JoinGame = $"../JoinGameMenu"
 
 var current_hull: int = 0
@@ -14,6 +15,9 @@ var current_hull: int = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	ship_texture.texture = boat_hulls[0].new_sprite
+	# Multiplayer is WIP and ENet doesn't work in browsers
+	if OS.has_feature("web"):
+		multiplayer_buttons.visible = false
 
 
 ## UI ACTIONS
