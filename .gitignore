@@ -20,3 +20,6 @@ data_*/
 mono_crash.*.json
 
 /android/
+
+# Packaged builds
+*.dmg
