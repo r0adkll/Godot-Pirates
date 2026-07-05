@@ -182,9 +182,8 @@ metadata/_custom_type_script = "uid://b3liy0gjleis0"
 
 [node name="CrewCabin" type="Node2D" parent="." unique_id=1167268538]
 script = ExtResource("11_onxlx")
-crew = 40
+crew = 20
 max_crew = 40
-crew_walking_speed = 500.0
 
 [node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("9_njxlb")]
 capacity = 10
