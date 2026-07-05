@@ -13,7 +13,9 @@ config_version=5
 config/name="Privateers"
 run/main_scene="uid://dmt04rkfnmmkq"
 config/features=PackedStringArray("4.7", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/image="uid://wxtoleu3jqeh"
+config/icon="uid://b4t5hpyibumg6"
+config/macos_native_icon="res://AppIcon.icns"
 
 [autoload]
 
