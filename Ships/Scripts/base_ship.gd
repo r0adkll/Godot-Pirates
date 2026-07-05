@@ -83,17 +83,20 @@ var beach_head: BeachHead
 var ship_velocity: float = 0.0
 var sprint_modifier: float = SPRINT_MODIFIER
 var angular_velocity: float = 0.0
+## The un-sprinted cruise speed. Abilities may raise this (e.g. Dutchman);
+## SprintInput multiplies it while sprint is held.
+var base_forward_speed: float = MAX_FORWARD_SPEED
 var max_forward_speed: float = MAX_FORWARD_SPEED
 var acceleration: float = ACCELERATION
-var is_sprinting: float:
-	get(): return max_forward_speed > MAX_FORWARD_SPEED
+var is_sprinting: bool:
+	get(): return max_forward_speed > base_forward_speed
 
 ## Is the ship in "Dutchman" mode
 var is_dutchman: bool = false
 
 ## How long the submerged state must hold before the visuals commit.
-## Filters out the one-frame is_sprinting flicker when the Dutchman
-## ability toggles max_forward_speed before SprintInput reasserts it.
+## Guards against single-frame is_sprinting flickers caused by ability
+## and input nodes adjusting speeds at different points in the frame.
 const SUBMERGE_DEBOUNCE: float = 0.1
 var _is_submerged: bool = false
 var _submerged_candidate: bool = false
