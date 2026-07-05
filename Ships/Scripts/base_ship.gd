@@ -29,6 +29,7 @@ const Z_INDEX: Dictionary = {
 }
 
 const explosion := preload("res://Effects/Explosion/explosion.tscn")
+const dive_splash := preload("res://Effects/Splash/ship_dive_splash.tscn")
 
 # Shared Ship Constants
 const ACCELERATION: float = 350.0
@@ -90,6 +91,14 @@ var is_sprinting: float:
 ## Is the ship in "Dutchman" mode
 var is_dutchman: bool = false
 
+## How long the submerged state must hold before the visuals commit.
+## Filters out the one-frame is_sprinting flicker when the Dutchman
+## ability toggles max_forward_speed before SprintInput reasserts it.
+const SUBMERGE_DEBOUNCE: float = 0.1
+var _is_submerged: bool = false
+var _submerged_candidate: bool = false
+var _submerged_candidate_time: float = 0.0
+
 const DRIFT_OFFSET: float = 15
 const DRIFT_ROTATION: float = 10
 const DRIFT_SPEED: float = 50
@@ -103,17 +112,46 @@ func _ready() -> void:
 	boat_sprite.hulls = faction.boat
 
 # Called every frame.
-func _process(_delta: float) -> void:
-	# Apply z-index based on state
-	if is_dutchman and is_sprinting:
-		# If we are in the dutchman state and "sprinting"
-		# then show the boat as going below the surface of the water
-		z_index = -1
-	else:
-		z_index = Z_INDEX[state]
-		
+func _process(delta: float) -> void:
+	_update_submerged(delta)
+
+	# Apply z-index based on state. A dutchman ship that is "sprinting"
+	# shows the boat as going below the surface of the water
+	z_index = -1 if _is_submerged else Z_INDEX[state]
+
 	# Check Health and apply visual states
 	check_health()
+
+
+## Track when a dutchman ship crosses the water's surface, kicking up a
+## splash on each dive / resurface transition
+func _update_submerged(delta: float) -> void:
+	var submerged := is_dutchman and is_sprinting and state == State.ALIVE
+	if submerged == _is_submerged:
+		_submerged_candidate = submerged
+		return
+
+	# Debounce: only commit once the new state has held long enough
+	if submerged != _submerged_candidate:
+		_submerged_candidate = submerged
+		_submerged_candidate_time = 0.0
+		return
+
+	_submerged_candidate_time += delta
+	if _submerged_candidate_time < SUBMERGE_DEBOUNCE:
+		return
+
+	_is_submerged = submerged
+	if state == State.ALIVE:
+		_splash_water()
+
+
+## Kick up water where the ship broke the surface (diving or resurfacing)
+func _splash_water() -> void:
+	var splash: ShipDiveSplash = dive_splash.instantiate()
+	splash.global_position = global_position
+	splash.global_rotation = global_rotation
+	SceneSpawnerSystem.add_entity(splash)
 
 
 func _physics_process(_delta: float) -> void:

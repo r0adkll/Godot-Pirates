@@ -115,6 +115,13 @@ func _physics_process(delta: float) -> void:
 	check_if_beached()
 
 
+## Add a little camera kick when the local player's ship breaks the surface
+func _splash_water() -> void:
+	super._splash_water()
+	if game_camera and control == LOCAL:
+		game_camera.add_trauma(0.15)
+
+
 ## Handle any Player Ship specific functions when it dies here
 func _on_die(_source: Faction) -> void:
 	collision_shape.disabled = true
