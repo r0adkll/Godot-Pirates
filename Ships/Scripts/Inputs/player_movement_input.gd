@@ -4,9 +4,9 @@ extends PlayerInputNode
 func process_input(ship: Ship, delta: float) -> void:
 	# Apply Speed Input
 	if Input.is_action_pressed("ui_up"):
-		ship.ship_velocity += BaseShip.ACCELERATION * delta
+		ship.ship_velocity += ship.acceleration * delta
 	elif Input.is_action_pressed("ui_down"):
-		ship.ship_velocity -= BaseShip.ACCELERATION * delta
+		ship.ship_velocity -= ship.acceleration * delta
 	else:
 		ship.ship_velocity = move_toward(ship.ship_velocity, 0, BaseShip.FRICTION * delta)
 		

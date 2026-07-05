@@ -143,6 +143,10 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 		var local_fort_position = fort.bounds.position - island.bounds.position
 		new_fort.position = land.map_to_local(local_fort_position) - Vector2(64, 64)
 		island.add_child(new_fort)
+		
+		# Increment the total number of forts in a map in our FactionSystme
+		# so we can accurately count conquest percentages
+		FactionSystem.total_forts += 1
 	
 	## TODO: Add to "land" layer?
 	add_child(island)

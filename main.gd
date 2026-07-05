@@ -11,7 +11,9 @@ extends Node2D
 func _ready() -> void:
 	SceneSpawnerSystem.entity_owner = self
 	ships_system.player_faction = player_faction
+	ships_system.enemy_faction = enemy_faction
 	hud.player_counter.faction = player_faction
+	hud.enemy_counter.faction = enemy_faction
 	
 	# Setup the faction system for this local game
 	FactionSystem.factions[player_faction.id] = player_faction

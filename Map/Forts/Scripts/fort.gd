@@ -16,6 +16,9 @@ extends StaticBody2D
 		faction = new_value
 		_set_flag(new_value)
 		
+		# If a faction change, update the faction system
+		FactionSystem.set_fort_faction(get_instance_id(), new_value)
+		
 		# Remove targets that match this faction
 		if new_value:
 			_clean_targets()

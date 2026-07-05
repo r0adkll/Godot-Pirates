@@ -80,8 +80,15 @@ var beach_head: BeachHead
 
 ## The total velocity of the ship 
 var ship_velocity: float = 0.0
+var sprint_modifier: float = SPRINT_MODIFIER
 var angular_velocity: float = 0.0
 var max_forward_speed: float = MAX_FORWARD_SPEED
+var acceleration: float = ACCELERATION
+var is_sprinting: float:
+	get(): return max_forward_speed > MAX_FORWARD_SPEED
+
+## Is the ship in "Dutchman" mode
+var is_dutchman: bool = false
 
 const DRIFT_OFFSET: float = 15
 const DRIFT_ROTATION: float = 10
@@ -98,7 +105,12 @@ func _ready() -> void:
 # Called every frame.
 func _process(_delta: float) -> void:
 	# Apply z-index based on state
-	z_index = Z_INDEX[state]	
+	if is_dutchman and is_sprinting:
+		# If we are in the dutchman state and "sprinting"
+		# then show the boat as going below the surface of the water
+		z_index = -1
+	else:
+		z_index = Z_INDEX[state]
 		
 	# Check Health and apply visual states
 	check_health()
@@ -129,7 +141,7 @@ func _physics_process(_delta: float) -> void:
 	var left_velocity = Vector2.DOWN.rotated(rotation + deg_to_rad(TRAIL_ANGLE)) * trail_magnitude
 	left_trail.point_velocity = left_velocity
 	right_trail.point_velocity = right_velocity
-	if ship_speed < 0.1:
+	if ship_speed < 0.1 or (is_dutchman and is_sprinting):
 		left_trail.enabled = false
 		right_trail.enabled = false
 	else:
@@ -217,6 +229,19 @@ func fade_away() -> void:
 	fade_tween.tween_property(self, "modulate", Color.TRANSPARENT, 10)
 	await fade_tween.finished
 	queue_free()
+	
+	
+## Set the dutchman mode for this ship
+func set_dutchman_mode(enabled: bool) -> void:
+	is_dutchman = enabled
+	var mat := boat_sprite.material as ShaderMaterial
+	var tween := create_tween()
+	tween.tween_method(
+		func(v: float): mat.set_shader_parameter("dutchman_strength", v),
+		mat.get_shader_parameter("dutchman_strength"),
+		1.0 if enabled else 0.0,
+		0.6
+	)
 
 func generate_explosions() -> void:
 	for i in range(15):

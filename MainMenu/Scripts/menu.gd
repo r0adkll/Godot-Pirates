@@ -51,7 +51,7 @@ func _change_hull(direction: int) -> void:
 
 func _apply_hull_to_new_game(new_scene: Node) -> void:
 	var player_faction = Faction.new()
-	player_faction.id = "player1"
+	player_faction.id = 0
 	player_faction.type = Faction.Type.Player
 	player_faction.boat = boat_hulls[current_hull]
 	

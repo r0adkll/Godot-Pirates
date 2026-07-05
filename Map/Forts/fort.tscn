@@ -28,6 +28,8 @@ radius = 1500.0
 collision_layer = 7
 collision_mask = 7
 script = ExtResource("1_rakby")
+max_crew = null
+crew = null
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1952514733]
 position = Vector2(192, 192)

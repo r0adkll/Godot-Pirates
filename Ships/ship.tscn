@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dkei6dibffafq"]
 
-[ext_resource type="Shader" uid="uid://nbp07318mrfa" path="res://Ships/Effects/hit_flash.gdshader" id="1_3hd0c"]
+[ext_resource type="Shader" uid="uid://nbp07318mrfa" path="res://Ships/Effects/ship_effects.gdshader" id="1_3hd0c"]
 [ext_resource type="Script" uid="uid://bss68d1jfl7k7" path="res://Ships/Scripts/ship.gd" id="1_gv7c3"]
 [ext_resource type="Resource" uid="uid://dqcd6i3uun0ul" path="res://Systems/Faction/player_faction.tres" id="2_10d41"]
 [ext_resource type="Script" uid="uid://chcye8f3cp6kg" path="res://Cannons/Scripts/damage_target.gd" id="2_cxoxt"]
@@ -17,7 +17,6 @@
 [ext_resource type="Script" uid="uid://ddg03jokeiaae" path="res://Ships/Scripts/crew_cabin.gd" id="11_onxlx"]
 [ext_resource type="PackedScene" uid="uid://dynf75xudk8up" path="res://UI/emote.tscn" id="12_fihr7"]
 [ext_resource type="PackedScene" uid="uid://h80fj2pfv1nd" path="res://Cannons/cannon.tscn" id="13_a86iu"]
-[ext_resource type="Animation" uid="uid://bkwilblbe1swk" path="res://Ships/Effects/hit_flash.res" id="13_ttvci"]
 [ext_resource type="Script" uid="uid://bc5yiewe4toml" path="res://Ships/Scripts/Inputs/input_splitter.gd" id="16_pksjs"]
 [ext_resource type="Script" uid="uid://c10lrnvgv6het" path="res://Ships/Scripts/Inputs/transform_rpc_input.gd" id="16_ujngh"]
 [ext_resource type="AudioStream" uid="uid://doeqat548ha24" path="res://Ships/Effects/Sfx/wood_breaking.mp3" id="17_em2b4"]
@@ -29,6 +28,22 @@
 [ext_resource type="PackedScene" uid="uid://dyxsvt3jxenvf" path="res://Ships/Weapons/broadsides.tscn" id="22_sb8vm"]
 [ext_resource type="Script" uid="uid://dbm02b7s7jet3" path="res://Ships/Scripts/Inputs/crew_deploy_input.gd" id="23_akqdl"]
 [ext_resource type="Script" uid="uid://6os0n23546yr" path="res://Ships/Scripts/Weapons/weapon_system.gd" id="23_m3k8j"]
+[ext_resource type="Script" uid="uid://bc7ya24ymi814" path="res://Ships/Abilities/ability_system.gd" id="29_akqdl"]
+[ext_resource type="Script" uid="uid://dt5kw250kqdhg" path="res://Ships/Abilities/dutchman.gd" id="30_503b3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7iy5"]
+resource_local_to_scene = true
+shader = ExtResource("1_3hd0c")
+shader_parameter/flash_active = false
+shader_parameter/dutchman_strength = 0.0
+shader_parameter/ghost_color = Color(0.35, 0.65, 0.45, 1)
+shader_parameter/glow_color = Color(0.45, 0.95, 0.6, 1)
+shader_parameter/glow_width = 2.0
+shader_parameter/glow_intensity = 1.5790000750025
+shader_parameter/pulse_speed = 3.570000169575
+shader_parameter/ghost_alpha = 0.85
+shader_parameter/halo_size = 25.68400121999
+shader_parameter/halo_strength = 0.55
 
 [sub_resource type="Animation" id="Animation_cxoxt"]
 length = 0.001
@@ -59,19 +74,31 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BoatSprite:material")
+tracks/2/path = NodePath("BoatSprite:material:shader_parameter/flash_active")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7iy5"]
-shader = ExtResource("1_3hd0c")
-shader_parameter/active = true
+[sub_resource type="Animation" id="Animation_hitflsh"]
+resource_name = "hit_flash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BoatSprite:material:shader_parameter/flash_active")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_onxlx"]
 resource_name = "sinking"
@@ -103,20 +130,20 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("BoatSprite:material")
+tracks/2/path = NodePath("BoatSprite:material:shader_parameter/flash_active")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [SubResource("ShaderMaterial_s7iy5"), null]
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fihr7"]
 _data = {
 &"RESET": SubResource("Animation_cxoxt"),
-&"hit_flash": ExtResource("13_ttvci"),
+&"hit_flash": SubResource("Animation_hitflsh"),
 &"sinking": SubResource("Animation_onxlx")
 }
 
@@ -135,6 +162,7 @@ right_trail = NodePath("Trails/Right")
 coin = 500
 
 [node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]
+material = SubResource("ShaderMaterial_s7iy5")
 scale = Vector2(2, 2)
 texture = ExtResource("2_ho0l7")
 script = ExtResource("3_ho0l7")
@@ -154,6 +182,8 @@ metadata/_custom_type_script = "uid://b3liy0gjleis0"
 
 [node name="CrewCabin" type="Node2D" parent="." unique_id=1167268538]
 script = ExtResource("11_onxlx")
+crew = 40
+max_crew = 40
 
 [node name="Magazine" parent="." unique_id=2116438306 instance=ExtResource("9_njxlb")]
 capacity = 10
@@ -257,6 +287,13 @@ ship = NodePath("..")
 z_index = -1
 faction = ExtResource("2_10d41")
 origin = NodePath("../..")
+
+[node name="AbilitySystem" type="Node" parent="." unique_id=1076506048 node_paths=PackedStringArray("ship")]
+script = ExtResource("29_akqdl")
+ship = NodePath("..")
+
+[node name="Dutchman" type="Node" parent="AbilitySystem" unique_id=411368653]
+script = ExtResource("30_503b3")
 
 [connection signal="crew_returned" from="." to="." method="_on_crew_returned"]
 [connection signal="apply_damage" from="DamageTarget" to="." method="_on_damage_target_apply_damage"]

@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cj4tu6bshyj28" path="res://Systems/Faction/faction.gd" id="2_1mq6f"]
 [ext_resource type="Script" uid="uid://chcye8f3cp6kg" path="res://Cannons/Scripts/damage_target.gd" id="2_35pnw"]
 [ext_resource type="Texture2D" uid="uid://05na1be36kmh" path="res://Ships/Sprites/ship_pirate/pirate_new.png" id="3_je6gq"]
-[ext_resource type="Shader" uid="uid://nbp07318mrfa" path="res://Ships/Effects/hit_flash.gdshader" id="3_w87dw"]
+[ext_resource type="Shader" uid="uid://nbp07318mrfa" path="res://Ships/Effects/ship_effects.gdshader" id="3_w87dw"]
 [ext_resource type="Script" uid="uid://63wxoecufwfe" path="res://Ships/Scripts/boat_sprite.gd" id="4_w87dw"]
 [ext_resource type="Resource" uid="uid://dedejr2j0go53" path="res://Ships/Resources/pirate_boat_hull.tres" id="5_w87dw"]
 [ext_resource type="PackedScene" uid="uid://h80fj2pfv1nd" path="res://Cannons/cannon.tscn" id="8_35pnw"]
@@ -54,38 +54,36 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BoatSprite:material")
+tracks/1/path = NodePath("BoatSprite:material:shader_parameter/flash_active")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [null]
+"values": [false]
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3hd0c"]
+resource_local_to_scene = true
 shader = ExtResource("3_w87dw")
-shader_parameter/active = true
+shader_parameter/flash_active = false
+shader_parameter/dutchman_strength = 0.0
 
 [sub_resource type="Animation" id="Animation_ylcei"]
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("BoatSprite:material")
+tracks/0/path = NodePath("BoatSprite:material:shader_parameter/flash_active")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [SubResource("ShaderMaterial_3hd0c"), null]
+"values": [true, false]
 }
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylcei"]
-shader = ExtResource("3_w87dw")
-shader_parameter/active = false
 
 [sub_resource type="Animation" id="Animation_onxlx"]
 resource_name = "sinking"
@@ -105,14 +103,14 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BoatSprite:material")
+tracks/1/path = NodePath("BoatSprite:material:shader_parameter/flash_active")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.35),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [SubResource("ShaderMaterial_ylcei"), null]
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fihr7"]
@@ -148,6 +146,7 @@ debug_path_custom_line_width = 10.0
 script = ExtResource("2_35pnw")
 
 [node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]
+material = SubResource("ShaderMaterial_3hd0c")
 scale = Vector2(2, 2)
 texture = ExtResource("3_je6gq")
 script = ExtResource("4_w87dw")

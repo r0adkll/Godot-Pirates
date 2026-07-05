@@ -20,11 +20,10 @@ func _turn_ship(ship: Ship, delta: float) -> void:
 	var length = left_joystick_vector.length()
 	if length > deadzone:
 		var current_angle = Vector2.DOWN.rotated(ship.rotation)
-		var target_angle = left_joystick_vector.angle() - (PI/2)
 		
 		# Based on how far the user is pushing the sticks, drive the overall velocity
 		var magnitude = abs(left_joystick_vector.length())
-		ship.ship_velocity += BaseShip.ACCELERATION * magnitude * delta
+		ship.ship_velocity += ship.acceleration * magnitude * delta
 		
 		# Rotate the ship based on the angle of the joystick vector
 		var angle_to = current_angle.angle_to(left_joystick_vector)
@@ -47,11 +46,3 @@ func _aim_cannon(ship: Ship) -> void:
 		if ship.aim_cursor.visible:
 			ship.aim_cursor.visible = false
 		
-func position_cursor_from_angle(ship: Ship, angle_rad: float, x_pixels: float) -> void:
-	var center_viewport := ship.to_global(ship.position) # center in viewport/screen coords
-	
-	# screen-space offset: (right, down) axes
-	var offset := Vector2.RIGHT.rotated(angle_rad) * x_pixels
-	
-	var target := center_viewport# + offset
-	Input.warp_mouse(target)
