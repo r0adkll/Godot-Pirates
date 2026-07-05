@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="16_saq78"]
 [ext_resource type="Script" uid="uid://cjl7bna2mmxgx" path="res://MainMenu/Scripts/join_game_menu.gd" id="25_ka3nr"]
 [ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="25_ql5ya"]
+[ext_resource type="PackedScene" path="res://MainMenu/settings_menu.tscn" id="26_setmn"]
 
 [sub_resource type="Curve2D" id="Curve2D_glbon"]
 _data = {
@@ -351,6 +352,8 @@ offset_transform_position = Vector2(0, -16)
 text = "Join Game"
 label_settings = SubResource("LabelSettings_684vk")
 horizontal_alignment = 1
+
+[node name="SettingsMenu" parent="." instance=ExtResource("26_setmn")]
 
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/LeftShipSelector" to="Menu" method="_on_left_ship_selector_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/RightShipSelector" to="Menu" method="_on_right_ship_selector_pressed"]

@@ -9,6 +9,7 @@ extends CanvasLayer
 @onready var ship_texture: TextureRect = $PanelContainer/VBoxContainer/ShipSelector/ShipTexture
 @onready var multiplayer_buttons: HBoxContainer = $PanelContainer/VBoxContainer/Buttons2
 @onready var join_game_menu: JoinGame = $"../JoinGameMenu"
+@onready var settings_menu: SettingsMenu = $"../SettingsMenu"
 
 var current_hull: int = 0
 
@@ -27,7 +28,7 @@ func _on_new_game_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
-	pass # Replace with function body.
+	settings_menu.visible = true
 
 
 func _on_multiplayer_button_pressed() -> void:

@@ -23,6 +23,7 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 @onready var theme_song: AudioStreamPlayer = $Music/ThemeSong
 
 @onready var emote: Emote = $Emote
+@onready var touch_controls: TouchControls = $TouchControls
 @onready var hud: Hud = $"../HUD" #FIXME: This is broke af
 
 func _ready() -> void:
@@ -58,6 +59,8 @@ func setup_remote_control() -> void:
 	control = REMOTE
 	player_input.enabled = false
 	multiplayer_input.enabled = false
+	# Remote peers' ships must never draw the on-screen touch controls
+	touch_controls.queue_free()
 	# FIXME: Hack since our scene includes Broadsides by default without input control
 	#        This is probably a sign of poor architecture with the weapon system and input systems
 	weapon_system.remove_child(weapon_system.get_child(0))
