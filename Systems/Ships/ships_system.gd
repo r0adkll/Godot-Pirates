@@ -45,17 +45,14 @@ func get_position_near_player() -> Vector2:
 	var player: Ship = get_tree().get_first_node_in_group(Ship.GROUP)
 	if player:
 		var player_coord: Vector2i = navigation_layer.local_to_map(player.global_position)
-		var coord: Vector2i
-		while not coord:
+		for i in 100:
 			var x_offset = randi_range(min_proximity_tiles, max_proximity_tiles) * _rand_sign()
 			var y_offset = randi_range(min_proximity_tiles, max_proximity_tiles) * _rand_sign()
 			var offset_coord = player_coord + Vector2i(x_offset, y_offset)
 			if navigation_layer.get_cell_source_id(offset_coord) != -1:
-				coord = offset_coord
-		
-		return navigation_layer.map_to_local(coord)
-	else:
-		return get_random_position()
+				return navigation_layer.map_to_local(offset_coord)
+
+	return get_random_position()
 
 
 func _rand_sign() -> int:
