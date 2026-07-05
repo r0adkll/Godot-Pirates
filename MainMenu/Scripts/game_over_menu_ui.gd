@@ -11,10 +11,10 @@ extends CanvasLayer
 const WIN_MESSAGES: Array[String] = [
 	"Victory be yers! The seven seas bow to yer flag!",
 	"Ye've plundered yer way to glory, Cap'n!",
-	"The Karebeean be yers, ye salty sea dog!",
+	"The high seas be yers, ye salty sea dog!",
 	"Huzzah! Davy Jones weeps at yer triumph!",
 	"Yo ho ho! The booty and the glory be all yers!",
-	"All hands salute ye — king o' the Karebeean!",
+	"All hands salute ye — prince o' the privateers!",
 	"Ye sank 'em all! Crack open the grog!",
 	"A legend be born this day, Cap'n!",
 ]

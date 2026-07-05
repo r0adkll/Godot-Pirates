@@ -267,7 +267,7 @@ texture = ExtResource("9_dy7ct")
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -16)
-text = "Pirates of the Karabean"
+text = "Privateers"
 label_settings = SubResource("LabelSettings_684vk")
 horizontal_alignment = 1
 
