@@ -31,7 +31,17 @@ func action() -> StringName:
 
 
 
-## Fire the broadsides
-func fire() -> void:
-	for cannon in cannons:
-		cannon.fire()
+## Fire the broadsides. All six cannons share one magazine, so a volley
+## can be partial — the returned bitmask records exactly which cannons
+## fired so remote peers can replay the same volley.
+func fire(force_mask: int = 0) -> int:
+	var fired_mask := 0
+	for i in cannons.size():
+		var forced := force_mask & (1 << i) != 0
+		# Replaying a remote volley: only the cannons that actually
+		# fired on the controlling peer, regardless of local magazine
+		if force_mask != 0 and not forced:
+			continue
+		if cannons[i].fire(forced):
+			fired_mask |= 1 << i
+	return fired_mask

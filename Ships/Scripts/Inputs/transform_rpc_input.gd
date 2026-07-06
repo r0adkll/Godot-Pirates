@@ -19,6 +19,7 @@ func process_input(ship: Ship, _delta: float) -> void:
 		island_id,
 		landing_pos,
 		ship.crew_cabin.crew,
+		ship.is_sprinting,
 	)
 
 @rpc("any_peer", "call_remote", "unreliable_ordered")
@@ -30,6 +31,7 @@ func _update_transform(
 	beached_island_id: int,
 	landing_pos: Vector2,
 	crew_count: int,
+	sprinting: bool,
 ) -> void:
 	var ship: Ship = get_ship()
 	ship.position = position
@@ -38,3 +40,4 @@ func _update_transform(
 	ship.cannon.global_rotation = cannon_rotation
 	ship.set_remote_beach_head(beached_island_id, landing_pos)
 	ship.crew_cabin.set_crew(crew_count)
+	ship.set_remote_sprinting(sprinting)

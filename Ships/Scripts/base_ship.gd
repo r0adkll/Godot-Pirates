@@ -414,6 +414,14 @@ func check_if_beached() -> void:
 @abstract func _on_lost_beach_head(beach: BeachHead) -> void
 
 
+## Apply the sprint state replicated from this ship's controlling peer.
+## is_sprinting derives from max_forward_speed, which only the local
+## SprintInput node updates — remote copies need it mirrored so
+## sprint-dependent visuals (Dutchman dive, trails) render correctly.
+func set_remote_sprinting(sprinting: bool) -> void:
+	max_forward_speed = base_forward_speed * (sprint_modifier if sprinting else 1.0)
+
+
 ## Apply the beached state replicated from this ship's controlling peer.
 ## Remote copies of a ship never move via move_and_slide, so they can't
 ## detect beaching through collisions like the local simulation does.

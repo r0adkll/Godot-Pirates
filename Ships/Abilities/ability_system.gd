@@ -25,13 +25,13 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-		
+
 	if get_child_count() == 0:
 		return
-	
+
 	# Get the curret set ability
 	var current_ability: ShipAbility = get_child(0)
-	
+
 	# Recharge the ability
 	if state == State.RECHARGING:
 		_recharging_time += delta
@@ -43,18 +43,40 @@ func _physics_process(delta: float) -> void:
 	elif state == State.ACTIVE:
 		_active_time += delta
 		state_changed.emit(state, clampf(_active_time / current_ability.duration, 0, 1))
-		
+
+	# Only the peer controlling this ship reads input — otherwise one
+	# keypress would activate the ability on every ship on screen
+	if not enabled or ship.control != BaseShip.LOCAL:
+		return
+
 	# Activate the ability
 	if Input.is_action_just_pressed("ui_ability") and state == State.INACTIVE:
-		state = State.ACTIVE
-		state_changed.emit(state, 1)
-		current_ability.activate(ship)
-		
-		await get_tree().create_timer(current_ability.duration).timeout
-		current_ability.deactivate(ship)
-		state = State.RECHARGING
-		_active_time = 0
-		state_changed.emit(state, 1)
+		if Lobby.active:
+			activate_ability.rpc()
+		else:
+			activate_ability()
+
+
+## Run the full ability lifecycle. In multiplayer this executes on every
+## peer, so the ability's effects (speed, collision, visuals) apply to
+## this ship everywhere.
+@rpc("any_peer", "call_local", "reliable")
+func activate_ability() -> void:
+	if state != State.INACTIVE or get_child_count() == 0:
+		return
+
+	var current_ability: ShipAbility = get_child(0)
+	state = State.ACTIVE
+	state_changed.emit(state, 1)
+	current_ability.activate(ship)
+
+	await get_tree().create_timer(current_ability.duration).timeout
+	if not is_instance_valid(ship):
+		return
+	current_ability.deactivate(ship)
+	state = State.RECHARGING
+	_active_time = 0
+	state_changed.emit(state, 1)
 
 
 func _get_configuration_warnings() -> PackedStringArray:

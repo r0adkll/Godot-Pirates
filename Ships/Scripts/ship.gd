@@ -73,6 +73,7 @@ func setup_local_control() -> void:
 	control = LOCAL
 	player_input.enabled = true
 	multiplayer_input.enabled = true
+	weapon_system.enabled = true
 
 
 func setup_remote_control() -> void:
@@ -81,10 +82,10 @@ func setup_remote_control() -> void:
 	multiplayer_input.enabled = false
 	# Remote peers' ships must never draw the on-screen touch controls
 	touch_controls.queue_free()
-	# FIXME: Hack since our scene includes Broadsides by default without input control
-	#        This is probably a sign of poor architecture with the weapon system and input systems
-	weapon_system.remove_child(weapon_system.get_child(0))
-	
+	# Weapons stay in the tree so their fire RPCs keep working — they
+	# just never read this peer's input
+	weapon_system.enabled = false
+
 
 func _exit_tree() -> void:
 	if _hud_bound:
