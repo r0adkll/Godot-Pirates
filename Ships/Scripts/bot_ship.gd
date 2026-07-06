@@ -18,6 +18,7 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 @export var shooting_distance: float = 600
 @export var ships_system: ShipsSystem
 @export var ship_blackboard: Blackboard
+@export var difficulty: DifficultyProfile
 
 ## The physical target that this ship is attacking
 var target: Node2D
@@ -32,8 +33,10 @@ func _ready() -> void:
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
 	crew_cabin.crew_updated.connect(_on_crew_cabin_crew_updated)
-	
+
 	nav_agent.debug_enabled = Debug.enabled
+
+	_apply_difficulty()
 
 
 func _exit_tree() -> void:
@@ -132,6 +135,22 @@ func _on_crew_cabin_crew_updated(_count: int, _max: int) -> void:
 const DEFAULT_DETECTION_RADIUS = 800 #px
 const ATTACKING_DETECTION_RADIUS = 1600 #px
 
+## Per-instance radii — the constants scaled by the active difficulty
+var default_detection_radius: float = DEFAULT_DETECTION_RADIUS
+var attacking_detection_radius: float = ATTACKING_DETECTION_RADIUS
+
+## Scale this bot's combat stats by the active difficulty. Runs once at
+## spawn; respawns re-enter via ShipsSystem.spawn_enemy() so every
+## replacement bot is scaled too. Never touches the player's ship.
+func _apply_difficulty() -> void:
+	if difficulty:
+		shooting_rate *= difficulty.shooting_rate_multiplier
+		shooting_distance *= difficulty.engage_distance_multiplier
+		cannon.power *= difficulty.cannon_power_multiplier
+		default_detection_radius = DEFAULT_DETECTION_RADIUS * difficulty.detection_radius_multiplier
+		attacking_detection_radius = ATTACKING_DETECTION_RADIUS * difficulty.detection_radius_multiplier
+	_set_detection_radius(default_detection_radius)
+
 ## Set the radius of the detection area
 func get_detection_radius() -> float:
 	var detection_shape: CircleShape2D = $DetectionArea/CollisionShape2D.shape as CircleShape2D
@@ -148,7 +167,7 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 			target = body
 			
 			# Expand our detection area so we don't lose our target as fast
-			_set_detection_radius(ATTACKING_DETECTION_RADIUS)
+			_set_detection_radius(attacking_detection_radius)
 			
 			# If the new target is of BaseShip, bind to its state signal
 			(body as BaseShip).state_changed.connect(_on_target_state_changed)
@@ -188,7 +207,7 @@ func _on_target_state_changed(_ship: BaseShip, _prev_state: BaseShip.State, new_
 		_clear_target()
 
 func _clear_target() -> void:
-	_set_detection_radius(DEFAULT_DETECTION_RADIUS)
+	_set_detection_radius(default_detection_radius)
 	
 	# If exiting body is a base ship, disconnect its state signal
 	# then set the target to null

@@ -129,6 +129,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_je6gq"]
+resource_local_to_scene = true
 radius = 800.0
 
 [node name="BotShip" type="CharacterBody2D" unique_id=769173989 node_paths=PackedStringArray("boat_sprite", "cannon", "crew_cabin", "left_trail", "right_trail")]

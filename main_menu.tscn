@@ -26,7 +26,11 @@
 [ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="16_saq78"]
 [ext_resource type="Script" uid="uid://cjl7bna2mmxgx" path="res://MainMenu/Scripts/join_game_menu.gd" id="25_ka3nr"]
 [ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="25_ql5ya"]
-[ext_resource type="PackedScene" path="res://MainMenu/settings_menu.tscn" id="26_setmn"]
+[ext_resource type="PackedScene" uid="uid://bkb1ymof4sk1p" path="res://MainMenu/settings_menu.tscn" id="26_setmn"]
+[ext_resource type="Script" uid="uid://cfdeuuuy648uf" path="res://Systems/Difficulty/difficulty_profile.gd" id="27_dfgd"]
+[ext_resource type="Resource" path="res://Systems/Difficulty/calm_seas.tres" id="28_dfcs"]
+[ext_resource type="Resource" path="res://Systems/Difficulty/rough_waters.tres" id="29_dfrw"]
+[ext_resource type="Resource" path="res://Systems/Difficulty/krakens_wrath.tres" id="30_dfkw"]
 
 [sub_resource type="Curve2D" id="Curve2D_glbon"]
 _data = {
@@ -49,6 +53,16 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l354k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dfnm"]
+font = ExtResource("10_0o4t1")
+font_size = 40
+font_color = Color(0.18359044, 0.18359044, 0.18359044, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dfds"]
+font = ExtResource("10_g8g3n")
+font_size = 26
+font_color = Color(0.18359044, 0.18359044, 0.18359044, 0.8)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g8g3n"]
 texture = ExtResource("14_8u0te")
@@ -154,21 +168,22 @@ script = ExtResource("9_oiatc")
 game_scene = &"uid://dbc8p40r5bsej"
 lobby_scene = &"uid://c7djubyw8gbyr"
 boat_hulls = Array[ExtResource("10_e5qqf")]([ExtResource("3_jix8l"), ExtResource("12_8uw0o"), ExtResource("12_7bbuq"), ExtResource("14_ql5ya"), ExtResource("15_ka3nr")])
+difficulties = Array[ExtResource("27_dfgd")]([ExtResource("28_dfcs"), ExtResource("29_dfrw"), ExtResource("30_dfkw")])
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu" unique_id=1069369484]
 offset_left = 168.0
-offset_top = 206.0
+offset_top = 138.0
 offset_right = 1443.0
-offset_bottom = 1163.0
+offset_bottom = 1363.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_3b2ya")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer" unique_id=1070158000]
 layout_mode = 2
-theme_override_constants/separation = 64
+theme_override_constants/separation = 16
 alignment = 2
 
 [node name="Spacer" type="Control" parent="Menu/PanelContainer/VBoxContainer" unique_id=357841981]
-custom_minimum_size = Vector2(0, 64)
+custom_minimum_size = Vector2(0, 88)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/VBoxContainer" unique_id=1142321293]
@@ -198,6 +213,48 @@ layout_mode = 2
 theme_override_icons/icon = ExtResource("10_cm266")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_l354k")
 icon = ExtResource("12_g8g3n")
+
+[node name="Spacer3" type="Control" parent="Menu/PanelContainer/VBoxContainer" unique_id=1829235506]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+
+[node name="DifficultySelector" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer" unique_id=1987001121]
+layout_mode = 2
+alignment = 1
+
+[node name="LeftDifficultySelector" type="Button" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector" unique_id=1987001122]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("10_cm266")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_l354k")
+icon = ExtResource("10_cm266")
+
+[node name="DifficultyInfo" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector" unique_id=1987001123]
+custom_minimum_size = Vector2(520, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="DifficultyName" type="Label" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo" unique_id=1987001124]
+layout_mode = 2
+text = "Rough Waters"
+label_settings = SubResource("LabelSettings_dfnm")
+horizontal_alignment = 1
+
+[node name="DifficultyDescription" type="Label" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo" unique_id=1987001125]
+layout_mode = 2
+text = "A fair fight on the open sea."
+label_settings = SubResource("LabelSettings_dfds")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="RightDifficultySelector" type="Button" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector" unique_id=1987001126]
+layout_mode = 2
+theme_override_icons/icon = ExtResource("10_cm266")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_l354k")
+icon = ExtResource("12_g8g3n")
+
+[node name="Spacer2" type="Control" parent="Menu/PanelContainer/VBoxContainer" unique_id=1811802738]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
 
 [node name="Buttons" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer" unique_id=1552261992]
 layout_mode = 2
@@ -255,9 +312,9 @@ text = "Join Game"
 
 [node name="Banner" type="PanelContainer" parent="Menu" unique_id=266015412]
 offset_left = 294.0
-offset_top = 140.0
+offset_top = 72.0
 offset_right = 1318.0
-offset_bottom = 396.0
+offset_bottom = 328.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3b2ya")
 
 [node name="TextureRect" type="TextureRect" parent="Menu/Banner" unique_id=1250626339]
@@ -353,10 +410,12 @@ text = "Join Game"
 label_settings = SubResource("LabelSettings_684vk")
 horizontal_alignment = 1
 
-[node name="SettingsMenu" parent="." instance=ExtResource("26_setmn")]
+[node name="SettingsMenu" parent="." unique_id=118695181 instance=ExtResource("26_setmn")]
 
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/LeftShipSelector" to="Menu" method="_on_left_ship_selector_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/RightShipSelector" to="Menu" method="_on_right_ship_selector_pressed"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/DifficultySelector/LeftDifficultySelector" to="Menu" method="_on_left_difficulty_selector_pressed"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/DifficultySelector/RightDifficultySelector" to="Menu" method="_on_right_difficulty_selector_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons/NewGameButton" to="Menu" method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons/SettingsButton" to="Menu" method="_on_settings_button_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Buttons2/MultiplayerButton" to="Menu" method="_on_multiplayer_button_pressed"]

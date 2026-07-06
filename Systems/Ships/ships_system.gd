@@ -19,7 +19,11 @@ const bot_ship_scene := preload("res://Ships/bot_ship.tscn")
 @export var max_proximity_tiles: int = 20
 
 ## The amount of enemies that should be alive on the map
+## (fallback when no difficulty profile is set)
 @export var enemy_count: int = 4
+
+## Difficulty tuning applied to spawned enemies (null = vanilla stats)
+@export var difficulty: DifficultyProfile
 
 @onready var player_camera: PlayerCamera = %PlayerCamera
 @onready var enemy_blackboard: Blackboard = $EnemyBlackboard
@@ -74,16 +78,22 @@ func spawn_player(is_first: bool = false) -> void:
 
 
 ## Spawn a new enemy into a random position
-func spawn_enemy() -> void:	
-	var count = enemy_count - _active_enemy_count()
+func spawn_enemy() -> void:
+	var count = _target_enemy_count() - _active_enemy_count()
 	for i in count:
 		var new_boat: BotShip = bot_ship_scene.instantiate()
 		new_boat.global_position = get_random_position()
 		new_boat.faction = enemy_faction
 		new_boat.ships_system = self
 		new_boat.ship_blackboard = enemy_blackboard
+		new_boat.difficulty = difficulty
 		new_boat.state_changed.connect(_on_enemy_state_changed)
 		SceneSpawnerSystem.add_entity(new_boat)
+
+
+## The enemy population to maintain on the map
+func _target_enemy_count() -> int:
+	return difficulty.enemy_count if difficulty else enemy_count
 
 
 ## Called when a spawned enemy ship 

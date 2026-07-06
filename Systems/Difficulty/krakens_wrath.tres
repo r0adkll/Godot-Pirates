@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DifficultyProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Systems/Difficulty/difficulty_profile.gd" id="1_diff"]
+
+[resource]
+script = ExtResource("1_diff")
+display_name = "Kraken's Wrath"
+description = "Ruthless hunters prowl every horizon."
+enemy_count = 7
+shooting_rate_multiplier = 0.6
+cannon_power_multiplier = 1.5
+detection_radius_multiplier = 1.4
+engage_distance_multiplier = 1.25
