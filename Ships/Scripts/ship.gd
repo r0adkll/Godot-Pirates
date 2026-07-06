@@ -7,6 +7,11 @@ const GROUP = &"Player"
 const cursor_target := preload("res://UI/Cursor/target_round_a.png")
 const floating_crew := preload("res://Crew/floating_crew.tscn")
 
+const hit_emoji = [
+	Emote.Emotes.ANGRY,
+	Emote.Emotes.POUND,
+]
+
 @export var game_camera: PlayerCamera
 @export var player_system: PlayerSystem
 
@@ -25,6 +30,8 @@ const floating_crew := preload("res://Crew/floating_crew.tscn")
 @onready var emote: Emote = $Emote
 @onready var touch_controls: TouchControls = $TouchControls
 @onready var hud: Hud = $"../HUD" #FIXME: This is broke af
+
+var is_first_ship: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -47,6 +54,13 @@ func _ready() -> void:
 		coin_changed.connect(hud.set_coin_count)
 		sprint_changed.connect(hud.set_sprint_percentage)
 		hud.set_coin_count(coin)
+	
+	if is_first_ship:
+		await get_tree().physics_frame
+		emote.emote = Emote.Emotes.EMPTY
+		emote.set_custom_icon(0, "wasd")
+		emote.duration = Emote.Duration.INFINITE
+		emote.show_emote(2)
 
 
 func setup_local_control() -> void:
@@ -83,10 +97,10 @@ func _process(delta: float) -> void:
 			emote.emote = beached_emote
 			emote.set_custom_icon(5) # F
 			emote.duration = Emote.Duration.INFINITE
-			emote.show_emote()
+			emote.show_emote(1)
 	else:
 		#modulate = Color.WHITE
-		if emote.is_showing_emote() and emote.emote == beached_emote:
+		if emote.is_showing_emote() and emote.emote_id == 1:
 			emote.hide_emote()
 
 
@@ -99,6 +113,10 @@ func _physics_process(delta: float) -> void:
 		# On Esc/ or start show the pause menu
 		if Input.is_action_just_pressed("ui_cancel"):
 			PauseMenu.pause()
+	
+	## TODO Fix this magic number
+	if ship_velocity > 0 and emote.is_showing_emote() and emote.emote_id == 2:
+		emote.hide_emote()
 	
 	# Make sure our emoji is always pointing up
 	emote.rotation = -rotation
@@ -148,6 +166,16 @@ func _on_die(_source: Faction) -> void:
 	animation_player.play(&"sinking")
 
 
+#func _on_idle_ship() -> void:
+	#if !emote.is_showing_emote():
+		#emote.play_custom_emote_animation(&"sleeping")
+		#emote.duration = Emote.Duration.INFINITE
+		#emote.show_emote(3)
+#
+#func _on_stop_idle_ship() -> void:
+	#if emote.is_showing_emote() and emote.emote_id == 3:
+		#emote.hide_emote()
+
 func _generate_explosions() -> void:
 	for i in range(15):
 		var offset_rotation = randf() * (2*PI)
@@ -186,7 +214,7 @@ func _apply_damage(hit_faction_id: int, amount: float):
 			game_camera.add_trauma(0.35)
 		
 		# Emote
-		emote.emote = Emote.Emotes.ANGRY
+		emote.emote = hit_emoji.pick_random()
 		emote.duration = Emote.Duration.SHORT
 		emote.show_emote()
 		

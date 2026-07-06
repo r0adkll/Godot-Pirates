@@ -161,8 +161,6 @@ cannon = NodePath("Cannon")
 crew_cabin = NodePath("CrewCabin")
 left_trail = NodePath("Trails/Left")
 right_trail = NodePath("Trails/Right")
-max_health = null
-max_sprint = null
 coin = 10
 
 [node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]

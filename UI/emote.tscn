@@ -229,9 +229,20 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3p8fr")
 }],
-"loop": false,
+"loop": 0,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2xlq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cevgf")
+}],
+"loop": 1,
+"name": &"sleeping",
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -243,7 +254,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wj7sb")
 }],
-"loop": true,
+"loop": 1,
 "name": &"thinking",
 "speed": 3.0
 }]
@@ -435,8 +446,7 @@ modulate = Color(0, 0, 0, 0)
 position = Vector2(0, -2.5)
 scale = Vector2(1e-05, 1e-05)
 sprite_frames = ExtResource("3_83ksy")
-animation = &"keyboard_filled"
-frame = 5
+animation = &"wasd"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1987431917]
 root_node = NodePath("../Timer")

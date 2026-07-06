@@ -63,12 +63,13 @@ func _rand_sign() -> int:
 
 
 ## Spawn the player ship 
-func spawn_player() -> void:
+func spawn_player(is_first: bool = false) -> void:
 	var player: Ship = player_ship_scene.instantiate()
 	player.game_camera = player_camera
 	player.global_position = get_random_position()
 	player.faction = player_faction
 	player.state_changed.connect(_on_player_state_changed)
+	player.is_first_ship = is_first
 	SceneSpawnerSystem.add_entity(player)
 
 
@@ -112,5 +113,5 @@ func _active_enemy_count() -> int:
 
 
 func _on_treasure_map_map_generated() -> void:
-	spawn_player()
+	spawn_player(true)
 	spawn_enemy()

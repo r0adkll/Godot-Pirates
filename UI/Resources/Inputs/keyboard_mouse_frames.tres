@@ -1030,7 +1030,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bxcf3")
 }],
-"loop": 0,
+"loop": 2,
 "name": &"wasd",
 "speed": 5.0
 }]

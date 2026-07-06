@@ -55,17 +55,26 @@ var SECONDS: Dictionary = {
 var is_showing: bool = false
 func is_showing_emote() -> bool:
 	return is_showing or animation_player.current_animation == &"appear"
+	
+var emote_id: int = -1
 
 func _set_emote(new_emote: Emotes) -> void:
 	emote = new_emote
 	sprite.set_frame_and_progress(emote, 0)
 	custom_icon.visible = emote == Emotes.EMPTY
-	
+
 
 ## Set the icon frame for the custom icon image for the emote
 func set_custom_icon(frame: int, animation: String = "keyboard_filled"):
 	custom_icon.animation = animation
 	custom_icon.frame = frame
+
+
+func play_custom_emote_animation(animation: StringName) -> void:
+	sprite.animation = animation
+	sprite.play(animation)
+	custom_icon.visible = false
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -75,7 +84,9 @@ func _ready() -> void:
 		animation_player.play(&"appear")
 		timer.start(SECONDS[duration])
 
-func show_emote() -> void:
+
+func show_emote(id: int = -1) -> void:
+	emote_id = id
 	animation_player.play(&"appear")
 	if duration != Duration.INFINITE:
 		timer.stop()
@@ -83,7 +94,11 @@ func show_emote() -> void:
 
 
 func hide_emote() -> void:
+	emote_id = -1
 	animation_player.play(&"disappear")
+	if sprite.animation != &"default":
+		sprite.stop()
+		sprite.animation = &"default"
 	
 
 func _on_timer_timeout() -> void:
@@ -93,7 +108,9 @@ func _on_timer_timeout() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	match anim_name:
 		"appear": is_showing = true
-		"disappear": is_showing = false
+		"disappear": 
+			is_showing = false
+			emote_id = -1
 	
 	if anim_name == &"disappear" and remove_on_hide:
 		queue_free()

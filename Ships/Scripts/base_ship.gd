@@ -171,8 +171,10 @@ func _physics_process(_delta: float) -> void:
 				_idle_position = position
 				_idle_rotation_degrees = rotation_degrees
 				_idle_ship()
+				_on_idle_ship()
 			elif ship_velocity != 0 and _idle_position != Vector2.INF:
 				_idle_position = Vector2.INF
+				_on_stop_idle_ship()
 				if _drift_tween:
 					_drift_tween.kill()
 				
@@ -193,7 +195,14 @@ func _physics_process(_delta: float) -> void:
 	else:
 		left_trail.enabled = true
 		right_trail.enabled = true
-		
+
+
+## Override to implement functionality when a ship starts to idle
+func _on_idle_ship() -> void:
+	pass
+
+func _on_stop_idle_ship() -> void:
+	pass
 
 func _idle_ship() -> void:
 	if state != State.ALIVE: return
