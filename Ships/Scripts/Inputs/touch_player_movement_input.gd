@@ -9,7 +9,7 @@ extends PlayerInputNode
 
 @export var touch_controls: TouchControls
 ## Seconds between auto-fired shots while aiming (ammo is still gated by the magazine)
-@export var auto_fire_interval: float = 0.6
+@export var auto_fire_interval: float = 0.3
 
 var _fire_cooldown: float = 0.0
 
