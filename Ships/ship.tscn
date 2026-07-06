@@ -30,7 +30,7 @@
 [ext_resource type="Script" uid="uid://6os0n23546yr" path="res://Ships/Scripts/Weapons/weapon_system.gd" id="23_m3k8j"]
 [ext_resource type="Script" uid="uid://bc7ya24ymi814" path="res://Ships/Abilities/ability_system.gd" id="29_akqdl"]
 [ext_resource type="Script" uid="uid://dt5kw250kqdhg" path="res://Ships/Abilities/dutchman.gd" id="30_503b3"]
-[ext_resource type="Script" path="res://Ships/Scripts/Inputs/touch_player_movement_input.gd" id="31_tchmv"]
+[ext_resource type="Script" uid="uid://cnjurnfll6njo" path="res://Ships/Scripts/Inputs/touch_player_movement_input.gd" id="31_tchmv"]
 [ext_resource type="PackedScene" path="res://UI/Touch/touch_controls.tscn" id="32_tchct"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_s7iy5"]
@@ -245,7 +245,7 @@ script = ExtResource("6_sb8vm")
 [node name="GamepadPlayerMovementInput" type="Node" parent="PlayerInput/InputSplitter" unique_id=580025588]
 script = ExtResource("18_02vqd")
 
-[node name="TouchPlayerMovementInput" type="Node" parent="PlayerInput/InputSplitter" node_paths=PackedStringArray("touch_controls")]
+[node name="TouchPlayerMovementInput" type="Node" parent="PlayerInput/InputSplitter" unique_id=1063416679 node_paths=PackedStringArray("touch_controls")]
 script = ExtResource("31_tchmv")
 touch_controls = NodePath("../../../TouchControls")
 
@@ -295,7 +295,7 @@ z_index = -1
 faction = ExtResource("2_10d41")
 origin = NodePath("../..")
 
-[node name="TouchControls" parent="." instance=ExtResource("32_tchct")]
+[node name="TouchControls" parent="." unique_id=1613970720 instance=ExtResource("32_tchct")]
 
 [node name="AbilitySystem" type="Node" parent="." unique_id=1076506048 node_paths=PackedStringArray("ship")]
 script = ExtResource("29_akqdl")

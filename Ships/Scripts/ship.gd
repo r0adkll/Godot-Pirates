@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 func _splash_water() -> void:
 	super._splash_water()
 	if game_camera and control == LOCAL:
-		game_camera.add_trauma(0.15)
+		game_camera.add_trauma(0.40)
 
 
 ## Handle any Player Ship specific functions when it dies here
