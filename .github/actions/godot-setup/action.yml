@@ -1,0 +1,37 @@
+name: Setup Godot
+description: Download Godot, install export templates, restore the import cache, and import project assets
+
+inputs:
+  godot-version:
+    description: Godot version to install (e.g. "4.7")
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Download Godot
+      shell: bash
+      run: |
+        curl -sSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${{ inputs.godot-version }}-stable/Godot_v${{ inputs.godot-version }}-stable_linux.x86_64.zip"
+        unzip -q godot.zip
+        sudo mv "Godot_v${{ inputs.godot-version }}-stable_linux.x86_64" /usr/local/bin/godot
+
+    - name: Install export templates
+      shell: bash
+      run: |
+        curl -sSL -o templates.tpz "https://github.com/godotengine/godot/releases/download/${{ inputs.godot-version }}-stable/Godot_v${{ inputs.godot-version }}-stable_export_templates.tpz"
+        unzip -q templates.tpz
+        mkdir -p "$HOME/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable"
+        mv templates/* "$HOME/.local/share/godot/export_templates/${{ inputs.godot-version }}.stable/"
+
+    - name: Cache imported assets
+      uses: actions/cache@v4
+      with:
+        path: .godot
+        key: godot-import-${{ inputs.godot-version }}-${{ hashFiles('**/*.import') }}
+        restore-keys: |
+          godot-import-${{ inputs.godot-version }}-
+
+    - name: Import assets
+      shell: bash
+      run: godot --headless --import
