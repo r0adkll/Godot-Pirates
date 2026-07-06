@@ -1,137 +1,90 @@
 [gd_scene format=3 uid="uid://bdknrxudfrwto"]
 
 [ext_resource type="Script" uid="uid://diagmgrw6ntr1" path="res://Cannons/Scripts/cannon_fire.gd" id="1_2lxhf"]
-[ext_resource type="Texture2D" uid="uid://cvqba60solh2e" path="res://Effects/Fire/fire1.png" id="1_lwmpf"]
-[ext_resource type="Texture2D" uid="uid://dn8j2c58cgfjv" path="res://Effects/Fire/fire2.png" id="2_2lxhf"]
 
-[sub_resource type="Animation" id="Animation_10d41"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CannonFire/Fire2:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1.5, 1.5)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CannonFire/Fire1:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1.5, 1.5)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CannonFire/Fire1:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CannonFire/Fire2:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
+[sub_resource type="Gradient" id="Gradient_flash_tex"]
+offsets = PackedFloat32Array(0, 0.35, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.6, 1, 1, 1, 0)
 
-[sub_resource type="Animation" id="Animation_sb8vm"]
-resource_name = "fire"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CannonFire/Fire2:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [Vector2(1.5, 1.5), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CannonFire/Fire1:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [Vector2(1.5, 1.5), Vector2(0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CannonFire/Fire1:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("CannonFire/Fire2:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.5, 2),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_flash"]
+gradient = SubResource("Gradient_flash_tex")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_m3k8j"]
-_data = {
-&"RESET": SubResource("Animation_10d41"),
-&"fire": SubResource("Animation_sb8vm")
-}
+[sub_resource type="Curve" id="Curve_flash_scale"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.25, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[node name="CannonFire" type="Node2D" unique_id=1477338365]
+[sub_resource type="Gradient" id="Gradient_flash_color"]
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(1, 0.98, 0.75, 1, 1, 0.6, 0.15, 1, 0.85, 0.3, 0.05, 0)
+
+[sub_resource type="Gradient" id="Gradient_smoke_tex"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_smoke"]
+gradient = SubResource("Gradient_smoke_tex")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Curve" id="Curve_smoke_grow"]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.35, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 1.2), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_smoke_color"]
+offsets = PackedFloat32Array(0, 0.3, 1)
+colors = PackedColorArray(0.95, 0.93, 0.88, 0.6, 0.8, 0.8, 0.82, 0.35, 0.75, 0.78, 0.8, 0)
+
+[node name="CannonFire" type="Node2D"]
 script = ExtResource("1_2lxhf")
 
-[node name="Fire1" type="Sprite2D" parent="." unique_id=1319488767]
-position = Vector2(0, 1)
-rotation = 1.5707964
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("1_lwmpf")
-offset = Vector2(0, -19)
+[node name="Smoke" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 8
+texture = SubResource("GradientTexture2D_smoke")
+lifetime = 1.3
+one_shot = true
+explosiveness = 0.9
+lifetime_randomness = 0.4
+direction = Vector2(1, 0)
+spread = 30.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 240.0
+initial_velocity_max = 440.0
+angle_min = -180.0
+angle_max = 180.0
+angular_velocity_min = -40.0
+angular_velocity_max = 40.0
+damping_min = 320.0
+damping_max = 480.0
+scale_amount_min = 1.5
+scale_amount_max = 3.0
+scale_amount_curve = SubResource("Curve_smoke_grow")
+color_ramp = SubResource("Gradient_smoke_color")
 
-[node name="Fire2" type="Sprite2D" parent="." unique_id=793266207]
-position = Vector2(0, -2)
-rotation = 1.5707964
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("2_2lxhf")
-offset = Vector2(0, -13.5)
-
-[node name="CannonFireAnimation" type="AnimationPlayer" parent="." unique_id=2133535322]
-root_node = NodePath("../..")
-libraries/ = SubResource("AnimationLibrary_m3k8j")
-
-[connection signal="animation_finished" from="CannonFireAnimation" to="." method="_on_cannon_fire_animation_animation_finished"]
+[node name="Flash" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 12
+texture = SubResource("GradientTexture2D_flash")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.25
+direction = Vector2(1, 0)
+spread = 20.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 200.0
+initial_velocity_max = 400.0
+damping_min = 300.0
+damping_max = 500.0
+scale_amount_min = 3.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_flash_scale")
+color_ramp = SubResource("Gradient_flash_color")
