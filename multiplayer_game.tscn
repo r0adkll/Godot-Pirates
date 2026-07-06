@@ -18,6 +18,9 @@
 [ext_resource type="Resource" uid="uid://beyw4n2x3ucvv" path="res://Ships/Resources/plain_boat_hull.tres" id="16_shuv8"]
 [ext_resource type="Resource" uid="uid://df137ll0jkjad" path="res://Ships/Resources/red_boat_hull.tres" id="17_fip17"]
 [ext_resource type="Resource" uid="uid://b0dej5pbj0jp1" path="res://Ships/Resources/yellow_boat_hull.tres" id="18_2uvy3"]
+[ext_resource type="PackedScene" path="res://UI/hud.tscn" id="19_hudsc"]
+[ext_resource type="PackedScene" uid="uid://3mwawest4pc" path="res://MainMenu/pause_menu.tscn" id="20_pausm"]
+[ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="21_gomnu"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_euiar"]
 parsed_collision_mask = 4294967280
@@ -95,5 +98,13 @@ available_boats = Dictionary[String, ExtResource("12_8q22c")]({
 "red": ExtResource("17_fip17"),
 "yellow": ExtResource("18_2uvy3")
 })
+
+[node name="HUD" parent="." unique_id=1567392199 instance=ExtResource("19_hudsc")]
+
+[node name="PauseMenu" parent="." unique_id=1798729079 instance=ExtResource("20_pausm")]
+visible = false
+
+[node name="GameOverMenu" parent="." unique_id=1792035010 instance=ExtResource("21_gomnu")]
+visible = false
 
 [connection signal="map_generated" from="TreasureMap" to="." method="_on_treasure_map_map_generated"]

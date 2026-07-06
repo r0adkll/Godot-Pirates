@@ -245,9 +245,25 @@ func check_last_collision_for_treasure() -> void:
 	if last_collision:
 		var collider = last_collision.get_collider()
 		if collider is Treasure:
-			coin += collider.coin
-			health += collider.health
-			collider.queue_free()
+			if Lobby.active:
+				# Only the peer controlling this ship reports the pickup;
+				# every peer then applies it so coin/health stay in sync
+				if control == LOCAL:
+					_collect_treasure.rpc(collider.name)
+			else:
+				_collect_treasure(collider.name)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _collect_treasure(treasure_name: String) -> void:
+	var collected := SceneSpawnerSystem.entity_owner.get_node_or_null(NodePath(treasure_name))
+	if collected == null or not collected is Treasure:
+		return
+	if collected.is_queued_for_deletion():
+		return
+	coin += collected.coin
+	health += collected.health
+	collected.queue_free()
 
 
 ## Apply the correct boat sprite for the ship's current health
@@ -324,24 +340,57 @@ func generate_explosions() -> void:
 		SceneSpawnerSystem.add_entity(new_exp)
 
 
+## Monotonic counter the server uses to give dropped treasure a unique
+## name that is identical on every peer
+static var _treasure_counter: int = 0
+
 func drop_treasure() -> void:
+	# In multiplayer only the server rolls the drops; every peer spawns
+	# from the same broadcast spec so positions and contents match
+	if Lobby.active and not multiplayer.is_server():
+		return
+
+	var specs: Array = []
 	for i in 5:
 		var offset_rotation = randf() * (2*PI)
 		var offset_magnitude = randf() * 75
-		var offset = Vector2.RIGHT.rotated(offset_rotation) * offset_magnitude
-		var friction = randf_range(5, 10)
-		
-		var new_treasure: Treasure = treasure.instantiate()
+		var spec: Dictionary = {
+			"name": "treasure_%d" % _treasure_counter,
+			"position": global_position,
+			"rotation": randf_range(-(PI/4), PI / 4),
+			"velocity": Vector2.RIGHT.rotated(offset_rotation) * offset_magnitude,
+			"friction": randf_range(5, 10),
+			"coin": 0,
+			"health": 0,
+			"state": Treasure.EMPTY,
+		}
 		if randf() > 0.5:
-			new_treasure.coin = coin
-			new_treasure.state = Treasure.COIN
+			spec["coin"] = coin
+			spec["state"] = Treasure.COIN
 		else:
-			new_treasure.health = 25
-			new_treasure.state = Treasure.HEALTH
-		new_treasure.global_position = global_position
-		new_treasure.rotation = randf_range(-(PI/4), PI / 4)
-		new_treasure.velocity = offset
-		new_treasure.friction = friction
+			spec["health"] = 25
+			spec["state"] = Treasure.HEALTH
+		_treasure_counter += 1
+		specs.append(spec)
+
+	if Lobby.active:
+		_spawn_treasure.rpc(specs)
+	else:
+		_spawn_treasure(specs)
+
+
+@rpc("authority", "call_local", "reliable")
+func _spawn_treasure(specs: Array) -> void:
+	for spec in specs:
+		var new_treasure: Treasure = treasure.instantiate()
+		new_treasure.name = spec["name"]
+		new_treasure.coin = spec["coin"]
+		new_treasure.health = spec["health"]
+		new_treasure.state = spec["state"]
+		new_treasure.global_position = spec["position"]
+		new_treasure.rotation = spec["rotation"]
+		new_treasure.velocity = spec["velocity"]
+		new_treasure.friction = spec["friction"]
 		SceneSpawnerSystem.add_entity(new_treasure)
 
 ## Return a crew member to this ship's cabin

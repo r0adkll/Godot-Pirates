@@ -20,6 +20,7 @@ var players = {}
 var player_info = {
 	"name": "Player",
 	"boat": "plain", # red, green, blue, yellow, plain, pirate
+	"ready": false,
 }
 
 var players_loaded = 0
@@ -66,7 +67,19 @@ func create_game():
 func remove_multiplayer_peer():
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	players.clear()
+	player_info["ready"] = false
 	active = false
+
+
+## Whether every connected client has readied up. The host is implicitly
+## ready since they are the one who starts the game.
+func all_players_ready() -> bool:
+	for peer_id in players:
+		if peer_id == 1:
+			continue
+		if not players[peer_id].get("ready", false):
+			return false
+	return true
 
 
 # When the server decides to start the game from a UI scene,

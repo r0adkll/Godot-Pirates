@@ -11,14 +11,19 @@ extends StaticBody2D
 @onready var tr_cannon: FortCannon = $TR_Cannon
 @onready var br_cannon: FortCannon = $BR_Cannon
 
+## Deterministic id assigned at map generation. Identical on every
+## peer since the map is seeded, so it is safe to key sync RPCs on.
+var fort_id: int = -1
+
 @export var faction: Faction:
 	set(new_value):
 		faction = new_value
 		_set_flag(new_value)
-		
+
 		# If a faction change, update the faction system
-		FactionSystem.set_fort_faction(get_instance_id(), new_value)
-		
+		FactionSystem.set_fort_faction(fort_id, new_value)
+		FactionSystem.notify_fort_changed(self)
+
 		# Remove targets that match this faction
 		if new_value:
 			_clean_targets()
@@ -32,9 +37,10 @@ extends StaticBody2D
 		_set_crew_count()
 		_update_cannons()
 		_distribute_targets()
+		FactionSystem.notify_fort_changed(self)
 		if new_value <= 0:
 			faction = null
-			
+
 
 ## A fort can target up to [crew] number of targets
 var targets: Array[Node2D] = []
@@ -59,6 +65,18 @@ func _ready() -> void:
 
 func is_full() -> bool:
 	return crew == max_crew
+
+
+## Apply authoritative fort state received from the server. The local
+## crew simulation may have drifted; the server's view always wins.
+func apply_synced_state(new_crew: int, faction_id: int) -> void:
+	if crew != new_crew:
+		crew = new_crew
+	var new_faction: Faction = null if faction_id == -1 else FactionSystem.get_faction(faction_id)
+	var changed = (faction == null) != (new_faction == null) \
+		or (faction != null and not faction.equals(new_faction))
+	if changed:
+		faction = new_faction
 
 func _set_cannon_origin() -> void:
 	tl_cannon.cannon.origin = self

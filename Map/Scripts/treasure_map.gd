@@ -142,11 +142,12 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 		# nested node2d.
 		var local_fort_position = fort.bounds.position - island.bounds.position
 		new_fort.position = land.map_to_local(local_fort_position) - Vector2(64, 64)
+
+		# Register the fort with the FactionSystem for conquest tracking.
+		# Map generation is seeded, so every peer assigns the same id to
+		# the same fort — this is what fort state RPCs key on.
+		new_fort.fort_id = FactionSystem.register_fort(new_fort)
 		island.add_child(new_fort)
-		
-		# Increment the total number of forts in a map in our FactionSystme
-		# so we can accurately count conquest percentages
-		FactionSystem.total_forts += 1
 	
 	## TODO: Add to "land" layer?
 	add_child(island)

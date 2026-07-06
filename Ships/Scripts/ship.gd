@@ -33,6 +33,11 @@ const hit_emoji = [
 
 var is_first_ship: bool = false
 
+## Whether this ship bound itself to the HUD. Only the locally
+## controlled ship may do so — remote peers' ships would otherwise
+## clobber the local player's HUD in multiplayer.
+var _hud_bound: bool = false
+
 func _ready() -> void:
 	super._ready()
 	add_to_group(GROUP)
@@ -46,9 +51,10 @@ func _ready() -> void:
 	Input.set_custom_mouse_cursor(cursor_target, Input.CursorShape.CURSOR_ARROW, Vector2(16, 16))
 	
 	# Connect the HUD
-	# TODO: There is probably a better way to connect ship-based state 
+	# TODO: There is probably a better way to connect ship-based state
 	#       to our HUD UI. This works for now, but is messy AF.
-	if hud:
+	if hud and control == LOCAL:
+		_hud_bound = true
 		hud.connect_magazine(cannon.magazine)
 		hud.set_crew_count(crew_cabin.crew, crew_cabin.max_crew)
 		coin_changed.connect(hud.set_coin_count)
@@ -81,7 +87,7 @@ func setup_remote_control() -> void:
 	
 
 func _exit_tree() -> void:
-	if hud:
+	if _hud_bound:
 		hud.disconnect_magazine(cannon.magazine)
 		coin_changed.disconnect(hud.set_coin_count)
 
@@ -158,8 +164,8 @@ func _on_die(_source: Faction) -> void:
 	if game_camera:
 		game_camera.add_trauma(0.8)
 	$Sfx/WoodBreaking.play()
-	
-	if hud:
+
+	if _hud_bound:
 		hud.set_crew_count(0, crew_cabin.max_crew)
 	
 	# Start "Sink" Animation
@@ -233,7 +239,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 
 func _on_crew_cabin_crew_updated(count: int, max_crew: int) -> void:
-	if hud:
+	if _hud_bound:
 		hud.set_crew_count(count, max_crew)
 
 

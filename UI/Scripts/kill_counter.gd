@@ -16,5 +16,6 @@ func _ready() -> void:
 
 ## Set the flag/counter for this
 func set_count(_faction: Faction, count: int) -> void:
-	flag_texture.texture = _faction.boat.flag
+	if _faction and _faction.boat:
+		flag_texture.texture = _faction.boat.flag
 	counter_label.text = str(count)

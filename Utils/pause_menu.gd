@@ -4,7 +4,10 @@ signal state_changed(paused: bool)
 
 
 func pause() -> void:
-	get_tree().paused = true
+	# Never halt the simulation in multiplayer; the world keeps moving
+	# for every other peer, so just overlay the menu
+	if not Lobby.active:
+		get_tree().paused = true
 	state_changed.emit(true)
 
 

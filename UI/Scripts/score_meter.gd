@@ -20,10 +20,20 @@ func _ready() -> void:
 
 
 func _on_faction_system_conquest_updated(conquest: Dictionary[int, float]) -> void:
+	if not player_counter.faction:
+		return
+
 	var player_conquest = conquest.get_or_add(player_counter.faction.id, 0)
-	var enemy_conquest = conquest.get_or_add(enemy_counter.faction.id, 0)
+	var enemy_conquest: float = 0.0
+	if enemy_counter.faction:
+		enemy_conquest = conquest.get_or_add(enemy_counter.faction.id, 0)
+	else:
+		# Multiplayer: no single enemy faction, show the strongest rival
+		for faction_id in conquest:
+			if faction_id != player_counter.faction.id:
+				enemy_conquest = maxf(enemy_conquest, conquest[faction_id])
 	var empty_conquest = 1 - (player_conquest + enemy_conquest)
-	
+
 	player_progress.size_flags_stretch_ratio = player_conquest
 	enemy_progress.size_flags_stretch_ratio = enemy_conquest
 	empty_progress.size_flags_stretch_ratio = empty_conquest
@@ -38,7 +48,7 @@ func _on_faction_system_victory_timer_updated(faction: Faction, remaining: float
 	
 	if faction.equals(player_counter.faction):
 		victory_timer.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	elif faction.equals(enemy_counter.faction):
+	else:
 		victory_timer.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	
 	## Update the victory timer

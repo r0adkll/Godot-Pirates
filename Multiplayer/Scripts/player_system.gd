@@ -6,6 +6,7 @@ const ship_scene := preload("res://Ships/ship.tscn")
 
 @onready var treasure_map: TreasureMap = $"../TreasureMap"
 @onready var player_camera: PlayerCamera = %PlayerCamera
+@onready var hud: Hud = $"../HUD"
 
 @export var available_boats: Dictionary[String, BoatHulls] = {}
 
@@ -22,7 +23,9 @@ func setup_players() -> void:
 
 
 func get_faction(player_id: int) -> Faction:
-	return factions.get(player_id) if factions.has(player_id) else _create_faction(player_id)
+	if not factions.has(player_id):
+		factions[player_id] = _create_faction(player_id)
+	return factions[player_id]
 
 
 ## Generate a new faction
@@ -32,7 +35,16 @@ func _create_faction(player_id: int) -> Faction:
 	faction.id = player_id
 	faction.type = Faction.Type.Player
 	faction.boat = available_boats[player_info["boat"]]
+	# Keep the global system in sync so kill/conquest tracking uses
+	# the same instance every peer resolves for this player
+	FactionSystem.factions[player_id] = faction
 	return faction
+
+
+## Remove a player's faction, e.g. when they disconnect
+func remove_faction(player_id: int) -> void:
+	factions.erase(player_id)
+	FactionSystem.factions.erase(player_id)
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -48,10 +60,16 @@ func spawn_player(player_id: int, pos: Vector2) -> void:
 	new_player.name = "player_" + str(player_id) + "_ship"
 	new_player.player_system = self
 	
+	# Set the control mode up-front: the ship's _ready (HUD binding, etc)
+	# runs before the deferred setup_*_control calls below
 	if is_client:
+		new_player.control = BaseShip.LOCAL
 		new_player.game_camera = player_camera
 		new_player.setup_local_control.call_deferred()
+		# The HUD score meter tracks the local player's faction
+		hud.player_counter.faction = faction
 	else:
+		new_player.control = BaseShip.REMOTE
 		new_player.setup_remote_control.call_deferred()
 	
 	# Only the server cares about re-spawning ships

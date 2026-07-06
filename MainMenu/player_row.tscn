@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://80rj3nu7vei4" path="res://UI/Resources/BIG/panel_grey_bolts_red 1.png" id="1_3iywr"]
 [ext_resource type="Texture2D" uid="uid://vony0r6hc0i3" path="res://Systems/Faction/Sprites/plain.png" id="2_ani06"]
+[ext_resource type="Texture2D" uid="uid://id8y43i6trhp" path="res://UI/Resources/BIG/checkbox_beige_empty 1.png" id="4_rdych"]
 [ext_resource type="Script" uid="uid://w6tuoiq5wtar" path="res://MainMenu/Scripts/player_row.gd" id="2_ou34l"]
 [ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="3_ou34l"]
 
@@ -37,3 +38,10 @@ expand_mode = 5
 layout_mode = 2
 text = "Player 1"
 label_settings = SubResource("LabelSettings_qnqvl")
+
+[node name="ReadyCheck" type="TextureRect" parent="HBoxContainer" unique_id=1188223401]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+texture = ExtResource("4_rdych")
+expand_mode = 5
+
