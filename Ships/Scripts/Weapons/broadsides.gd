@@ -18,7 +18,7 @@ extends WeaponNode
 ]
 
 @export var faction: Faction
-@export var origin: Node2D
+@export var origin: Ship
 
 func _ready() -> void:
 	for cannon in cannons:
@@ -44,4 +44,8 @@ func fire(force_mask: int = 0) -> int:
 			continue
 		if cannons[i].fire(forced):
 			fired_mask |= 1 << i
+	
+	if fired_mask != 0 and origin.game_camera and origin.control == Ship.LOCAL:
+		origin.game_camera.add_trauma(0.30)
+			
 	return fired_mask

@@ -6,5 +6,9 @@ func process_input(ship: Ship, _delta: float) -> void:
 	# locally, and force them on remote peers so their magazine drift
 	# can't drop the spawn.
 	if Input.is_action_just_pressed("ui_shoot"):
-		if ship.fire_main_cannon() and Lobby.active:
-			ship.fire_main_cannon.rpc(true)
+		var did_fire = ship.fire_main_cannon()
+		if did_fire:
+			if ship.game_camera:
+				ship.game_camera.add_trauma(0.18)
+			if Lobby.active:
+				ship.fire_main_cannon.rpc(true)
