@@ -112,6 +112,7 @@ func _on_ready_button_pressed() -> void:
 	Lobby.player_info["ready"] = is_ready
 	ready_check_box.texture = checkbox_checked if is_ready else checkbox_empty
 	Lobby._on_player_updated()
+	ready_button.text = "Ready" if not is_ready else "Not ready"
 
 
 func _on_start_game_button_pressed() -> void:
