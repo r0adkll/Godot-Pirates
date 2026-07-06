@@ -161,7 +161,9 @@ cannon = NodePath("Cannon")
 crew_cabin = NodePath("CrewCabin")
 left_trail = NodePath("Trails/Left")
 right_trail = NodePath("Trails/Right")
-coin = 500
+max_health = null
+max_sprint = null
+coin = 10
 
 [node name="BoatSprite" type="Sprite2D" parent="." unique_id=1778376956]
 material = SubResource("ShaderMaterial_s7iy5")
@@ -304,7 +306,5 @@ ship = NodePath("..")
 [node name="Dutchman" type="Node" parent="AbilitySystem" unique_id=411368653]
 script = ExtResource("30_503b3")
 
-[connection signal="crew_returned" from="." to="." method="_on_crew_returned"]
 [connection signal="apply_damage" from="DamageTarget" to="." method="_on_damage_target_apply_damage"]
-[connection signal="crew_updated" from="CrewCabin" to="." method="_on_crew_cabin_crew_updated"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

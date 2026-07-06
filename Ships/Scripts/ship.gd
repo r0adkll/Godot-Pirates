@@ -116,6 +116,7 @@ func _physics_process(delta: float) -> void:
 	# Due to how the last_collision property works it HAS to be
 	# called after move_and_slide() 
 	check_if_beached()
+	check_last_collision_for_treasure()
 
 
 ## Add a little camera kick when the local player's ship breaks the surface

@@ -30,6 +30,7 @@ const Z_INDEX: Dictionary = {
 
 const explosion := preload("res://Effects/Explosion/explosion.tscn")
 const dive_splash := preload("res://Effects/Splash/ship_dive_splash.tscn")
+const treasure := preload("res://Resources/treasure.tscn")
 
 # Shared Ship Constants
 const ACCELERATION: float = 350.0
@@ -54,16 +55,20 @@ const TRAIL_ANGLE: float = 90
 @export var right_trail: TrailEmitter
 @export var max_health: float = 100
 @export var max_sprint: float = 500
-@onready var health: float = max_health
+
+@onready var health: float = max_health:
+	set(new_value):
+		health = clampf(new_value, 0, max_health)
+		
 @onready var sprint: float = max_sprint:
 	set(new_value):
 		sprint = new_value
 		sprint_changed.emit(sprint / max_sprint)
 
-@export var coin: int = 0: set = _set_coin
-func _set_coin(new_value: int) -> void:
-	coin = new_value
-	coin_changed.emit(coin)
+@export var coin: int = 0:
+	set(new_value):
+		coin = new_value
+		coin_changed.emit(coin)
 
 ## The state of the ship
 var state: State = State.ALIVE: set = set_state
@@ -226,6 +231,16 @@ func last_collision_as_beached() -> BeachHead:
 	return null
 
 
+func check_last_collision_for_treasure() -> void:
+	var last_collision = get_last_slide_collision()
+	if last_collision:
+		var collider = last_collision.get_collider()
+		if collider is Treasure:
+			coin += collider.coin
+			health += collider.health
+			collider.queue_free()
+
+
 ## Apply the correct boat sprite for the ship's current health
 func check_health() -> void:
 	var health_pct = health / max_health
@@ -257,8 +272,11 @@ func die(source: Faction = null) -> void:
 	# Generate floating crew
 	crew_cabin.abandon_ship()
 	
-	## Generate Explosions!
+	# Generate Explosions!
 	generate_explosions()
+	
+	# Drop Treasure!
+	drop_treasure()
 	
 	# Tell FactionSystem that we died
 	if source:
@@ -296,6 +314,26 @@ func generate_explosions() -> void:
 		new_exp.delay = delay
 		SceneSpawnerSystem.add_entity(new_exp)
 
+
+func drop_treasure() -> void:
+	for i in 5:
+		var offset_rotation = randf() * (2*PI)
+		var offset_magnitude = randf() * 75
+		var offset = Vector2.RIGHT.rotated(offset_rotation) * offset_magnitude
+		var friction = randf_range(5, 10)
+		
+		var new_treasure: Treasure = treasure.instantiate()
+		if randf() > 0.5:
+			new_treasure.coin = coin
+			new_treasure.state = Treasure.COIN
+		else:
+			new_treasure.health = 25
+			new_treasure.state = Treasure.HEALTH
+		new_treasure.global_position = global_position
+		new_treasure.rotation = randf_range(-(PI/4), PI / 4)
+		new_treasure.velocity = offset
+		new_treasure.friction = friction
+		SceneSpawnerSystem.add_entity(new_treasure)
 
 ## Return a crew member to this ship's cabin
 func return_crew(amount: int = 1) -> void:

@@ -23,7 +23,6 @@ var deployment: Deployment
 
 ## The target position to move towards
 var target: Vector2 = Vector2.INF
-var nearby_treasure: TreasureChest
 
 func _ready() -> void:
 	sprite.frame = randi_range(0, 49)
@@ -88,13 +87,3 @@ class Deployment:
 		self.faction = f
 		self.island = isl
 		self.landing_pos = lpos
-
-
-func _on_detection_zone_area_entered(area: Area2D) -> void:
-	if area is TreasureChest:
-		nearby_treasure = area
-
-
-func _on_detection_zone_area_exited(area: Area2D) -> void:
-	if area == nearby_treasure:
-		nearby_treasure = null

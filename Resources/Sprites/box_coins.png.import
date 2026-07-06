@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q40ld4benimv"
-path="res://.godot/imported/treasure_location.png-e85135dc8a80c2151553e8d4314b8c3e.ctex"
+uid="uid://clwt0jt3bwadn"
+path="res://.godot/imported/box_coins.png-986caa689135f96ddb4000eaa26c230b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/Items/Treasure/treasure_location.png"
-dest_files=["res://.godot/imported/treasure_location.png-e85135dc8a80c2151553e8d4314b8c3e.ctex"]
+source_file="res://Resources/Sprites/box_coins.png"
+dest_files=["res://.godot/imported/box_coins.png-986caa689135f96ddb4000eaa26c230b.ctex"]
 
 [params]
 

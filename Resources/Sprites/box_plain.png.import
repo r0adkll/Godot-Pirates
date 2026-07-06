@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dplx6gkjbwi64"
-path="res://.godot/imported/crateWood.png-15851c7ca9fba61f87d249a8a18b99c9.ctex"
+uid="uid://d4gy7skcph4e7"
+path="res://.godot/imported/box_plain.png-d9e3daf0c516ad0ce222152635ec70a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/Items/crateWood.png"
-dest_files=["res://.godot/imported/crateWood.png-15851c7ca9fba61f87d249a8a18b99c9.ctex"]
+source_file="res://Resources/Sprites/box_plain.png"
+dest_files=["res://.godot/imported/box_plain.png-d9e3daf0c516ad0ce222152635ec70a9.ctex"]
 
 [params]
 

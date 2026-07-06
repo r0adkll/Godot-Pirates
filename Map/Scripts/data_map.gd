@@ -8,13 +8,6 @@ func find_treasure_coords(coords: Array[Vector2i]) -> Array[Vector2i]:
 	return coords.filter(_has_treasure)
 	
 
-func create_treasure(coord: Vector2i) -> TreasureChest:
-	var treasure_scene: PackedScene = load("res://Map/Items/Treasure/treasure.tscn")
-	var treasure: TreasureChest = treasure_scene.instantiate()
-	treasure.position = map_to_local(coord)
-	return treasure
-		
-
 ## Check if a map position has a treasure tile
 func _has_treasure(coords: Vector2i) -> bool:
 	var source_id: int = get_cell_source_id(coords)
