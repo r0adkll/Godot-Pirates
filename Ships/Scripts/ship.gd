@@ -56,6 +56,7 @@ func _ready() -> void:
 	if hud and control == LOCAL:
 		_hud_bound = true
 		hud.connect_magazine(cannon.magazine)
+		crew_cabin.crew_updated.connect(_on_crew_cabin_crew_updated)
 		hud.set_crew_count(crew_cabin.crew, crew_cabin.max_crew)
 		coin_changed.connect(hud.set_coin_count)
 		sprint_changed.connect(hud.set_sprint_percentage)
@@ -246,7 +247,3 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func _on_crew_cabin_crew_updated(count: int, max_crew: int) -> void:
 	if _hud_bound:
 		hud.set_crew_count(count, max_crew)
-
-
-func _on_crew_returned(amount: int) -> void:
-	crew_cabin.add_crew(amount)

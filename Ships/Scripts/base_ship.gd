@@ -397,6 +397,7 @@ func _spawn_treasure(specs: Array) -> void:
 
 ## Return a crew member to this ship's cabin
 func return_crew(amount: int = 1) -> void:
+	crew_cabin.add_crew(amount)
 	crew_returned.emit(amount)
 
 

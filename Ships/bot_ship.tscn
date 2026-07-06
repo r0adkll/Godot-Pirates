@@ -328,6 +328,5 @@ script = ExtResource("23_taibw")
 metadata/_custom_type_script = "uid://cv74jjdrwevpr"
 
 [connection signal="apply_damage" from="DamageTarget" to="." method="_on_damage_target_apply_damage"]
-[connection signal="crew_updated" from="CrewCabin" to="." method="_on_crew_cabin_crew_updated"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="current_animation_changed" from="AnimationPlayer" to="." method="_on_animation_player_current_animation_changed"]

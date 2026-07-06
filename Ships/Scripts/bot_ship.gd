@@ -31,6 +31,7 @@ func _ready() -> void:
 	
 	detection_area.body_entered.connect(_on_detection_area_body_entered)
 	detection_area.body_exited.connect(_on_detection_area_body_exited)
+	crew_cabin.crew_updated.connect(_on_crew_cabin_crew_updated)
 	
 	nav_agent.debug_enabled = Debug.enabled
 
