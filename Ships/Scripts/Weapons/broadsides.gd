@@ -21,6 +21,11 @@ extends WeaponNode
 @export var origin: Ship
 
 func _ready() -> void:
+	# The scene's faction export is only a fallback — the ship's faction
+	# is assigned at spawn time (e.g. the hull chosen in the menu) and
+	# kills are attributed to whatever faction the cannons carry
+	if origin:
+		faction = origin.faction
 	for cannon in cannons:
 		cannon.faction = faction
 		cannon.origin = origin
