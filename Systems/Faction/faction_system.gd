@@ -192,7 +192,9 @@ func _compute_conquest() -> void:
 			counts.set(fort_faction, new_value)
 			conquest.set(fort_faction, coverage)
 			
-			if coverage >= 0.5:
+			# Strict majority — at exactly half, two factions could tie
+			# and the "winner" would flip with dict iteration order
+			if coverage > 0.5:
 				majority_faction = fort_faction
 	
 	if winning_faction_id != majority_faction and majority_faction != -1:

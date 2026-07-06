@@ -89,6 +89,10 @@ func _update_difficulty_display() -> void:
 
 
 func _apply_hull_to_new_game(new_scene: Node) -> void:
+	# The FactionSystem autoload survives scene changes; a winner from a
+	# previous round would permanently block the victory timer
+	FactionSystem.reset()
+
 	var player_faction = Faction.new()
 	player_faction.id = 0
 	player_faction.type = Faction.Type.Player
