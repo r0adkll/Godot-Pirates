@@ -5,6 +5,8 @@ extends Resource
 
 @export var display_name: String = ""
 @export_multiline var description: String = ""
+@export var difficulty_descriptor: String = ""
+@export var descriptor_color: Color = Color.AQUA
 
 ## Absolute number of enemy ships ShipsSystem keeps alive
 @export var enemy_count: int = 4

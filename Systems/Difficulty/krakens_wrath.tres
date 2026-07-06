@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="DifficultyProfile" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DifficultyProfile" format=3 uid="uid://crfo72vjolema"]
 
-[ext_resource type="Script" path="res://Systems/Difficulty/difficulty_profile.gd" id="1_diff"]
+[ext_resource type="Script" uid="uid://cfdeuuuy648uf" path="res://Systems/Difficulty/difficulty_profile.gd" id="1_diff"]
 
 [resource]
 script = ExtResource("1_diff")
 display_name = "Kraken's Wrath"
 description = "Ruthless hunters prowl every horizon."
+difficulty_descriptor = "Hard"
+descriptor_color = Color(0.99898523, 0.31896928, 0.2614431, 1)
 enemy_count = 7
 shooting_rate_multiplier = 0.6
 cannon_power_multiplier = 1.5

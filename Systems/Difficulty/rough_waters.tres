@@ -1,13 +1,10 @@
-[gd_resource type="Resource" script_class="DifficultyProfile" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="DifficultyProfile" format=3 uid="uid://baexbsmd28foq"]
 
-[ext_resource type="Script" path="res://Systems/Difficulty/difficulty_profile.gd" id="1_diff"]
+[ext_resource type="Script" uid="uid://cfdeuuuy648uf" path="res://Systems/Difficulty/difficulty_profile.gd" id="1_diff"]
 
 [resource]
 script = ExtResource("1_diff")
 display_name = "Rough Waters"
 description = "A fair fight on the open sea."
-enemy_count = 4
-shooting_rate_multiplier = 1.0
-cannon_power_multiplier = 1.0
-detection_radius_multiplier = 1.0
-engage_distance_multiplier = 1.0
+difficulty_descriptor = "Medium"
+descriptor_color = Color(0.86796224, 0.50369936, 7.70092e-07, 1)

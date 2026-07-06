@@ -24,13 +24,14 @@
 [ext_resource type="StyleBox" uid="uid://e4xft5q4tl2i" path="res://UI/Resources/BIG/normal_button_texture.tres" id="15_8u0te"]
 [ext_resource type="Resource" uid="uid://b0dej5pbj0jp1" path="res://Ships/Resources/yellow_boat_hull.tres" id="15_ka3nr"]
 [ext_resource type="Texture2D" uid="uid://budpwy1hxr4jt" path="res://Ships/Sprites/ship_plain/plain_new.png" id="16_saq78"]
+[ext_resource type="FontFile" uid="uid://c66s7f32pww5w" path="res://UI/Resources/Fonts/Kenney Future Narrow.ttf" id="25_ai24q"]
 [ext_resource type="Script" uid="uid://cjl7bna2mmxgx" path="res://MainMenu/Scripts/join_game_menu.gd" id="25_ka3nr"]
 [ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="25_ql5ya"]
 [ext_resource type="PackedScene" uid="uid://bkb1ymof4sk1p" path="res://MainMenu/settings_menu.tscn" id="26_setmn"]
 [ext_resource type="Script" uid="uid://cfdeuuuy648uf" path="res://Systems/Difficulty/difficulty_profile.gd" id="27_dfgd"]
-[ext_resource type="Resource" path="res://Systems/Difficulty/calm_seas.tres" id="28_dfcs"]
-[ext_resource type="Resource" path="res://Systems/Difficulty/rough_waters.tres" id="29_dfrw"]
-[ext_resource type="Resource" path="res://Systems/Difficulty/krakens_wrath.tres" id="30_dfkw"]
+[ext_resource type="Resource" uid="uid://b3jkdtwlmj5cx" path="res://Systems/Difficulty/calm_seas.tres" id="28_dfcs"]
+[ext_resource type="Resource" uid="uid://baexbsmd28foq" path="res://Systems/Difficulty/rough_waters.tres" id="29_dfrw"]
+[ext_resource type="Resource" uid="uid://crfo72vjolema" path="res://Systems/Difficulty/krakens_wrath.tres" id="30_dfkw"]
 
 [sub_resource type="Curve2D" id="Curve2D_glbon"]
 _data = {
@@ -53,6 +54,13 @@ outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l354k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qby1g"]
+font = ExtResource("25_ai24q")
+font_size = 32
+font_color = Color(2.4065375e-06, 0.66433716, 0.36764133, 1)
+outline_size = 4
+outline_color = Color(0.1254902, 0.7058824, 0.44705883, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dfnm"]
 font = ExtResource("10_0o4t1")
@@ -232,6 +240,12 @@ icon = ExtResource("10_cm266")
 custom_minimum_size = Vector2(520, 0)
 layout_mode = 2
 size_flags_horizontal = 4
+
+[node name="DifficultyDescriptor" type="Label" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo" unique_id=1499619785]
+layout_mode = 2
+text = "Medium"
+label_settings = SubResource("LabelSettings_qby1g")
+horizontal_alignment = 1
 
 [node name="DifficultyName" type="Label" parent="Menu/PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo" unique_id=1987001124]
 layout_mode = 2

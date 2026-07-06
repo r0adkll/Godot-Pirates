@@ -11,6 +11,7 @@ extends CanvasLayer
 const DEFAULT_DIFFICULTY_INDEX := 1
 
 @onready var ship_texture: TextureRect = $PanelContainer/VBoxContainer/ShipSelector/ShipTexture
+@onready var difficulty_descriptor: Label = $PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo/DifficultyDescriptor
 @onready var difficulty_name: Label = $PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo/DifficultyName
 @onready var difficulty_description: Label = $PanelContainer/VBoxContainer/DifficultySelector/DifficultyInfo/DifficultyDescription
 @onready var multiplayer_buttons: HBoxContainer = $PanelContainer/VBoxContainer/Buttons2
@@ -82,6 +83,9 @@ func _update_difficulty_display() -> void:
 	var profile := difficulties[current_difficulty]
 	difficulty_name.text = profile.display_name
 	difficulty_description.text = profile.description
+	difficulty_descriptor.text = profile.difficulty_descriptor
+	difficulty_descriptor.label_settings.font_color = profile.descriptor_color
+	difficulty_descriptor.label_settings.outline_color = profile.descriptor_color
 
 
 func _apply_hull_to_new_game(new_scene: Node) -> void:
