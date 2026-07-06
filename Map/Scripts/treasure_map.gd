@@ -72,7 +72,11 @@ func generate_server_map() -> void:
 
 ## Generate the automatic layers of the map (sea floor and ocean layers)
 ## Based on the map size
-func generate_map() -> void:	
+func generate_map() -> void:
+	# A previous game's forts/islands may still be registered (and freed
+	# with that scene) — clear them before registering this map's
+	FactionSystem.clear_map_registries()
+
 	_setup_camera_limits()
 	
 	var land_cells: Array[Vector2i] = []

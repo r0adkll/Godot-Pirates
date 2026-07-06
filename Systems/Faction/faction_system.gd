@@ -43,8 +43,16 @@ func reset() -> void:
 	victory_timer = 0
 	winning_faction_id = -1
 	faction_kills.clear()
-	fort_factions.clear()
 	factions.clear()
+	clear_map_registries()
+
+
+## Clear everything registered by a generated map. Called before every
+## map generation so freed forts/islands from a previous game can never
+## linger in the registries.
+func clear_map_registries() -> void:
+	total_forts = 0
+	fort_factions.clear()
 	forts.clear()
 	islands.clear()
 	_fort_sync_timer = 0.0
@@ -65,9 +73,14 @@ func _process(delta: float) -> void:
 		_fort_sync_timer += delta
 		if _fort_sync_timer >= FORT_SYNC_INTERVAL:
 			_fort_sync_timer = 0.0
-			for fort: Fort in forts.values():
+			# NOTE: values() can't be iterated with a typed loop variable
+			# here — binding a freed instance to a typed var is an error
+			for fort_id in forts.keys():
+				var fort = forts[fort_id]
 				if is_instance_valid(fort):
 					_broadcast_fort(fort)
+				else:
+					forts.erase(fort_id)
 
 
 ## Register a fort at map-generation time, returning its deterministic id.
@@ -88,8 +101,14 @@ func register_island(island: Island) -> int:
 
 
 func get_island(island_id: int) -> Island:
-	var island: Island = islands.get(island_id)
-	return island if island and is_instance_valid(island) else null
+	# Untyped read: assigning a freed instance to a typed var is an error
+	var island = islands.get(island_id)
+	return island if is_instance_valid(island) else null
+
+
+func get_fort(fort_id: int) -> Fort:
+	var fort = forts.get(fort_id)
+	return fort if is_instance_valid(fort) else null
 
 
 ## Called by the server's fort cannons when they want to shoot; the shot
@@ -110,8 +129,8 @@ func request_fort_cannon_fire(fort_cannon: FortCannon) -> void:
 
 @rpc("authority", "call_local", "reliable")
 func _fort_cannon_fire(fort_id: int, cannon_idx: int, aim_rotation: float) -> void:
-	var fort: Fort = forts.get(fort_id)
-	if not fort or not is_instance_valid(fort):
+	var fort := get_fort(fort_id)
+	if not fort:
 		return
 	var fort_cannon = fort._cannon_at(cannon_idx)
 	if not fort_cannon:
@@ -136,8 +155,8 @@ func _broadcast_fort(fort: Fort) -> void:
 
 @rpc("authority", "call_remote", "reliable")
 func _sync_fort(fort_id: int, crew: int, faction_id: int) -> void:
-	var fort: Fort = forts.get(fort_id)
-	if fort and is_instance_valid(fort):
+	var fort := get_fort(fort_id)
+	if fort:
 		fort.apply_synced_state(crew, faction_id)
 
 
