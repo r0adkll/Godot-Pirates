@@ -72,7 +72,11 @@ func generate_server_map() -> void:
 
 ## Generate the automatic layers of the map (sea floor and ocean layers)
 ## Based on the map size
-func generate_map() -> void:	
+func generate_map() -> void:
+	# A previous game's forts/islands may still be registered (and freed
+	# with that scene) — clear them before registering this map's
+	FactionSystem.clear_map_registries()
+
 	_setup_camera_limits()
 	
 	var land_cells: Array[Vector2i] = []
@@ -128,6 +132,7 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 	# Generate Nodes
 	var island: Island = Island.new()
 	island.map = self
+	island.island_id = FactionSystem.register_island(island)
 	island.bounds = spec.bounds()
 	island.position = land.map_to_local(island.bounds.position) - Vector2(land.tile_set.tile_size) / 2
 	island.land = spec.land
@@ -142,11 +147,12 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 		# nested node2d.
 		var local_fort_position = fort.bounds.position - island.bounds.position
 		new_fort.position = land.map_to_local(local_fort_position) - Vector2(64, 64)
+
+		# Register the fort with the FactionSystem for conquest tracking.
+		# Map generation is seeded, so every peer assigns the same id to
+		# the same fort — this is what fort state RPCs key on.
+		new_fort.fort_id = FactionSystem.register_fort(new_fort)
 		island.add_child(new_fort)
-		
-		# Increment the total number of forts in a map in our FactionSystme
-		# so we can accurately count conquest percentages
-		FactionSystem.total_forts += 1
 	
 	## TODO: Add to "land" layer?
 	add_child(island)

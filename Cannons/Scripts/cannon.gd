@@ -14,9 +14,11 @@ const cannon_fire := preload("res://Cannons/cannon_fire.tscn")
 @export var shoot_pos: Marker2D
 
 
-# Fire the cannon from the 
-func fire() -> bool:
-	if magazine.try_chamber_round():
+# Fire the cannon from the magazine.
+# force fires even when the local magazine is empty — used when a remote
+# peer already validated the shot, so local magazine drift can't drop it
+func fire(force: bool = false) -> bool:
+	if magazine.try_chamber_round() or force:
 		var new_fire: CannonFire = cannon_fire.instantiate()
 		new_fire.position = shoot_pos.position
 		add_child(new_fire)

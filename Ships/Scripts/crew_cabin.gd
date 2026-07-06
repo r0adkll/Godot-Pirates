@@ -27,6 +27,16 @@ func add_crew(amount: int) -> void:
 	crew_updated.emit(crew, max_crew)
 
 
+## Reconcile the crew count from the ship's controlling peer. The local
+## pickup/boarding simulation is approximate on remote peers; the
+## controller's count always wins.
+func set_crew(count: int) -> void:
+	if crew == count:
+		return
+	crew = clampi(count, 0, max_crew)
+	crew_updated.emit(crew, max_crew)
+
+
 func deploy(
 	ship: BaseShip, 
 	island: Island, 
@@ -64,7 +74,11 @@ func abandon_ship() -> void:
 		frictions.append(randf_range(28, 32))
 		
 	if Lobby.active:
-		dump_all_crew.rpc(crew, offsets, speeds, frictions)
+		# die() runs on every peer, so gate the broadcast to the ship's
+		# controlling peer — otherwise the crew gets dumped once per peer
+		var ship := get_parent() as BaseShip
+		if ship and ship.control == BaseShip.LOCAL:
+			dump_all_crew.rpc(crew, offsets, speeds, frictions)
 	else:
 		dump_all_crew(crew, offsets, speeds, frictions)
 

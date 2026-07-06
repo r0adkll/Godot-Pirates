@@ -248,3 +248,4 @@ layout_mode = 2
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/RightShipSelector" to="." method="_on_right_ship_selector_pressed"]
 [connection signal="text_submitted" from="Menu/PanelContainer/VBoxContainer/NameInput" to="." method="_on_name_input_text_submitted"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ReadyCheckButton/ReadyButton" to="." method="_on_ready_button_pressed"]

@@ -22,6 +22,9 @@ func _on_resume_button_pressed() -> void:
 
 func _on_quit_button_pressed() -> void:
 	PauseMenu.resume()
+	# Leaving a multiplayer game means disconnecting from it
+	if Lobby.active:
+		Lobby.remove_multiplayer_peer()
 	SceneLoader.load_scene(&"uid://dmt04rkfnmmkq")
 
 

@@ -13,6 +13,10 @@ const GROUP = &"islands"
 ## The land map layer that these islands exist in
 @export var map: TreasureMap
 
+## Deterministic id assigned at map generation. Identical on every peer
+## since the map is seeded, so it is safe to reference in sync RPCs.
+var island_id: int = -1
+
 ## The land coordinates on the tilemap that compose this island
 var land: Array[Vector2i]
 

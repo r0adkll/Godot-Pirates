@@ -33,9 +33,10 @@ func _auto_fire(ship: Ship, stick: Vector2, delta: float) -> void:
 	if stick != Vector2.ZERO:
 		if _fire_cooldown == 0.0:
 			_fire_cooldown = auto_fire_interval
-			ship.fire_main_cannon()
-			if Lobby.active:
-				ship.fire_main_cannon.rpc()
+			# Only replicate shots that actually fired; force them on
+			# remote peers so magazine drift can't drop the spawn
+			if ship.fire_main_cannon() and Lobby.active:
+				ship.fire_main_cannon.rpc(true)
 	else:
 		# First shot fires the moment aiming starts
 		_fire_cooldown = 0.0

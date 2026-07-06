@@ -1,0 +1,318 @@
+[gd_scene format=4]
+
+[ext_resource type="Script" uid="uid://bywf3iu71w6to" path="res://UI/Scripts/hud.gd" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://cs466lyel5xjw" path="res://UI/Resources/BIG/panel_brown_damaged_dark 1.png" id="5_0odxb"]
+[ext_resource type="Texture2D" uid="uid://bhnwf4a4ymfpt" path="res://UI/Resources/BIG/panel_grey_bolts_dark 1.png" id="5_lswn8"]
+[ext_resource type="Texture2D" uid="uid://drb2mymtpnspj" path="res://Crew/Sprites/crew_3.png" id="6_4c57u"]
+[ext_resource type="PackedScene" uid="uid://def8vfdu0wa34" path="res://UI/ammo_indicator.tscn" id="6_7mycd"]
+[ext_resource type="Script" uid="uid://c5s7s5lsvftfd" path="res://UI/Scripts/ui_ammo_container.gd" id="6_272bh"]
+[ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="6_kek77"]
+[ext_resource type="Texture2D" uid="uid://brgd6fol8jipw" path="res://UI/Resources/BIG/panel_grey_bolts 1.png" id="9_lswn8"]
+[ext_resource type="Texture2D" uid="uid://dmogivb66sjfr" path="res://UI/Resources/coin_01.png" id="9_vivmo"]
+[ext_resource type="PackedScene" uid="uid://bsjtm7nvw1ehf" path="res://UI/kill_counter.tscn" id="11_d13ii"]
+[ext_resource type="Resource" uid="uid://dqcd6i3uun0ul" path="res://Systems/Faction/player_faction.tres" id="12_d13ii"]
+[ext_resource type="Texture2D" uid="uid://b7e38i57ug1bu" path="res://UI/Resources/Progress/progress_blue_small_border.png" id="14_a6jrf"]
+[ext_resource type="PackedScene" uid="uid://brfocte6os72a" path="res://UI/health_bar.tscn" id="14_xuqvo"]
+[ext_resource type="Script" uid="uid://cxdg2vljmyjcj" path="res://UI/Scripts/score_meter.gd" id="15_jq2sk"]
+[ext_resource type="Texture2D" uid="uid://ddfgf4slyuc2e" path="res://UI/Resources/BIG/pattern_grid_paper 1.png" id="16_htxhm"]
+[ext_resource type="Texture2D" uid="uid://burrk2hlcm4ef" path="res://UI/Resources/BIG/pattern_diagonal_grey_small 1.png" id="17_jq2sk"]
+[ext_resource type="Texture2D" uid="uid://c84n3c2prgfqd" path="res://UI/Resources/BIG/pattern_diagonal_transparent_small 1.png" id="18_4k2k6"]
+[ext_resource type="Texture2D" uid="uid://j6w4bmw3ak6r" path="res://UI/Resources/BIG/pattern_diagonal_red_small 1.png" id="19_0rl1p"]
+[ext_resource type="StyleBox" uid="uid://cik0ovxds67fr" path="res://UI/Resources/BIG/Panels/panel_border_brown_9patch.tres" id="20_ok6jj"]
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="22_4k2k6"]
+[ext_resource type="Resource" uid="uid://cgndd52r241g3" path="res://Systems/Faction/enemy_faction.tres" id="22_ryguw"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7enqr"]
+content_margin_left = 40.0
+content_margin_right = 40.0
+texture = ExtResource("5_lswn8")
+texture_margin_left = 56.0
+texture_margin_top = 56.0
+texture_margin_right = 56.0
+texture_margin_bottom = 56.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3b2ya"]
+content_margin_left = 32.0
+content_margin_top = 32.0
+content_margin_right = 32.0
+content_margin_bottom = 32.0
+texture = ExtResource("5_0odxb")
+texture_margin_left = 84.0
+texture_margin_top = 99.0
+texture_margin_right = 73.0
+texture_margin_bottom = 83.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ejx4a"]
+content_margin_left = 64.0
+content_margin_top = 40.0
+content_margin_right = 64.0
+content_margin_bottom = 40.0
+texture = ExtResource("9_lswn8")
+texture_margin_left = 48.0
+texture_margin_top = 48.0
+texture_margin_right = 48.0
+texture_margin_bottom = 48.0
+region_rect = Rect2(0, 0, 256, 256)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
+font = ExtResource("6_kek77")
+font_size = 48
+outline_size = 3
+stacked_shadow_count = 1
+stacked_shadow_0/offset = Vector2(2, 2)
+stacked_shadow_0/outline_size = 4
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qh381"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xw5pn"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wb4rj"]
+texture = ExtResource("16_htxhm")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdkua"]
+texture = ExtResource("17_jq2sk")
+axis_stretch_horizontal = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2ya"]
+bg_color = Color(0.7058824, 0.48235294, 0.2509804, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_facbu"]
+texture = ExtResource("18_4k2k6")
+axis_stretch_horizontal = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0ysg"]
+bg_color = Color(0.8899407, 0.4068356, 0.3598077, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0mb4"]
+texture = ExtResource("19_0rl1p")
+axis_stretch_horizontal = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_3b2ya"]
+font = ExtResource("22_4k2k6")
+font_size = 52
+font_color = Color(1, 0.20373312, 0.15207395, 1)
+outline_size = 4
+outline_color = Color(1, 0.20392157, 0.15294118, 1)
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.60784316)
+shadow_offset = Vector2(2, 2)
+stacked_outline_count = 1
+stacked_outline_0/size = 4
+stacked_outline_0/color = Color(1, 1, 1, 0.24313726)
+
+[node name="HUD" type="CanvasLayer" unique_id=567392199]
+layer = 2
+script = ExtResource("3_1bvp3")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2022466150]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -264.0
+offset_right = 372.0
+grow_vertical = 0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=171320274]
+layout_mode = 2
+
+[node name="Magazine" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=1210485858]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_7enqr")
+
+[node name="AmmoContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/Magazine" unique_id=773446134]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+script = ExtResource("6_272bh")
+
+[node name="AmmoIndicator1" parent="MarginContainer/HBoxContainer/Magazine/AmmoContainer" unique_id=1349898182 instance=ExtResource("6_7mycd")]
+layout_mode = 2
+
+[node name="AmmoIndicator2" parent="MarginContainer/HBoxContainer/Magazine/AmmoContainer" unique_id=1637920932 instance=ExtResource("6_7mycd")]
+layout_mode = 2
+
+[node name="AmmoIndicator3" parent="MarginContainer/HBoxContainer/Magazine/AmmoContainer" unique_id=1343287070 instance=ExtResource("6_7mycd")]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer" unique_id=555206538]
+propagate_maximum_size = false
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxTexture_3b2ya")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer" unique_id=1765651547]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="PlayerContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=1417898174]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Counters" type="PanelContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer" unique_id=1366217753]
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_styles/panel = SubResource("StyleBoxTexture_ejx4a")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters" unique_id=1289300580]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="CrewCounter" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters/HBoxContainer2" unique_id=401541280]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters/HBoxContainer2/CrewCounter" unique_id=754294203]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+texture = ExtResource("6_4c57u")
+stretch_mode = 5
+
+[node name="CrewCountLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters/HBoxContainer2/CrewCounter" unique_id=945882265]
+unique_name_in_owner = true
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -3)
+text = "0"
+label_settings = SubResource("LabelSettings_4c57u")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CoinCounter" type="HBoxContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters/HBoxContainer2" unique_id=1545118513]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters/HBoxContainer2/CoinCounter" unique_id=525103267]
+custom_minimum_size = Vector2(40, 40)
+custom_maximum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("9_vivmo")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="CoinCountLabel" type="Label" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/PlayerContainer/Counters/HBoxContainer2/CoinCounter" unique_id=1236440774]
+unique_name_in_owner = true
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -3)
+text = "0"
+label_settings = SubResource("LabelSettings_4c57u")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprint" type="PanelContainer" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer" unique_id=1983616277]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_qh381")
+
+[node name="SprintMeter" parent="MarginContainer/HBoxContainer/PanelContainer/VBoxContainer/Sprint" unique_id=564379113 instance=ExtResource("14_xuqvo")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+custom_maximum_size = Vector2(-1, 32)
+layout_mode = 2
+size_flags_vertical = 4
+full_texture = ExtResource("14_a6jrf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1478416867]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -676.0
+offset_top = 24.0
+offset_right = 676.0
+offset_bottom = 224.0
+grow_horizontal = 2
+script = ExtResource("15_jq2sk")
+
+[node name="ScoreMeter" type="HBoxContainer" parent="VBoxContainer" unique_id=765381721]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayerCounter" parent="VBoxContainer/ScoreMeter" unique_id=167486497 instance=ExtResource("11_d13ii")]
+layout_mode = 2
+faction = ExtResource("12_d13ii")
+
+[node name="ControlBar" type="PanelContainer" parent="VBoxContainer/ScoreMeter" unique_id=473758431]
+custom_minimum_size = Vector2(800, 150)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xw5pn")
+
+[node name="Background" type="MarginContainer" parent="VBoxContainer/ScoreMeter/ControlBar" unique_id=1867887335]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar/Background" unique_id=1187657955]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_wb4rj")
+
+[node name="Meter" type="MarginContainer" parent="VBoxContainer/ScoreMeter/ControlBar" unique_id=499390744]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScoreMeter/ControlBar/Meter" unique_id=1529758343]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PlayerProgress" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=709035109]
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_mdkua")
+
+[node name="PlayerDivider" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=1380343528]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3b2ya")
+
+[node name="EmptyProgress" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=317766355]
+propagate_maximum_size = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_facbu")
+
+[node name="EnemyDivider" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=131748411]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3b2ya")
+
+[node name="EnemyProgress" type="PanelContainer" parent="VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer" unique_id=1433326881]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v0ysg")
+
+[node name="EnemyProgressPattern" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar/Meter/HBoxContainer/EnemyProgress" unique_id=138998228]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_r0mb4")
+
+[node name="Border" type="Panel" parent="VBoxContainer/ScoreMeter/ControlBar" unique_id=1081071217]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("20_ok6jj")
+
+[node name="EnemyCounter" parent="VBoxContainer/ScoreMeter" unique_id=1167181252 instance=ExtResource("11_d13ii")]
+layout_mode = 2
+faction = ExtResource("22_ryguw")
+
+[node name="VictoryTimer" type="Label" parent="VBoxContainer" unique_id=234631384]
+visible = false
+layout_mode = 2
+text = "5:23 until victory"
+label_settings = SubResource("LabelSettings_3b2ya")

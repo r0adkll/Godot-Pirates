@@ -3,6 +3,9 @@ extends Node2D
 
 const player_row_scene := preload("res://MainMenu/player_row.tscn")
 
+const checkbox_empty := preload("res://UI/Resources/BIG/checkbox_beige_empty 1.png")
+const checkbox_checked := preload("res://UI/Resources/BIG/checkbox_beige_checked 1.png")
+
 @onready var start_game_button: Button = $Menu/PanelContainer/VBoxContainer/StartGameButton
 @onready var ready_check_button: HBoxContainer = $Menu/PanelContainer/VBoxContainer/ReadyCheckButton
 @onready var ready_button: Button = $Menu/PanelContainer/VBoxContainer/ReadyCheckButton/ReadyButton
@@ -36,25 +39,38 @@ func _ready() -> void:
 		Lobby.create_game()
 	elif host_address:
 		Lobby.join_game(host_address)
+	_update_start_button()
 
 
 func _on_player_connected(peer_id: int, player_info: Dictionary) -> void:
+	# The host is implicitly ready; clients report their own state
+	var player_ready: bool = peer_id == 1 or player_info.get("ready", false)
 	var existing = _find_player_row(peer_id)
 	if existing:
 		existing.player_name = player_info["name"]
 		existing.boat = available_boats[player_info["boat"]]
+		existing.ready_state = player_ready
 	else:
 		var new_player_row: PlayerRow = player_row_scene.instantiate()
 		new_player_row.peer_id = peer_id
 		new_player_row.player_name = player_info["name"]
 		new_player_row.boat = available_boats[player_info["boat"]]
+		new_player_row.ready_state = player_ready
 		player_list.add_child(new_player_row)
+	_update_start_button()
 
 
 func _on_player_disconnected(peer_id: int) -> void:
 	var player_row = _find_player_row(peer_id)
 	if player_row:
 		player_list.remove_child(player_row)
+	_update_start_button()
+
+
+## The host can only start the game once every client has readied up
+func _update_start_button() -> void:
+	if is_host:
+		start_game_button.disabled = not Lobby.all_players_ready()
 
 
 func _find_player_row(peer_id: int) -> PlayerRow:
@@ -89,6 +105,14 @@ func _change_hull(direction: int) -> void:
 	ship_texture.texture = available_boats.values()[current_hull].new_sprite
 	Lobby.player_info["boat"] = boat_key
 	Lobby._on_player_updated()
+
+
+func _on_ready_button_pressed() -> void:
+	var is_ready: bool = not Lobby.player_info["ready"]
+	Lobby.player_info["ready"] = is_ready
+	ready_check_box.texture = checkbox_checked if is_ready else checkbox_empty
+	Lobby._on_player_updated()
+	ready_button.text = "Ready" if not is_ready else "Not ready"
 
 
 func _on_start_game_button_pressed() -> void:
