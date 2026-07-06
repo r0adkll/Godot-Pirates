@@ -1,31 +1,44 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://bkb1ymof4sk1p"]
 
-[ext_resource type="Script" path="res://MainMenu/Scripts/settings_menu.gd" id="1_setm"]
-[ext_resource type="Texture2D" path="res://UI/Resources/BIG/panel_brown_corners_a 1.png" id="2_setm"]
-[ext_resource type="Texture2D" path="res://UI/Resources/BIG/banner_classic_curtain 1.png" id="3_setm"]
-[ext_resource type="FontFile" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="4_setm"]
-[ext_resource type="Theme" path="res://UI/Resources/BIG/big_theme.tres" id="5_setm"]
+[ext_resource type="Script" uid="uid://en4g50t2iu2r" path="res://MainMenu/Scripts/settings_menu.gd" id="1_setm"]
+[ext_resource type="Texture2D" uid="uid://dd2mlbarpgwdm" path="res://UI/Resources/BIG/panel_brown_corners_a 1.png" id="2_setm"]
+[ext_resource type="Texture2D" uid="uid://b6xg30ith3j4t" path="res://UI/Resources/BIG/banner_classic_curtain 1.png" id="3_setm"]
+[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="4_setm"]
+[ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="5_setm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dim"]
 bg_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
 texture = ExtResource("2_setm")
+texture_margin_left = 64.0
+texture_margin_top = 64.0
+texture_margin_right = 64.0
+texture_margin_bottom = 64.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_7rtlj"]
+font = ExtResource("4_setm")
+font_size = 52
+font_color = Color(0, 0, 0, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_banner"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font = ExtResource("4_setm")
 font_size = 80
-font_color = Color(1, 1, 1, 1)
 shadow_size = 8
 shadow_color = Color(0, 0, 0, 0.4)
 
-[node name="SettingsMenu" type="CanvasLayer"]
+[node name="SettingsMenu" type="CanvasLayer" unique_id=1833546738]
+layer = 7
 visible = false
 script = ExtResource("1_setm")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=368710478]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -33,34 +46,35 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dim")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=352294626]
 offset_left = 700.0
 offset_top = 328.0
 offset_right = 1975.0
 offset_bottom = 1152.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1448133745]
 layout_mode = 2
 theme_override_constants/separation = 64
 alignment = 1
 
-[node name="Spacer" type="Control" parent="PanelContainer/VBoxContainer"]
+[node name="Spacer" type="Control" parent="PanelContainer/VBoxContainer" unique_id=754257849]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
-[node name="TouchRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="TouchRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=2106972544]
 layout_mode = 2
 theme_override_constants/separation = 48
 alignment = 1
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TouchRow"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/TouchRow" unique_id=1199450585]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_setm")
 theme_override_font_sizes/font_size = 40
 text = "Touch Controls"
+label_settings = SubResource("LabelSettings_7rtlj")
 
-[node name="TouchModeOption" type="OptionButton" parent="PanelContainer/VBoxContainer/TouchRow"]
+[node name="TouchModeOption" type="OptionButton" parent="PanelContainer/VBoxContainer/TouchRow" unique_id=936851177]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme = ExtResource("5_setm")
@@ -73,29 +87,29 @@ popup/item_1/id = 1
 popup/item_2/text = "Off"
 popup/item_2/id = 2
 
-[node name="Buttons" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="Buttons" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=979411863]
 layout_mode = 2
 theme_override_constants/separation = 48
 alignment = 1
 
-[node name="BackButton" type="Button" parent="PanelContainer/VBoxContainer/Buttons"]
+[node name="BackButton" type="Button" parent="PanelContainer/VBoxContainer/Buttons" unique_id=905194543]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 theme = ExtResource("5_setm")
 text = "Back"
 
-[node name="Banner" type="PanelContainer" parent="."]
+[node name="Banner" type="PanelContainer" parent="." unique_id=1216356236]
 offset_left = 826.0
 offset_top = 262.0
 offset_right = 1850.0
 offset_bottom = 518.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_banner")
 
-[node name="TextureRect" type="TextureRect" parent="Banner"]
+[node name="TextureRect" type="TextureRect" parent="Banner" unique_id=1831013172]
 layout_mode = 2
 texture = ExtResource("3_setm")
 
-[node name="Label" type="Label" parent="Banner"]
+[node name="Label" type="Label" parent="Banner" unique_id=1728643425]
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -16)

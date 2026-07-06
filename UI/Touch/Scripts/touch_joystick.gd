@@ -23,6 +23,11 @@ var value: Vector2 = Vector2.ZERO
 
 var _touch_index: int = -1
 
+
+## Whether a finger is currently holding this stick
+func is_engaged() -> bool:
+	return _touch_index != -1
+
 @onready var base: Control = $Base
 @onready var knob: Control = $Base/Knob
 

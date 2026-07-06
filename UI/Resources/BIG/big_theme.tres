@@ -8,6 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://d13qpte7rlegc" path="res://UI/Resources/BIG/checkbox_beige_cross 1.png" id="6_yykv4"]
 [ext_resource type="Texture2D" uid="uid://id8y43i6trhp" path="res://UI/Resources/BIG/checkbox_beige_empty 1.png" id="7_ejx4a"]
 [ext_resource type="Texture2D" uid="uid://cotxo6ktbiik6" path="res://UI/Resources/BIG/panel_border_brown_detail 1.png" id="8_ejx4a"]
+[ext_resource type="FontFile" uid="uid://c66s7f32pww5w" path="res://UI/Resources/Fonts/Kenney Future Narrow.ttf" id="9_xhodn"]
+[ext_resource type="Texture2D" uid="uid://c0c0u1uafkvyk" path="res://UI/Resources/Checkbox/checkbox_beige_cross.svg" id="10_f3eyf"]
+[ext_resource type="Texture2D" uid="uid://bi1giocn7jqtr" path="res://UI/Resources/Checkbox/checkbox_beige_checked.svg" id="11_0086r"]
+[ext_resource type="Texture2D" uid="uid://oowyx34o28nh" path="res://UI/Resources/Checkbox/checkbox_beige_empty.svg" id="12_kdbth"]
+[ext_resource type="Texture2D" uid="uid://cs466lyel5xjw" path="res://UI/Resources/BIG/panel_brown_damaged_dark 1.png" id="13_et0nf"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3b2ya"]
 texture = ExtResource("8_ejx4a")
@@ -15,6 +20,15 @@ texture_margin_left = 74.0
 texture_margin_top = 73.0
 texture_margin_right = 74.0
 texture_margin_bottom = 74.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_14wef"]
+texture = ExtResource("13_et0nf")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [resource]
 Button/colors/font_disabled_color = Color(1, 1, 1, 0.5137255)
@@ -35,3 +49,17 @@ LineEdit/colors/font_placeholder_color = Color(0.69965345, 0.6996535, 0.6996533,
 LineEdit/font_sizes/font_size = 48
 LineEdit/fonts/font = ExtResource("1_7r4kq")
 LineEdit/styles/normal = SubResource("StyleBoxTexture_3b2ya")
+PopupMenu/colors/font_disabled_color = Color(1, 1, 1, 0.4392157)
+PopupMenu/colors/font_outline_color = Color(1, 1, 1, 1)
+PopupMenu/constants/h_separation = 20
+PopupMenu/constants/icon_max_width = 16
+PopupMenu/constants/item_end_padding = 8
+PopupMenu/constants/item_start_padding = 8
+PopupMenu/constants/v_separation = 8
+PopupMenu/font_sizes/font_size = 32
+PopupMenu/fonts/font = ExtResource("9_xhodn")
+PopupMenu/icons/checked = ExtResource("10_f3eyf")
+PopupMenu/icons/radio_checked = ExtResource("11_0086r")
+PopupMenu/icons/radio_unchecked = ExtResource("12_kdbth")
+PopupMenu/icons/unchecked = ExtResource("12_kdbth")
+PopupMenu/styles/panel = SubResource("StyleBoxTexture_14wef")

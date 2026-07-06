@@ -129,6 +129,12 @@ func _splash_water() -> void:
 func _on_die(_source: Faction) -> void:
 	collision_shape.disabled = true
 	remove_from_group(GROUP)
+
+	# The replacement ship spawns its own touch controls while this ship is
+	# still sinking — drop ours immediately so they don't stack up.
+	# (Already freed on remote-controlled ships.)
+	if is_instance_valid(touch_controls):
+		touch_controls.queue_free()
 	
 	if game_camera:
 		game_camera.add_trauma(0.8)
