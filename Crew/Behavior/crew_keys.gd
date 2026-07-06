@@ -11,15 +11,18 @@ enum Key {
 ## Return the total number of crew current targetting a fort
 static func get_targetted_count(blackboard: Blackboard, fort: Fort) -> int:
 	var targetted_forts: Dictionary = blackboard.get_value(Key.TARGETTED_FORTS, {})
-	return targetted_forts.get_or_add(fort.name, 0)
+	# Key by fort_id, not fort.name — node names are only unique among
+	# siblings, so every island's first fort is named "Fort" and counts
+	# would bleed between islands on the ship-lifetime cabin blackboard
+	return targetted_forts.get_or_add(fort.fort_id, 0)
 
 
 ## Add an amount to the number of crew targetting the [fort]
 static func add_targetted_count(blackboard: Blackboard, fort: Fort, amount: int = 1) -> int:
 	var targetted_forts: Dictionary = blackboard.get_value(Key.TARGETTED_FORTS, {})
-	var current_count: int = targetted_forts.get_or_add(fort.name, 0)
+	var current_count: int = targetted_forts.get_or_add(fort.fort_id, 0)
 	var new_count = current_count + amount
-	targetted_forts.set(fort.name, new_count)
+	targetted_forts.set(fort.fort_id, new_count)
 	blackboard.set_value(Key.TARGETTED_FORTS, targetted_forts)
 	return new_count
 

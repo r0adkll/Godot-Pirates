@@ -49,6 +49,20 @@ func _on_blackboard_lost() -> void:
 	beehave_tree.blackboard = blackboard
 
 
+# Crew can be freed while still holding a fort claim (boarding a ship, or the
+# behavior tree interrupting OccupyFort) — release it here so the shared
+# TARGETTED_FORTS count on the cabin blackboard doesn't leak a permanent +1.
+# Paths that release explicitly (EnterFort, MoveToFort) erase the FORT key
+# first, so this no-ops for them.
+func _exit_tree() -> void:
+	if not blackboard or not is_instance_valid(blackboard):
+		return
+	var fort: Fort = blackboard.get_value(CrewKeys.Key.FORT, null, name)
+	if fort and is_instance_valid(fort):
+		CrewKeys.add_targetted_count(blackboard, fort, -1)
+	blackboard.erase_value(CrewKeys.Key.FORT, name)
+
+
 func _process(_delta: float) -> void:
 	treasure_sprite.visible = treasure != null
 
