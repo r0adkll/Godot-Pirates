@@ -20,6 +20,9 @@ const FORT_SYNC_INTERVAL: float = 2.0
 var forts: Dictionary[int, Fort] = {}
 var _fort_sync_timer: float = 0.0
 
+## All islands on the current map keyed by their deterministic island_id
+var islands: Dictionary[int, Island] = {}
+
 var winning_faction_id: int = -1
 var victory_timer: float = 0
 var winner_faction: Faction
@@ -43,6 +46,7 @@ func reset() -> void:
 	fort_factions.clear()
 	factions.clear()
 	forts.clear()
+	islands.clear()
 	_fort_sync_timer = 0.0
 
 
@@ -73,6 +77,49 @@ func register_fort(fort: Fort) -> int:
 	forts[id] = fort
 	total_forts += 1
 	return id
+
+
+## Register an island at map-generation time, returning its deterministic
+## id. Like forts, generation order is seeded and identical on every peer.
+func register_island(island: Island) -> int:
+	var id = islands.size()
+	islands[id] = island
+	return id
+
+
+func get_island(island_id: int) -> Island:
+	var island: Island = islands.get(island_id)
+	return island if island and is_instance_valid(island) else null
+
+
+## Called by the server's fort cannons when they want to shoot; the shot
+## is broadcast so every peer fires the same cannon with the same aim.
+func request_fort_cannon_fire(fort_cannon: FortCannon) -> void:
+	var fort := fort_cannon.get_parent() as Fort
+	if not fort or fort.fort_id == -1:
+		return
+	# Only broadcast shots that can actually fire, otherwise this would
+	# flood the network with a reliable rpc every physics frame
+	if fort_cannon.cannon.magazine.count <= 0:
+		return
+	var idx = fort.cannon_index(fort_cannon)
+	if idx == -1:
+		return
+	_fort_cannon_fire.rpc(fort.fort_id, idx, fort_cannon.global_rotation)
+
+
+@rpc("authority", "call_local", "reliable")
+func _fort_cannon_fire(fort_id: int, cannon_idx: int, aim_rotation: float) -> void:
+	var fort: Fort = forts.get(fort_id)
+	if not fort or not is_instance_valid(fort):
+		return
+	var fort_cannon = fort._cannon_at(cannon_idx)
+	if not fort_cannon:
+		return
+	# Match the server's aim so the trajectory is identical, and force
+	# the shot so client-side magazine drift can't drop it
+	fort_cannon.global_rotation = aim_rotation
+	fort_cannon.fire(true)
 
 
 ## Called by forts whenever their crew/faction changes. On the server this

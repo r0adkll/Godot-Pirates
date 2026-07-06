@@ -11,16 +11,19 @@ func _physics_process(_delta: float) -> void:
 	if target and visible:
 		# Aim towards the target
 		_lead_target(target)
-		
-		# Fire
+
+		# Fire. In multiplayer only the server decides when a fort fires;
+		# clients aim locally for visuals and shoot when the server's
+		# broadcast (keyed on the fort's deterministic id) arrives.
 		if Lobby.active:
-			fire.rpc()
+			if multiplayer.is_server():
+				FactionSystem.request_fort_cannon_fire(self)
 		else:
 			fire()
 
-@rpc("any_peer", "call_local", "reliable")
-func fire() -> void:
-	cannon.fire()
+
+func fire(force: bool = false) -> void:
+	cannon.fire(force)
 
 func _lead_target(node: Node2D) -> void:
 	if is_instance_of(node, CharacterBody2D):

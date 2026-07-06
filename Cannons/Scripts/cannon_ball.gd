@@ -49,29 +49,26 @@ func _physics_process(delta: float) -> void:
 		trail.scale.y = _trail_scale_y * power
 		
 	
-	# Check collisions
-	if not is_remote and ray_cast.is_colliding():
+	# Check collisions. Every peer simulates its own copy of the ball and
+	# explodes it locally on impact; only the authoritative copy applies
+	# damage (which is then replicated through the ship's damage RPC).
+	# Ball node names aren't guaranteed to match across peers, so no RPCs
+	# are ever addressed to a ball directly.
+	if ray_cast.is_colliding():
 		var collider: Node2D = ray_cast.get_collider()
-		
+
 		# Apply damage, if colliding subject can take damage
 		if collider != null and collider != origin:
-			var target = collider.get_node_or_null("DamageTarget")
-			if target != null and target is DamageTarget:
-				(target as DamageTarget).damage(faction, damage)
-				
+			if not is_remote:
+				var target = collider.get_node_or_null("DamageTarget")
+				if target != null and target is DamageTarget:
+					(target as DamageTarget).damage(faction, damage)
+
 			# Explode
 			explode()
 
 
 func explode() -> void:
-	if Lobby.active and multiplayer.is_server():
-		_explode.rpc()
-	else:
-		_explode()
-
-
-@rpc("any_peer", "call_local", "reliable")
-func _explode() -> void:
 	var new_exp: Explosion = explosion.instantiate()
 	new_exp.global_position = global_position
 	get_parent().add_child(new_exp)

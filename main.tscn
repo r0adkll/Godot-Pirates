@@ -2,120 +2,21 @@
 
 [ext_resource type="Script" uid="uid://c2ebrkqa7vt1n" path="res://main.gd" id="1_1u8w0"]
 [ext_resource type="TileSet" uid="uid://cu7ly4k0wffxe" path="res://Map/main.tres" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://bywf3iu71w6to" path="res://UI/Scripts/hud.gd" id="3_1bvp3"]
 [ext_resource type="PackedScene" path="res://UI/hud.tscn" id="3_hudsc"]
-[ext_resource type="Texture2D" uid="uid://cs466lyel5xjw" path="res://UI/Resources/BIG/panel_brown_damaged_dark 1.png" id="5_0odxb"]
-[ext_resource type="Texture2D" uid="uid://bhnwf4a4ymfpt" path="res://UI/Resources/BIG/panel_grey_bolts_dark 1.png" id="5_lswn8"]
-[ext_resource type="Texture2D" uid="uid://drb2mymtpnspj" path="res://Crew/Sprites/crew_3.png" id="6_4c57u"]
-[ext_resource type="PackedScene" uid="uid://def8vfdu0wa34" path="res://UI/ammo_indicator.tscn" id="6_7mycd"]
-[ext_resource type="Script" uid="uid://c5s7s5lsvftfd" path="res://UI/Scripts/ui_ammo_container.gd" id="6_272bh"]
-[ext_resource type="FontFile" uid="uid://br144p58im5cb" path="res://UI/Resources/Fonts/Kenney Mini Square Mono.ttf" id="6_kek77"]
 [ext_resource type="Script" uid="uid://dj6cbkjchiyql" path="res://Map/Scripts/land.gd" id="9_efxa6"]
-[ext_resource type="Texture2D" uid="uid://brgd6fol8jipw" path="res://UI/Resources/BIG/panel_grey_bolts 1.png" id="9_lswn8"]
-[ext_resource type="Texture2D" uid="uid://dmogivb66sjfr" path="res://UI/Resources/coin_01.png" id="9_vivmo"]
 [ext_resource type="Script" uid="uid://ja0epvjqf1h5" path="res://Map/Scripts/treasure_map.gd" id="10_getpj"]
-[ext_resource type="PackedScene" uid="uid://bsjtm7nvw1ehf" path="res://UI/kill_counter.tscn" id="11_d13ii"]
 [ext_resource type="Resource" uid="uid://dqcd6i3uun0ul" path="res://Systems/Faction/player_faction.tres" id="12_d13ii"]
 [ext_resource type="Script" uid="uid://buvw8hjlglquk" path="res://Map/Scripts/data_map.gd" id="12_vivmo"]
 [ext_resource type="PackedScene" uid="uid://3mwawest4pc" path="res://MainMenu/pause_menu.tscn" id="14_0odxb"]
-[ext_resource type="Texture2D" uid="uid://b7e38i57ug1bu" path="res://UI/Resources/Progress/progress_blue_small_border.png" id="14_a6jrf"]
-[ext_resource type="PackedScene" uid="uid://brfocte6os72a" path="res://UI/health_bar.tscn" id="14_xuqvo"]
-[ext_resource type="Script" uid="uid://cxdg2vljmyjcj" path="res://UI/Scripts/score_meter.gd" id="15_jq2sk"]
 [ext_resource type="Script" uid="uid://b4yyr2uupqogq" path="res://Systems/Trails/trail_system.gd" id="15_vivmo"]
 [ext_resource type="Script" uid="uid://b3liy0gjleis0" path="res://Camera/Scripts/camera_harness.gd" id="16_d13ii"]
-[ext_resource type="Texture2D" uid="uid://ddfgf4slyuc2e" path="res://UI/Resources/BIG/pattern_grid_paper 1.png" id="16_htxhm"]
 [ext_resource type="Curve" uid="uid://c68pd0cxxrjsx" path="res://Ships/Effects/Trail/trail_width_curve.tres" id="16_yaehf"]
 [ext_resource type="Gradient" uid="uid://dibsrqdd7ob2i" path="res://Ships/Effects/Trail/trail_gradient.tres" id="17_074og"]
-[ext_resource type="Texture2D" uid="uid://burrk2hlcm4ef" path="res://UI/Resources/BIG/pattern_diagonal_grey_small 1.png" id="17_jq2sk"]
-[ext_resource type="Texture2D" uid="uid://c84n3c2prgfqd" path="res://UI/Resources/BIG/pattern_diagonal_transparent_small 1.png" id="18_4k2k6"]
-[ext_resource type="Texture2D" uid="uid://j6w4bmw3ak6r" path="res://UI/Resources/BIG/pattern_diagonal_red_small 1.png" id="19_0rl1p"]
 [ext_resource type="PackedScene" uid="uid://cooq5awbwhbp" path="res://Camera/player_camera.tscn" id="20_82xsv"]
-[ext_resource type="StyleBox" uid="uid://cik0ovxds67fr" path="res://UI/Resources/BIG/Panels/panel_border_brown_9patch.tres" id="20_ok6jj"]
-[ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="22_4k2k6"]
 [ext_resource type="Resource" uid="uid://cgndd52r241g3" path="res://Systems/Faction/enemy_faction.tres" id="22_ryguw"]
 [ext_resource type="Script" uid="uid://2rv3pd8at6fi" path="res://Systems/Ships/ships_system.gd" id="23_d13ii"]
 [ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="24_0rl1p"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="24_1u8w0"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7enqr"]
-content_margin_left = 40.0
-content_margin_right = 40.0
-texture = ExtResource("5_lswn8")
-texture_margin_left = 56.0
-texture_margin_top = 56.0
-texture_margin_right = 56.0
-texture_margin_bottom = 56.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3b2ya"]
-content_margin_left = 32.0
-content_margin_top = 32.0
-content_margin_right = 32.0
-content_margin_bottom = 32.0
-texture = ExtResource("5_0odxb")
-texture_margin_left = 84.0
-texture_margin_top = 99.0
-texture_margin_right = 73.0
-texture_margin_bottom = 83.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ejx4a"]
-content_margin_left = 64.0
-content_margin_top = 40.0
-content_margin_right = 64.0
-content_margin_bottom = 40.0
-texture = ExtResource("9_lswn8")
-texture_margin_left = 48.0
-texture_margin_top = 48.0
-texture_margin_right = 48.0
-texture_margin_bottom = 48.0
-region_rect = Rect2(0, 0, 256, 256)
-
-[sub_resource type="LabelSettings" id="LabelSettings_4c57u"]
-font = ExtResource("6_kek77")
-font_size = 48
-outline_size = 3
-stacked_shadow_count = 1
-stacked_shadow_0/offset = Vector2(2, 2)
-stacked_shadow_0/outline_size = 4
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qh381"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xw5pn"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wb4rj"]
-texture = ExtResource("16_htxhm")
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 2
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mdkua"]
-texture = ExtResource("17_jq2sk")
-axis_stretch_horizontal = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2ya"]
-bg_color = Color(0.7058824, 0.48235294, 0.2509804, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_facbu"]
-texture = ExtResource("18_4k2k6")
-axis_stretch_horizontal = 1
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v0ysg"]
-bg_color = Color(0.8899407, 0.4068356, 0.3598077, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r0mb4"]
-texture = ExtResource("19_0rl1p")
-axis_stretch_horizontal = 1
-
-[sub_resource type="LabelSettings" id="LabelSettings_3b2ya"]
-font = ExtResource("22_4k2k6")
-font_size = 52
-font_color = Color(1, 0.20373312, 0.15207395, 1)
-outline_size = 4
-outline_color = Color(1, 0.20392157, 0.15294118, 1)
-shadow_size = 8
-shadow_color = Color(0, 0, 0, 0.60784316)
-shadow_offset = Vector2(2, 2)
-stacked_outline_count = 1
-stacked_outline_0/size = 4
-stacked_outline_0/color = Color(1, 1, 1, 0.24313726)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3b2ya"]
 parsed_collision_mask = 4294967280

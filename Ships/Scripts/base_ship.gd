@@ -220,10 +220,12 @@ func _idle_ship() -> void:
 	_drift_tween.tween_callback(_idle_ship)
 
 
-## Fire the ship's main cannons
+## Fire the ship's main cannons. Returns whether a shot actually fired.
+## Remote peers pass force=true since the controlling peer already
+## validated the shot against its magazine.
 @rpc("any_peer", "call_remote", "reliable")
-func fire_main_cannon() -> void:
-	cannon.fire()
+func fire_main_cannon(force: bool = false) -> bool:
+	return cannon.fire(force)
 
 
 ## Check if the ship is currently colliding with land
@@ -410,6 +412,24 @@ func check_if_beached() -> void:
 		beach_head.island.add_beached_ship(self)
 
 @abstract func _on_lost_beach_head(beach: BeachHead) -> void
+
+
+## Apply the beached state replicated from this ship's controlling peer.
+## Remote copies of a ship never move via move_and_slide, so they can't
+## detect beaching through collisions like the local simulation does.
+func set_remote_beach_head(island_id: int, landing_pos: Vector2) -> void:
+	# Clear a stale beach head (left the island, or switched islands)
+	if beach_head and (island_id == -1 or beach_head.island.island_id != island_id):
+		var last_beach = beach_head
+		beach_head = null
+		last_beach.island.remove_beached_ship(self)
+		_on_lost_beach_head(last_beach)
+
+	if island_id != -1 and not beach_head:
+		var island := FactionSystem.get_island(island_id)
+		if island:
+			beach_head = BeachHead.new(island, landing_pos)
+			island.add_beached_ship(self)
 
 
 ## Class to track the island and position that this ship is "beached" upon

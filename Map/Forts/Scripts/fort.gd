@@ -164,6 +164,15 @@ func _cannon_at(idx: int) -> FortCannon:
 		_: return null
 
 
+## The inverse of _cannon_at, used to address a cannon in fire RPCs
+func cannon_index(fort_cannon: FortCannon) -> int:
+	if fort_cannon == tl_cannon: return 0
+	if fort_cannon == tr_cannon: return 1
+	if fort_cannon == bl_cannon: return 2
+	if fort_cannon == br_cannon: return 3
+	return -1
+
+
 func _set_flag(f: Faction) -> void:
 	if not is_inside_tree(): return
 	

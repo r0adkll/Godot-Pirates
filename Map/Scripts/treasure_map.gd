@@ -128,6 +128,7 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 	# Generate Nodes
 	var island: Island = Island.new()
 	island.map = self
+	island.island_id = FactionSystem.register_island(island)
 	island.bounds = spec.bounds()
 	island.position = land.map_to_local(island.bounds.position) - Vector2(land.tile_set.tile_size) / 2
 	island.land = spec.land
