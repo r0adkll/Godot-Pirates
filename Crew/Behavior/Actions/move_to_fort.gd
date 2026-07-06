@@ -1,7 +1,9 @@
 @tool
 extends ActionLeaf
 
-@export var min_dist: float = 36864 #192^2 - radius of medium fort
+## Half-extent of the fort footprint (384px medium fort) — the crew garrisons
+## as soon as it touches the footprint square, whichever side it arrives from
+@export var contact_dist: float = 192.0
 
 
 func tick(actor: Node, blackboard: Blackboard) -> int:
@@ -27,12 +29,17 @@ func tick(actor: Node, blackboard: Blackboard) -> int:
 		CrewKeys.add_targetted_count(blackboard, fort, -1)
 		return FAILURE
 	
-	# Set target and check dist
+	# Aim for the fort's center; garrison on any contact with its footprint
 	crew.set_target(fort.center)
-	
-	## Check dist
-	var dist = crew.position.distance_squared_to(fort.center)
-	if dist > min_dist:
-		return RUNNING
-	else:
+
+	var offset: Vector2 = (fort.center - crew.global_position).abs()
+	if offset.x <= contact_dist and offset.y <= contact_dist:
 		return SUCCESS
+
+	# The navmesh can't get us close enough (e.g. fort ringed by rocks) —
+	# release the fort so the tree can retry another or escape
+	if crew.is_target_unreachable():
+		blackboard.erase_value(CrewKeys.Key.FORT, crew.name)
+		CrewKeys.add_targetted_count(blackboard, fort, -1)
+		return FAILURE
+	return RUNNING

@@ -19,6 +19,8 @@ func tick(actor: Node, _blackboard: Blackboard) -> int:
 	## Check dist
 	var dist = crew.position.distance_squared_to(_target)
 	if dist > min_dist * min_dist:
+		if crew.is_target_unreachable():
+			return FAILURE
 		return RUNNING
 	else:
 		return SUCCESS

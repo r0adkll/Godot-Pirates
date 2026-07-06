@@ -85,9 +85,11 @@ func enrich(
 			if not grid.has(scell) and not beach_grid.has(scell):
 				beach_grid.add(scell)
 				
-		# Check to add decor randomly
-		if randf() < decor_probability:
-			if randf() > 0.5:
+		# Check to add decor randomly — must use the seeded rng so every peer
+		# places identical decor: rocks obstruct the land navmesh, so decor
+		# placement is gameplay-relevant, not just cosmetic
+		if rng.randf() < decor_probability:
+			if rng.randf() > 0.5:
 				spec.shrubs.append(cell)
 			else:
 				spec.rocks.append(cell)
