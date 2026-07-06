@@ -24,9 +24,12 @@ var fort_id: int = -1
 		FactionSystem.set_fort_faction(fort_id, new_value)
 		FactionSystem.notify_fort_changed(self)
 
-		# Remove targets that match this faction
+		# Remove targets that match this faction, then re-scan the
+		# detection area — ships that entered as allies were never
+		# tracked and may now be valid targets
 		if new_value:
 			_clean_targets()
+			_rescan_detection_area()
 
 
 ## The amount of crew currently occupying this fort
@@ -154,6 +157,14 @@ func _clean_targets() -> void:
 		for dead in non_targets:
 			targets.erase(dead)
 		_distribute_targets()
+
+## Re-evaluate bodies already inside the detection area. Area2D only
+## signals on enter/exit, so a faction change must poll for ships that
+## were filtered out as allies when they entered.
+func _rescan_detection_area() -> void:
+	if not is_inside_tree() or not detection_area: return
+	for body in detection_area.get_overlapping_bodies():
+		_on_detection_area_body_entered(body)
 
 func _cannon_at(idx: int) -> FortCannon:
 	match idx:
