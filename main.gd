@@ -1,17 +1,23 @@
 class_name MainGame
 extends Node2D
 
+const DEFAULT_DIFFICULTY := preload("res://Systems/Difficulty/rough_waters.tres")
+
 @onready var ships_system: ShipsSystem = %ShipsSystem
 @onready var hud: Hud = $HUD
 
 @export var player_faction: Faction
 @export var enemy_faction: Faction
+@export var difficulty: DifficultyProfile
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if difficulty == null:
+		difficulty = DEFAULT_DIFFICULTY
 	SceneSpawnerSystem.entity_owner = self
 	ships_system.player_faction = player_faction
 	ships_system.enemy_faction = enemy_faction
+	ships_system.difficulty = difficulty
 	hud.player_counter.faction = player_faction
 	hud.enemy_counter.faction = enemy_faction
 	

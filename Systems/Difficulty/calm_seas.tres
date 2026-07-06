@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="DifficultyProfile" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Systems/Difficulty/difficulty_profile.gd" id="1_diff"]
+
+[resource]
+script = ExtResource("1_diff")
+display_name = "Calm Seas"
+description = "A gentle voyage. Fewer foes, lighter broadsides."
+enemy_count = 2
+shooting_rate_multiplier = 1.5
+cannon_power_multiplier = 0.6
+detection_radius_multiplier = 0.7
+engage_distance_multiplier = 1.0

@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://2rv3pd8at6fi" path="res://Systems/Ships/ships_system.gd" id="23_d13ii"]
 [ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="24_0rl1p"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="24_1u8w0"]
+[ext_resource type="Resource" path="res://Systems/Difficulty/rough_waters.tres" id="25_diffn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3b2ya"]
 parsed_collision_mask = 4294967280
@@ -27,6 +28,7 @@ baking_rect = Rect2(0, 0, 12800, 12800)
 script = ExtResource("1_1u8w0")
 player_faction = ExtResource("12_d13ii")
 enemy_faction = ExtResource("22_ryguw")
+difficulty = ExtResource("25_diffn")
 
 [node name="HUD" parent="." unique_id=567392199 instance=ExtResource("3_hudsc")]
 
