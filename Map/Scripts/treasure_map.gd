@@ -22,6 +22,14 @@ const fort_scene := preload("res://Map/Forts/fort.tscn")
 @onready var camera_harness: CameraHarness = $CameraHarness
 @onready var navigation_region_2d: NavigationRegion2D = $"../NavigationRegion2D"
 
+## Navigation layer bitmask for land traversal (water navmesh is layer 1)
+const LAND_NAV_LAYER: int = 2
+
+## Navmesh that crew use to walk islands. Built at generation time from the
+## exact island cell data (land/beach traversable; rocks and forts obstruct).
+var land_nav_region: NavigationRegion2D
+var _land_nav_source: NavigationMeshSourceGeometryData2D
+
 @export var map_size: Vector2i
 @export var generate_map_on_ready: bool = true
 
@@ -37,6 +45,10 @@ var translucent_water_tile: CellData = CellData.new(0, Vector2i(8, 4), 1)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	land_nav_region = NavigationRegion2D.new()
+	land_nav_region.navigation_layers = LAND_NAV_LAYER
+	add_child(land_nav_region)
+
 	# If this component is setup to generate a map, go ahead
 	# and do so
 	if generate_map_on_ready:
@@ -78,7 +90,9 @@ func generate_map() -> void:
 	FactionSystem.clear_map_registries()
 
 	_setup_camera_limits()
-	
+
+	_land_nav_source = NavigationMeshSourceGeometryData2D.new()
+
 	var land_cells: Array[Vector2i] = []
 	
 	var k: float = 0
@@ -103,14 +117,64 @@ func generate_map() -> void:
 			_process_island(island)
 			
 	await get_tree().physics_frame
-	
+
 	var nav_bake_start = TimeUtil.mark()
-	navigation_region_2d.bake_navigation_polygon(false)	
+	navigation_region_2d.bake_navigation_polygon(false)
 	TimeUtil.print_time(nav_bake_start, "Baked NavRegtion")
-	
+
+	_bake_land_navigation()
+
 	# Notify observers
 	map_ready = true
 	map_generated.emit()
+
+
+## Bake the land navmesh from the source geometry accumulated per-island
+## during generation. Baked synchronously so the mesh is registered before
+## map_ready is flagged. Inputs derive solely from the seeded RNG/noise, so
+## every peer bakes an identical mesh — crew paths stay deterministic.
+func _bake_land_navigation() -> void:
+	var bake_start = TimeUtil.mark()
+	var land_poly := NavigationPolygon.new()
+	land_poly.agent_radius = 24.0
+	land_poly.baking_rect = Rect2(Vector2.ZERO, Vector2(map_size * land.tile_set.tile_size.x))
+	NavigationServer2D.bake_from_source_geometry_data(land_poly, _land_nav_source)
+	land_nav_region.navigation_polygon = land_poly
+	TimeUtil.print_time(bake_start, "Baked land NavRegion")
+
+
+## Append an island's navmesh source geometry: painted land cells are
+## traversable, rock cells obstruct. Forts deliberately do NOT obstruct —
+## crew aim for the fort center and garrison on contact with its footprint
+## (see MoveToFort), so paths must be able to reach it from any side.
+func _add_island_nav_geometry(spec: IslandBuilder.IslandSpec) -> void:
+	var tile_size := Vector2(land.tile_set.tile_size)
+	var half := tile_size / 2.0
+
+	# Land cells only: beach rings from opposite shores of a narrow strait
+	# touch each other, which would bridge separate landmasses — and beach
+	# tiles read as water, so crew walking them look like they're swimming.
+	# Slightly off-mesh targets (beach landings, fort centers) are covered by
+	# the crew's straight-line finish (WalkingCrew.OFF_MESH_WALK_DIST).
+	for cell in spec.land:
+		# Terrain-connect can leave spit cells unpainted when no tile matches
+		# their peering config — those render as water, keep them off the mesh
+		if land.get_cell_source_id(cell) == -1:
+			continue
+		_land_nav_source.add_traversable_outline(_cell_outline(cell, half))
+
+	for cell in spec.rocks:
+		_land_nav_source.add_obstruction_outline(_cell_outline(cell, half))
+
+
+func _cell_outline(cell: Vector2i, half: Vector2) -> PackedVector2Array:
+	var center := land.map_to_local(cell)
+	return PackedVector2Array([
+		center + Vector2(-half.x, -half.y),
+		center + Vector2(half.x, -half.y),
+		center + Vector2(half.x, half.y),
+		center + Vector2(-half.x, half.y),
+	])
 
 
 ## Process an island spec into its tilemap tiles and generate it's Island
@@ -125,9 +189,12 @@ func _process_island(spec: IslandBuilder.IslandSpec) -> void:
 	decor.set_cells_terrain_connect(spec.shrubs, 0, 2)
 	decor.set_cells_terrain_connect(spec.rocks, 0, 3)
 	
-	# Remove the island from the navigation 
+	# Remove the island from the navigation
 	for cell in spec.land:
 		navigation.erase_cell(cell)
+
+	# Accumulate this island's walkable geometry for the land navmesh
+	_add_island_nav_geometry(spec)
 	
 	# Generate Nodes
 	var island: Island = Island.new()
