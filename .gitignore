@@ -23,3 +23,5 @@ mono_crash.*.json
 
 # Packaged builds
 *.dmg
+
+.DS_Store
