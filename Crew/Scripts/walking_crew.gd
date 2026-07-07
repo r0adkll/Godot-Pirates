@@ -11,6 +11,17 @@ const interaction_dist = 100
 ## the path is exhausted; anything farther is unreachable.
 const OFF_MESH_WALK_DIST: float = 256.0
 
+const _DEPLOY_SOUNDS: Array[AudioStream] = [
+	preload("res://Crew/Sfx/pirate_1.mp3"),
+	preload("res://Crew/Sfx/pirate_2.mp3"),
+	preload("res://Crew/Sfx/pirate_3.mp3"),
+	preload("res://Crew/Sfx/pirate_4.mp3"),
+]
+
+## Shared across all crew so a batch deployment rotates through every
+## voice instead of repeating one
+static var _next_deploy_sound: int = 0
+
 @onready var sprite: AnimatedSprite2D = $Sprite2D
 @onready var detection_zone: Area2D = $DetectionZone
 @onready var treasure_sprite: Sprite2D = $Treasure
@@ -19,6 +30,7 @@ const OFF_MESH_WALK_DIST: float = 256.0
 # Crew are simulated locally on every peer — avoidance must stay disabled so
 # identical targets produce identical paths across the network
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var deploy_sfx: AudioStreamPlayer2D = $DeploySfx
 
 # The 'held' treasure of this crew member
 @export var treasure: Treasure
@@ -35,12 +47,20 @@ var target: Vector2 = Vector2.INF
 func _ready() -> void:
 	sprite.frame = randi_range(0, 49)
 	nav_agent.debug_enabled = Debug.enabled
+	if deployment:
+		_play_deploy_sound()
 	if blackboard:
 		beehave_tree.blackboard = blackboard
 		# The shared blackboard lives under the deploying ship's crew cabin,
 		# so it's freed with the ship if it sinks — swap in a local one so
 		# already-deployed crew keep garrisoning instead of freezing
 		blackboard.tree_exiting.connect(_on_blackboard_lost)
+
+
+func _play_deploy_sound() -> void:
+	deploy_sfx.stream = _DEPLOY_SOUNDS[_next_deploy_sound]
+	_next_deploy_sound = (_next_deploy_sound + 1) % _DEPLOY_SOUNDS.size()
+	deploy_sfx.play()
 
 
 func _on_blackboard_lost() -> void:

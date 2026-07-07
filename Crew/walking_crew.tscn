@@ -90,6 +90,11 @@ amount = 20
 texture = ExtResource("2_vbcks")
 process_material = SubResource("ParticleProcessMaterial_rujms")
 
+[node name="DeploySfx" type="AudioStreamPlayer2D" parent="."]
+volume_db = -12.0
+max_distance = 2000.0
+bus = &"SFX"
+
 [node name="BeehaveTree" type="Node" parent="." unique_id=1836616785 node_paths=PackedStringArray("blackboard", "actor")]
 script = ExtResource("3_lhixj")
 blackboard = NodePath("@Node@22866")
