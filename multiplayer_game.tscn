@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" path="res://UI/hud.tscn" id="19_hudsc"]
 [ext_resource type="PackedScene" uid="uid://3mwawest4pc" path="res://MainMenu/pause_menu.tscn" id="20_pausm"]
 [ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="21_gomnu"]
+[ext_resource type="PackedScene" path="res://Music/music_system.tscn" id="22_music"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_euiar"]
 parsed_collision_mask = 4294967280
@@ -106,5 +107,7 @@ visible = false
 
 [node name="GameOverMenu" parent="." unique_id=1792035010 instance=ExtResource("21_gomnu")]
 visible = false
+
+[node name="MusicSystem" parent="." instance=ExtResource("22_music")]
 
 [connection signal="map_generated" from="TreasureMap" to="." method="_on_treasure_map_map_generated"]

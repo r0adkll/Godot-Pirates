@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="24_0rl1p"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="24_1u8w0"]
 [ext_resource type="Resource" uid="uid://baexbsmd28foq" path="res://Systems/Difficulty/rough_waters.tres" id="25_diffn"]
+[ext_resource type="PackedScene" path="res://Music/music_system.tscn" id="26_music"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3b2ya"]
 parsed_collision_mask = 4294967280
@@ -104,5 +105,7 @@ navigation_layer = NodePath("../TreasureMap/Navigation")
 [node name="EnemyBlackboard" type="Node" parent="ShipsSystem" unique_id=182668152]
 script = ExtResource("24_1u8w0")
 metadata/_custom_type_script = "uid://dme5f24l0edsf"
+
+[node name="MusicSystem" parent="." unique_id=1183264363 instance=ExtResource("26_music")]
 
 [connection signal="map_generated" from="TreasureMap" to="ShipsSystem" method="_on_treasure_map_map_generated"]

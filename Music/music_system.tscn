@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cvytl0xx62vs"]
+
+[ext_resource type="Script" uid="uid://h8oyk5clyac1" path="res://Music/Scripts/music_system.gd" id="1_msys"]
+[ext_resource type="AudioStream" uid="uid://cx2p2k7wtuurc" path="res://Music/main_theme_music.mp3" id="2_main"]
+[ext_resource type="AudioStream" uid="uid://b7kojwky61sfo" path="res://Music/fighting_music.mp3" id="3_figh"]
+[ext_resource type="AudioStream" uid="uid://df26glp4jlsaj" path="res://Music/victory_music.mp3" id="4_vict"]
+[ext_resource type="AudioStream" uid="uid://dpcdwfxpbspit" path="res://Music/winner_music.mp3" id="5_winn"]
+[ext_resource type="AudioStream" uid="uid://7orr4647wxou" path="res://Music/loser_music.mp3" id="6_lose"]
+
+[node name="MusicSystem" type="Node" unique_id=1506354654]
+process_mode = 3
+script = ExtResource("1_msys")
+
+[node name="MainTheme" type="AudioStreamPlayer" parent="." unique_id=1032165726]
+stream = ExtResource("2_main")
+volume_db = -16.0
+bus = &"Music"
+
+[node name="Fighting" type="AudioStreamPlayer" parent="." unique_id=80994002]
+stream = ExtResource("3_figh")
+volume_db = -12.0
+bus = &"Music"
+
+[node name="Victory" type="AudioStreamPlayer" parent="." unique_id=62329872]
+stream = ExtResource("4_vict")
+volume_db = -12.0
+bus = &"Music"
+
+[node name="Winner" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_winn")
+volume_db = -12.0
+bus = &"Music"
+
+[node name="Loser" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_lose")
+volume_db = -12.0
+bus = &"Music"
