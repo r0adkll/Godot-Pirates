@@ -10,21 +10,18 @@ script = ExtResource("1_odejh")
 
 [node name="Fire1" type="AudioStreamPlayer2D" parent="." unique_id=383552487]
 stream = ExtResource("1_t1aqg")
-volume_db = -18.0
 pitch_scale = 0.5
 max_distance = 2500.0
 bus = &"SFX"
 
 [node name="Fire2" type="AudioStreamPlayer2D" parent="." unique_id=1362624889]
 stream = ExtResource("2_odejh")
-volume_db = -16.0
 pitch_scale = 0.9
 max_distance = 2500.0
 bus = &"SFX"
 
 [node name="Fire3" type="AudioStreamPlayer2D" parent="." unique_id=1487526942]
 stream = ExtResource("3_qc3eo")
-volume_db = -16.0
 pitch_scale = 0.9
 max_distance = 2500.0
 bus = &"SFX"

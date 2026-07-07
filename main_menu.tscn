@@ -32,6 +32,8 @@
 [ext_resource type="Resource" uid="uid://b3jkdtwlmj5cx" path="res://Systems/Difficulty/calm_seas.tres" id="28_dfcs"]
 [ext_resource type="Resource" uid="uid://baexbsmd28foq" path="res://Systems/Difficulty/rough_waters.tres" id="29_dfrw"]
 [ext_resource type="Resource" uid="uid://crfo72vjolema" path="res://Systems/Difficulty/krakens_wrath.tres" id="30_dfkw"]
+[ext_resource type="LabelSettings" uid="uid://bc7ebwj470wq0" path="res://MainMenu/Resources/banner_label_settings.tres" id="30_qby1g"]
+[ext_resource type="AudioStream" uid="uid://c6mk6keva4va6" path="res://Music/ocean_seagull_background.mp3" id="34_04soa"]
 
 [sub_resource type="Curve2D" id="Curve2D_glbon"]
 _data = {
@@ -58,9 +60,9 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_qby1g"]
 font = ExtResource("25_ai24q")
 font_size = 32
-font_color = Color(2.4065375e-06, 0.66433716, 0.36764133, 1)
+font_color = Color(0.86796224, 0.50369936, 7.70092e-07, 1)
 outline_size = 4
-outline_color = Color(0.1254902, 0.7058824, 0.44705883, 1)
+outline_color = Color(0.86796224, 0.50369936, 7.70092e-07, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dfnm"]
 font = ExtResource("10_0o4t1")
@@ -92,13 +94,6 @@ expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3b2ya"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_684vk"]
-line_spacing = 0.0
-font = ExtResource("10_0o4t1")
-font_size = 52
-outline_size = 20
-outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3b2ya"]
 bg_color = Color(0, 0, 0, 0.47843137)
@@ -340,7 +335,7 @@ layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -16)
 text = "Privateers"
-label_settings = SubResource("LabelSettings_684vk")
+label_settings = ExtResource("30_qby1g")
 horizontal_alignment = 1
 
 [node name="JoinGameMenu" type="CanvasLayer" parent="." unique_id=647083332]
@@ -421,10 +416,16 @@ layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -16)
 text = "Join Game"
-label_settings = SubResource("LabelSettings_684vk")
+label_settings = ExtResource("30_qby1g")
 horizontal_alignment = 1
 
 [node name="SettingsMenu" parent="." unique_id=118695181 instance=ExtResource("26_setmn")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=557626464]
+stream = ExtResource("34_04soa")
+volume_db = -10.4
+autoplay = true
+parameters/looping = true
 
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/LeftShipSelector" to="Menu" method="_on_left_ship_selector_pressed"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ShipSelector/RightShipSelector" to="Menu" method="_on_right_ship_selector_pressed"]
