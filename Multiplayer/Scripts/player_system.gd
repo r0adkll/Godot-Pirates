@@ -18,7 +18,7 @@ func setup_players() -> void:
 	if multiplayer.is_server():
 		var ids: Array = Lobby.players.keys()
 		for player_id: int in ids:
-			var pos = SpawnSafety.pick_spawn_position(treasure_map.navigation, get_faction(player_id))
+			var pos = get_random_position()
 			spawn_player.rpc(player_id, pos)
 
 
@@ -94,5 +94,5 @@ func _on_player_state_changed(
 	new_state: BaseShip.State
 ) -> void:
 	if new_state == BaseShip.State.DEAD:
-		var new_position = SpawnSafety.pick_spawn_position(treasure_map.navigation, ship.faction)
+		var new_position = get_random_position()
 		spawn_player.rpc(ship.faction.id, new_position)
