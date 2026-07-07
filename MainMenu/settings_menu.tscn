@@ -62,6 +62,69 @@ alignment = 1
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 
+[node name="MasterVolumeRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MasterVolumeRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_setm")
+theme_override_font_sizes/font_size = 40
+text = "Master Volume"
+label_settings = SubResource("LabelSettings_7rtlj")
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/VBoxContainer/MasterVolumeRow"]
+custom_minimum_size = Vector2(400, 48)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_setm")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SfxVolumeRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/SfxVolumeRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_setm")
+theme_override_font_sizes/font_size = 40
+text = "Sound Effects"
+label_settings = SubResource("LabelSettings_7rtlj")
+
+[node name="SfxVolumeSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SfxVolumeRow"]
+custom_minimum_size = Vector2(400, 48)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_setm")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicVolumeRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MusicVolumeRow"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_setm")
+theme_override_font_sizes/font_size = 40
+text = "Music"
+label_settings = SubResource("LabelSettings_7rtlj")
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/VBoxContainer/MusicVolumeRow"]
+custom_minimum_size = Vector2(400, 48)
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("5_setm")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
 [node name="TouchRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=2106972544]
 layout_mode = 2
 theme_override_constants/separation = 48
@@ -117,5 +180,8 @@ text = "Settings"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/MasterVolumeRow/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/SfxVolumeRow/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/MusicVolumeRow/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/TouchRow/TouchModeOption" to="." method="_on_touch_mode_option_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Buttons/BackButton" to="." method="_on_back_button_pressed"]

@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var settings_menu: SettingsMenu = $SettingsMenu
 
 var is_paused: bool = false
 
@@ -18,6 +19,10 @@ func _on_paused_changed(paused: bool) -> void:
 
 func _on_resume_button_pressed() -> void:
 	PauseMenu.resume()
+
+
+func _on_settings_button_pressed() -> void:
+	settings_menu.visible = true
 
 
 func _on_quit_button_pressed() -> void:

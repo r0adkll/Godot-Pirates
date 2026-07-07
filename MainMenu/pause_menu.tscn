@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="3_j7l1e"]
 [ext_resource type="Texture2D" uid="uid://dcs3daorvjxep" path="res://UI/Resources/BIG/panel_brown_corners_b 1.png" id="4_b12ir"]
 [ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="5_jm8af"]
+[ext_resource type="PackedScene" uid="uid://bkb1ymof4sk1p" path="res://MainMenu/settings_menu.tscn" id="6_stmnu"]
 
 [sub_resource type="Animation" id="Animation_omha6"]
 length = 0.001
@@ -176,6 +177,10 @@ theme = ExtResource("5_jm8af")
 text = "Quit
 "
 
+[node name="SettingsMenu" parent="." instance=ExtResource("6_stmnu")]
+layer = 8
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/PanelContainer/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

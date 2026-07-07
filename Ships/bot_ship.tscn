@@ -189,16 +189,20 @@ shape = SubResource("CircleShape2D_je6gq")
 wait_time = 0.5
 one_shot = true
 
-[node name="Sfx" type="Node" parent="." unique_id=214781246]
+[node name="Sfx" type="Node2D" parent="." unique_id=214781246]
 
-[node name="WoodBreaking" type="AudioStreamPlayer" parent="Sfx" unique_id=1892774491]
+[node name="WoodBreaking" type="AudioStreamPlayer2D" parent="Sfx" unique_id=1892774491]
 stream = ExtResource("14_wlg32")
 volume_db = -16.0
 pitch_scale = 0.83
+max_distance = 2000.0
+bus = &"SFX"
 
-[node name="WoodImpact" type="AudioStreamPlayer" parent="Sfx" unique_id=341352061]
+[node name="WoodImpact" type="AudioStreamPlayer2D" parent="Sfx" unique_id=341352061]
 stream = ExtResource("15_eoivm")
 volume_db = -50.486
+max_distance = 2000.0
+bus = &"SFX"
 
 [node name="Trails" type="Node2D" parent="." unique_id=1309767946]
 
