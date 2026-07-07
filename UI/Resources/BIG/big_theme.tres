@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://d13qpte7rlegc" path="res://UI/Resources/BIG/checkbox_beige_cross 1.png" id="6_yykv4"]
 [ext_resource type="Texture2D" uid="uid://id8y43i6trhp" path="res://UI/Resources/BIG/checkbox_beige_empty 1.png" id="7_ejx4a"]
 [ext_resource type="Texture2D" uid="uid://cotxo6ktbiik6" path="res://UI/Resources/BIG/panel_border_brown_detail 1.png" id="8_ejx4a"]
+[ext_resource type="Texture2D" uid="uid://ctjrk1v48uk38" path="res://UI/Resources/Progress/progress_white_small.png" id="8_f3eyf"]
 [ext_resource type="FontFile" uid="uid://c66s7f32pww5w" path="res://UI/Resources/Fonts/Kenney Future Narrow.ttf" id="9_xhodn"]
 [ext_resource type="Texture2D" uid="uid://c0c0u1uafkvyk" path="res://UI/Resources/Checkbox/checkbox_beige_cross.svg" id="10_f3eyf"]
 [ext_resource type="Texture2D" uid="uid://bi1giocn7jqtr" path="res://UI/Resources/Checkbox/checkbox_beige_checked.svg" id="11_0086r"]
@@ -43,6 +44,7 @@ CheckBox/icons/checked_disabled = ExtResource("6_yykv4")
 CheckBox/icons/unchecked = ExtResource("7_ejx4a")
 CheckBox/styles/normal = ExtResource("4_ejx4a")
 CheckBox/styles/pressed = ExtResource("5_sv0wh")
+HSlider/icons/grabber = ExtResource("8_f3eyf")
 LineEdit/colors/caret_color = Color(0, 0, 0, 1)
 LineEdit/colors/font_color = Color(0, 0, 0, 1)
 LineEdit/colors/font_placeholder_color = Color(0.69965345, 0.6996535, 0.6996533, 1)

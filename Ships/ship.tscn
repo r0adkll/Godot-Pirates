@@ -255,22 +255,25 @@ script = ExtResource("7_m3k8j")
 [node name="CrewDeployInput" type="Node" parent="PlayerInput" unique_id=1361426898]
 script = ExtResource("23_akqdl")
 
-[node name="Sfx" type="Node" parent="." unique_id=2017829903]
+[node name="Sfx" type="Node2D" parent="." unique_id=2017829903]
 
-[node name="WoodBreaking" type="AudioStreamPlayer" parent="Sfx" unique_id=1515738617]
+[node name="WoodBreaking" type="AudioStreamPlayer2D" parent="Sfx" unique_id=1515738617]
 stream = ExtResource("17_em2b4")
 volume_db = -14.0
+bus = &"SFX"
 
-[node name="WoodImpact" type="AudioStreamPlayer" parent="Sfx" unique_id=629944357]
+[node name="WoodImpact" type="AudioStreamPlayer2D" parent="Sfx" unique_id=629944357]
 stream = ExtResource("18_84lgx")
 volume_db = -40.001
 pitch_scale = 0.49
+bus = &"SFX"
 
 [node name="Music" type="Node" parent="." unique_id=1586605938]
 
 [node name="ThemeSong" type="AudioStreamPlayer" parent="Music" unique_id=1003883303]
 unique_name_in_owner = true
 stream = ExtResource("19_84lgx")
+bus = &"Music"
 
 [node name="Trails" type="Node2D" parent="." unique_id=642801447]
 

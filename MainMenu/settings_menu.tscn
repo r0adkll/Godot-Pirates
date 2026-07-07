@@ -5,11 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://b6xg30ith3j4t" path="res://UI/Resources/BIG/banner_classic_curtain 1.png" id="3_setm"]
 [ext_resource type="FontFile" uid="uid://optph7edgtf" path="res://UI/Resources/Fonts/Kenney Future.ttf" id="4_setm"]
 [ext_resource type="Theme" uid="uid://b2wbfh51kmy5l" path="res://UI/Resources/BIG/big_theme.tres" id="5_setm"]
+[ext_resource type="LabelSettings" uid="uid://bc7ebwj470wq0" path="res://MainMenu/Resources/banner_label_settings.tres" id="6_h7n5m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dim"]
 bg_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+content_margin_left = 80.0
+content_margin_right = 80.0
 texture = ExtResource("2_setm")
 texture_margin_left = 64.0
 texture_margin_top = 64.0
@@ -27,12 +30,6 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_banner"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_title"]
-font = ExtResource("4_setm")
-font_size = 80
-shadow_size = 8
-shadow_color = Color(0, 0, 0, 0.4)
-
 [node name="SettingsMenu" type="CanvasLayer" unique_id=1833546738]
 layer = 7
 visible = false
@@ -48,18 +45,91 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_dim")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=352294626]
 offset_left = 700.0
-offset_top = 328.0
+offset_top = 196.0
 offset_right = 1975.0
-offset_bottom = 1152.0
+offset_bottom = 1253.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=1448133745]
 layout_mode = 2
-theme_override_constants/separation = 64
+theme_override_constants/separation = 16
 alignment = 1
 
 [node name="Spacer" type="Control" parent="PanelContainer/VBoxContainer" unique_id=754257849]
-custom_minimum_size = Vector2(0, 64)
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+
+[node name="MasterVolumeRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=464809935]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MasterVolumeRow" unique_id=1230870418]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_setm")
+theme_override_font_sizes/font_size = 40
+text = "Master Volume"
+label_settings = SubResource("LabelSettings_7rtlj")
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/VBoxContainer/MasterVolumeRow" unique_id=1639434231]
+custom_minimum_size = Vector2(400, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("5_setm")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SfxVolumeRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1288044742]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/SfxVolumeRow" unique_id=1576502325]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_setm")
+theme_override_font_sizes/font_size = 40
+text = "Sound Effects"
+label_settings = SubResource("LabelSettings_7rtlj")
+
+[node name="SfxVolumeSlider" type="HSlider" parent="PanelContainer/VBoxContainer/SfxVolumeRow" unique_id=923236813]
+custom_minimum_size = Vector2(400, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("5_setm")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="MusicVolumeRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1464330661]
+layout_mode = 2
+theme_override_constants/separation = 48
+alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MusicVolumeRow" unique_id=257523518]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_setm")
+theme_override_font_sizes/font_size = 40
+text = "Music"
+label_settings = SubResource("LabelSettings_7rtlj")
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/VBoxContainer/MusicVolumeRow" unique_id=166227437]
+custom_minimum_size = Vector2(400, 48)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("5_setm")
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="Spacer2" type="Control" parent="PanelContainer/VBoxContainer" unique_id=1138447463]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
 [node name="TouchRow" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=2106972544]
@@ -87,6 +157,10 @@ popup/item_1/id = 1
 popup/item_2/text = "Off"
 popup/item_2/id = 2
 
+[node name="Spacer3" type="Control" parent="PanelContainer/VBoxContainer" unique_id=1628120918]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
 [node name="Buttons" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=979411863]
 layout_mode = 2
 theme_override_constants/separation = 48
@@ -100,9 +174,9 @@ text = "Back"
 
 [node name="Banner" type="PanelContainer" parent="." unique_id=1216356236]
 offset_left = 826.0
-offset_top = 262.0
+offset_top = 130.0
 offset_right = 1850.0
-offset_bottom = 518.0
+offset_bottom = 386.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_banner")
 
 [node name="TextureRect" type="TextureRect" parent="Banner" unique_id=1831013172]
@@ -114,8 +188,11 @@ layout_mode = 2
 offset_transform_enabled = true
 offset_transform_position = Vector2(0, -16)
 text = "Settings"
-label_settings = SubResource("LabelSettings_title")
+label_settings = ExtResource("6_h7n5m")
 horizontal_alignment = 1
 
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/MasterVolumeRow/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/SfxVolumeRow/SfxVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/VBoxContainer/MusicVolumeRow/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
 [connection signal="item_selected" from="PanelContainer/VBoxContainer/TouchRow/TouchModeOption" to="." method="_on_touch_mode_option_item_selected"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/Buttons/BackButton" to="." method="_on_back_button_pressed"]
