@@ -70,7 +70,7 @@ func _rand_sign() -> int:
 func spawn_player(is_first: bool = false) -> void:
 	var player: Ship = player_ship_scene.instantiate()
 	player.game_camera = player_camera
-	player.global_position = SpawnSafety.pick_spawn_position(navigation_layer, player_faction)
+	player.global_position = get_random_position()
 	player.faction = player_faction
 	player.state_changed.connect(_on_player_state_changed)
 	player.is_first_ship = is_first
@@ -82,7 +82,7 @@ func spawn_enemy() -> void:
 	var count = _target_enemy_count() - _active_enemy_count()
 	for i in count:
 		var new_boat: BotShip = bot_ship_scene.instantiate()
-		new_boat.global_position = SpawnSafety.pick_spawn_position(navigation_layer, enemy_faction)
+		new_boat.global_position = get_random_position()
 		new_boat.faction = enemy_faction
 		new_boat.ships_system = self
 		new_boat.ship_blackboard = enemy_blackboard
