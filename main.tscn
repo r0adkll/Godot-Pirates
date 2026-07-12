@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://ykaepquiprnp" path="res://MainMenu/game_over_menu.tscn" id="24_0rl1p"]
 [ext_resource type="Script" uid="uid://dme5f24l0edsf" path="res://addons/beehave/blackboard.gd" id="24_1u8w0"]
 [ext_resource type="Resource" uid="uid://baexbsmd28foq" path="res://Systems/Difficulty/rough_waters.tres" id="25_diffn"]
-[ext_resource type="PackedScene" path="res://Music/music_system.tscn" id="26_music"]
+[ext_resource type="PackedScene" uid="uid://cvytl0xx62vs" path="res://Music/music_system.tscn" id="26_music"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_3b2ya"]
 parsed_collision_mask = 4294967280

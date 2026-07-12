@@ -127,7 +127,7 @@ curve = SubResource("Curve2D_glbon")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Map/Path2D" unique_id=1871718425]
 position = Vector2(1704.6088, 1029.1226)
-rotation = 0.5910455
+rotation = 0.59104556
 progress = 875.623
 script = ExtResource("2_fu7sn")
 editor_enabled = false

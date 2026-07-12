@@ -34,6 +34,7 @@ Settings="*res://Utils/settings.gd"
 
 window/size/viewport_width=2640
 window/size/viewport_height=1440
+window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=4
